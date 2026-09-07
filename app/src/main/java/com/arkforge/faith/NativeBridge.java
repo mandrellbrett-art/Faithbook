@@ -80,6 +80,7 @@ public class NativeBridge {
     @JavascriptInterface public String exportAssistantContext(String mode){try{activity.requestAssistantContextExport(mode);JSONObject o=new JSONObject();o.put("ok",true);o.put("pending",true);o.put("mode",mode);return o.toString();}catch(Exception e){return MainActivity.error(e.getMessage()).toString();}}
     @JavascriptInterface public String shareAssistantContext(String mode){try{activity.shareAssistantContext(mode);JSONObject o=new JSONObject();o.put("ok",true);o.put("pending",true);o.put("mode",mode);return o.toString();}catch(Exception e){return MainActivity.error(e.getMessage()).toString();}}
 
+    @JavascriptInterface public String importLibraryFolder(){try{activity.pickLibraryFolder();JSONObject o=new JSONObject();o.put("ok",true);o.put("pending",true);return o.toString();}catch(Exception e){return MainActivity.error(e.getMessage()).toString();}}
     @JavascriptInterface public void printCurrent(){activity.printCurrent();}
     @JavascriptInterface public void shareText(String subject,String text){activity.shareText(subject,text);}
 

@@ -25,6 +25,7 @@ public class MainActivity extends Activity {
     private static final int REQ_PICK = 1001;
     private static final int REQ_BACKUP_EXPORT = 1002;
     private static final int REQ_ASSISTANT_EXPORT = 1003;
+    private static final int REQ_LIBRARY_TREE = 1004;
     private WebView web;
     private R10Database db;
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
@@ -74,6 +75,20 @@ public class MainActivity extends Activity {
             i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
             try { startActivityForResult(i, REQ_PICK); }
             catch (ActivityNotFoundException e) { callback("onNativeError", error("No Android document picker is available.")); }
+        });
+    }
+
+
+    public void pickLibraryFolder() {
+        runOnUiThread(() -> {
+            Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+            i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION |
+                    Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION |
+                    Intent.FLAG_GRANT_PREFIX_URI_PERMISSION);
+            try { startActivityForResult(i, REQ_LIBRARY_TREE); }
+            catch (ActivityNotFoundException e) {
+                callback("onNativeError", error("No Android folder picker is available."));
+            }
         });
     }
 
@@ -134,6 +149,27 @@ public class MainActivity extends Activity {
     @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != RESULT_OK || data == null) return;
+
+
+        if (requestCode == REQ_LIBRARY_TREE) {
+            if (data.getData() == null) return;
+            final Uri treeUri = data.getData();
+            try {
+                int flags = data.getFlags() & (Intent.FLAG_GRANT_READ_URI_PERMISSION |
+                        Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                getContentResolver().takePersistableUriPermission(
+                        treeUri, flags & Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            } catch (Exception ignored) {}
+            executor.execute(() -> {
+                try { callback("onNativeFolderImport", DriveFolderImporter.importTree(this, db, treeUri)); }
+                catch (Exception e) {
+                    db.log("library", "folder-import", "FAIL",
+                            e.getClass().getSimpleName() + ": " + e.getMessage());
+                    callback("onNativeError", error(e.getMessage()));
+                }
+            });
+            return;
+        }
 
         if (requestCode == REQ_PICK && "library-batch".equals(pendingImportKind)) {
             final java.util.ArrayList<Uri> uris = new java.util.ArrayList<>();

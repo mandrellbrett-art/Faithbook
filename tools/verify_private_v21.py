@@ -22,8 +22,8 @@ c("No code execution", 'execution_allowed", false' in mgr and 'code_executed", f
 c("No raw book bytes", "raw_book_bytes_included" in mgr)
 c("Credentials excluded", "credentials_included" in mgr)
 c("Ademic Cantus exported", '"ademic_cantus"' in mgr and "Runic compression" in mgr)
-c("V21 versionCode", "versionCode 210001" in grad)
-c("V21 versionName", "21.0.0-assistant-bridge" in grad)
+m=re.search(r"versionCode\s+(\d+)",grad); c("V21+ versionCode", bool(m) and int(m.group(1))>=210001)
+c("Assistant Bridge version lineage", "assistant-bridge" in grad or "drive-folder-import" in grad)
 c("Bridge spec JSON", (root/"app/src/main/assets/assistant-bridge-spec.json").is_file())
 c("Bridge documentation", (root/"ASSISTANT_BRIDGE.md").is_file())
 failed=[x for x in checks if not x[1]]

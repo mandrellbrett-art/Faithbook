@@ -1,80 +1,75 @@
 {
-  "schema": "heritagefaith.qa.v21",
-  "passed": 15,
+  "schema": "heritagefaith.qa.v22",
+  "passed": 14,
   "failed": 0,
   "checks": [
     {
-      "name": "AssistantBridgeManager exists",
+      "name": "DriveFolderImporter exists",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Settings route",
+      "name": "ACTION_OPEN_DOCUMENT_TREE",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Settings navigation",
+      "name": "persistable tree permission",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Standard context export",
+      "name": "recursive traversal",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Share context",
+      "name": "Google Drive compatible SAF wording",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Assistant Return import",
+      "name": "supported book filter",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "No background access declaration",
+      "name": "private only provenance",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "No code execution",
+      "name": "folder import JS bridge",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "No raw book bytes",
+      "name": "settings folder button",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Credentials excluded",
+      "name": "folder callback",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Ademic Cantus exported",
+      "name": "V22 versionCode",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "V21+ versionCode",
+      "name": "V22 versionName",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Assistant Bridge version lineage",
+      "name": "V21 bridge preserved",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Bridge spec JSON",
-      "pass": true,
-      "detail": ""
-    },
-    {
-      "name": "Bridge documentation",
+      "name": "Ademic Cantus preserved",
       "pass": true,
       "detail": ""
     }

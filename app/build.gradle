@@ -10,8 +10,8 @@ android {
         applicationId 'com.arkforge.faith'
         minSdk 26
         targetSdk 35
-        versionCode 210001
-        versionName '21.0.0-assistant-bridge'
+        versionCode 220001
+        versionName '22.0.0-drive-folder-import'
     }
 
     buildTypes {

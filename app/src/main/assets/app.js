@@ -176,7 +176,7 @@ function renderSettings(){
  </div>
  <div class="split">
   <section class="card"><div class="tag">IMPORT</div><h2>Bring material into HeritageFaith</h2>
-   <div class="actions"><button class="primary" id="assistantImportReturn">Import Assistant Return</button><button id="assistantImportBooks">Import books / documents</button><button id="assistantImportProject">Import project / ZIP</button><button id="assistantImportContinuity">Import continuity bundle</button><button id="assistantRestoreBackup">Restore HeritageFaith backup</button></div>
+   <div class="actions"><button class="primary" id="assistantImportReturn">Import Assistant Return</button><button class="primary" id="assistantImportFolder">Import entire Drive / document folder</button><button id="assistantImportBooks">Import books / documents</button><button id="assistantImportProject">Import project / ZIP</button><button id="assistantImportContinuity">Import continuity bundle</button><button id="assistantRestoreBackup">Restore HeritageFaith backup</button></div>
    <p class="small muted">Assistant Return bundles may add notes or proposals. They cannot execute code, silently overwrite source files, or bypass Constructor/continuity rules.</p>
   </section>
   <section class="card"><div class="tag">WORKFLOW</div><h2>How I can work with the installed app</h2>
@@ -190,6 +190,7 @@ function renderSettings(){
  $('#assistantShareFull').onclick=()=>{if(confirm('Full private context may include sensitive personal records. Continue?')){const r=call('shareAssistantContext','full');toast(r.ok?'Preparing full private context…':r.error||'Could not prepare context',!r.ok)}};
  $('#assistantSaveFull').onclick=()=>{if(confirm('Full private context may include sensitive personal records. Continue?')){const r=call('exportAssistantContext','full');toast(r.ok?'Choose where to save the full context ZIP…':r.error||'Could not start export',!r.ok)}};
  $('#assistantImportReturn').onclick=()=>B&&B.importFile&&B.importFile('assistant-return');
+ $('#assistantImportFolder').onclick=()=>{const r=call('importLibraryFolder');toast(r.ok?'Choose a Google Drive or document folder…':r.error||'Could not open folder picker',!r.ok)};
  $('#assistantImportBooks').onclick=()=>B&&B.importFile&&B.importFile('library-batch');
  $('#assistantImportProject').onclick=()=>B&&B.importFile&&B.importFile('project');
  $('#assistantImportContinuity').onclick=()=>B&&B.importFile&&B.importFile('continuity');
@@ -707,7 +708,8 @@ window.R10={
  onNativeError(payload){toast(payload.error||'Native action failed',true)},
  onBackupExport(payload){toast(payload.ok?`Backup exported · ${payload.managed_files||0} managed files`:payload.error||'Backup failed',!payload.ok)},
  onAssistantExport(payload){toast(payload.ok?`Assistant context saved · ${payload.mode||'standard'} · ${payload.bytes||0} bytes`:payload.error||'Assistant export failed',!payload.ok)},
- onAssistantShare(payload){toast(payload.ok?`Assistant context ready to share · ${payload.mode||'standard'}`:payload.error||'Assistant share failed',!payload.ok)}
+ onAssistantShare(payload){toast(payload.ok?`Assistant context ready to share · ${payload.mode||'standard'}`:payload.error||'Assistant share failed',!payload.ok)},
+ onNativeFolderImport(payload){toast(payload.ok?`Folder imported · ${payload.books_imported||0} books · ${payload.skipped_unsupported||0} skipped`:`Folder import partial · ${payload.books_imported||0} imported · ${payload.failed||0} failed`,!payload.ok); if(state.route==='library'||state.route==='settings')render()}
 };
 
 window.addEventListener('hashchange',render);

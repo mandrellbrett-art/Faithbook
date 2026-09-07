@@ -1,32 +1,140 @@
 {
   "schema": "faithbook.features.v19",
   "product": "HeritageFaith",
-  "version": "19.0.0-foundation",
-  "price_target_usd": 4.99,
-  "release_state": "SOURCE_FOUNDATION_NOT_STORE_CANDIDATE",
-  "truth_boundary": "Scripture-first public app source. Private Home Base data, personal archives, and user-owned copyrighted books are not bundled.",
+  "version": "20.0.0-united-private",
+  "price_target_usd": null,
+  "release_state": "PRIVATE_SINGLE_USER_ANDROID_SOURCE",
+  "truth_boundary": "Private single-user HeritageFaith + Home Base app. User-owned copyrighted books may be imported for personal study but are not bundled or redistributed.",
   "features": [
-    {"name":"Three-Door Home — Read / Understand / Live","state":"IMPLEMENTED_SOURCE","detail":"Quiet parchment/leather home navigation with Scripture, context, practice, Humanity Ark, Alexandria, Ancestors, Constructor, and private notes."},
-    {"name":"Jesus Center","state":"IMPLEMENTED_SOURCE","detail":"Life/ministry, parables, miracles, teachings, names/titles; Scripture opens before commentary."},
-    {"name":"73-Book Catholic Scripture Reader","state":"IMPLEMENTED_SOURCE","detail":"Existing rights-cleared public Scripture installer/reader retained; device and rights verification remain separate gates."},
-    {"name":"Scripture Context Atlas + Seven Commentary Leaves","state":"IMPLEMENTED_SOURCE","detail":"Context, people, places, objects, timelines, questions, sources, and uncertainty remain separate from source Scripture."},
-    {"name":"Living Church + Living Tradition","state":"IMPLEMENTED_SOURCE","detail":"Roles, vocations, structures, sacraments, symbols, ceremonies, songs, sermons, and traditions."},
-    {"name":"Ancestors — Where Am I From?","state":"IMPLEMENTED_SOURCE","detail":"Private sourced family history with confidence labels and equal-dignity rule."},
-    {"name":"Family Gifts & Traditions","state":"IMPLEMENTED_SOURCE","detail":"Local records for recurring family skills, customs, service, art, agriculture, languages, recipes, and traditions; patterns never become hereditary rank or destiny."},
-    {"name":"Humanity Ark","state":"IMPLEMENTED_SOURCE","detail":"25 foundation domains spanning foods, oils, plants, animals, textiles, manufacturing, infrastructure, fuel, anatomy, biology, Tree of Life, vocations, governance, patents, technology, and human techniques."},
-    {"name":"Patents & Inventions Registry","state":"IMPLEMENTED_SOURCE","detail":"Idea/status separation, inventors/contributors, prior art, novelty, prototype/test evidence, disclosure, filing, jurisdiction, ownership/license, and linked source files."},
-    {"name":"Technology Continuum","state":"IMPLEMENTED_SOURCE","detail":"Handcraft through automated/AI and speculative levels; user-defined degrees retain evidence-state labels."},
-    {"name":"Library of Alexandria","state":"IMPLEMENTED_SOURCE","detail":"Comparative research shell for owned-source intake, source/rights tracking, Map of Creation, Ademic Cantus, runes, meaning course, and occult/esoteric study."},
-    {"name":"Map of Creation + Layers of Creation","state":"IMPLEMENTED_SOURCE","detail":"Biblical path, recurring imagery, and eight explicitly labeled physical/biological/ecological/human/symbolic/interior/moral/theological lenses. Not physical coordinates to heaven."},
-    {"name":"Ademic Cantus + Resonance","state":"IMPLEMENTED_SOURCE","detail":"Interactive semantic decomposition plus tone/force/mode/intent/posture/register/certainty layer."},
-    {"name":"Ademic Rune Compression","state":"IMPLEMENTED_SOURCE_EXPERIMENTAL","detail":"Deterministic generated compound glyphs from Cantus records. Original notation; never labeled ancient, biblical, or supernatural."},
-    {"name":"Historical Runes + Sigil Craft","state":"FOUNDATION_CONTENT","detail":"Starter Elder Futhark reference plus rune/sigil construction principles and source-separation rules; artifact-level scholarship still needs expansion."},
-    {"name":"The Human Art of Meaning Course","state":"IMPLEMENTED_SOURCE","detail":"12-unit course on language, resonance, symbols, ritual, belief, historical magic claims, Recursive Eye, creativity, and discernment."},
-    {"name":"Occult & Esoteric Research Shelf","state":"IMPLEMENTED_SOURCE","detail":"Source intake and Recursive Eye truth-test workflow. Claims remain claims; harmful material is studied without being optimized for harm."},
-    {"name":"Human Techniques","state":"IMPLEMENTED_SOURCE","detail":"Soil Method, Adaptive Fortress, Compost Principle, distance-first lethal-threat safety, continuity, and capability transfer."},
-    {"name":"Constructor Backend Navigator","state":"IMPLEMENTED_SOURCE_PARTIAL_NATIVE","detail":"Native local status/search/project index retained; V19 UI makes Constructor responsible for file/project navigation, manifests, hashes, missing references, imports/exports, and rollback policy. Deeper automated classification remains future work."},
-    {"name":"Red-Letter Display Layer","state":"PARTIAL_REVIEW_REQUIRED","detail":"Reversible annotation approach exists; complete certified speech-boundary dataset is not yet verified."},
-    {"name":"Browser Preview Bridge","state":"IMPLEMENTED_SOURCE","detail":"Non-production localStorage shim permits UI preview outside Android without overriding the native bridge."},
-    {"name":"Signed Google Play AAB","state":"NOT_YET_VERIFIED","detail":"No claim of signed bundle, physical-phone acceptance, Play approval, or store readiness in this build."}
+    {
+      "name": "Home Base United",
+      "state": "IMPLEMENTED_SOURCE",
+      "detail": "Re-enables My Work, Files, Games, Production, Engineering, Garden, Farm Time, Kernel, Systems, Continuity, record tools, Constructor, backups, import/export, and Auto Finish inside HeritageFaith."
+    },
+    {
+      "name": "Private Multi-Book Import",
+      "state": "IMPLEMENTED_SOURCE",
+      "detail": "Android document picker supports selecting multiple user-owned book files, including through the Google Drive document provider; imported bytes are copied to app-private managed storage with hashes and source URIs."
+    },
+    {
+      "name": "Six Private Google Drive Library Shelves",
+      "state": "SOURCE_REGISTERED_BYTES_PENDING_USER_SELECTION",
+      "detail": "The six supplied Drive folder locations are preserved in private-library-sources.json. Actual book bytes are imported only after the user grants Android/Drive access and selects files."
+    },
+    {
+      "name": "Ademic Cantus \u2014 United Core",
+      "state": "IMPLEMENTED_SOURCE",
+      "detail": "Ademic Cantus, Resonance, reversible runic compression, Cantus logs, and Constructor remain first-class within the unified private app."
+    },
+    {
+      "name": "Three-Door Home \u2014 Read / Understand / Live",
+      "state": "IMPLEMENTED_SOURCE",
+      "detail": "Quiet parchment/leather home navigation with Scripture, context, practice, Humanity Ark, Alexandria, Ancestors, Constructor, and private notes."
+    },
+    {
+      "name": "Jesus Center",
+      "state": "IMPLEMENTED_SOURCE",
+      "detail": "Life/ministry, parables, miracles, teachings, names/titles; Scripture opens before commentary."
+    },
+    {
+      "name": "73-Book Catholic Scripture Reader",
+      "state": "IMPLEMENTED_SOURCE",
+      "detail": "Existing rights-cleared public Scripture installer/reader retained; device and rights verification remain separate gates."
+    },
+    {
+      "name": "Scripture Context Atlas + Seven Commentary Leaves",
+      "state": "IMPLEMENTED_SOURCE",
+      "detail": "Context, people, places, objects, timelines, questions, sources, and uncertainty remain separate from source Scripture."
+    },
+    {
+      "name": "Living Church + Living Tradition",
+      "state": "IMPLEMENTED_SOURCE",
+      "detail": "Roles, vocations, structures, sacraments, symbols, ceremonies, songs, sermons, and traditions."
+    },
+    {
+      "name": "Ancestors \u2014 Where Am I From?",
+      "state": "IMPLEMENTED_SOURCE",
+      "detail": "Private sourced family history with confidence labels and equal-dignity rule."
+    },
+    {
+      "name": "Family Gifts & Traditions",
+      "state": "IMPLEMENTED_SOURCE",
+      "detail": "Local records for recurring family skills, customs, service, art, agriculture, languages, recipes, and traditions; patterns never become hereditary rank or destiny."
+    },
+    {
+      "name": "Humanity Ark",
+      "state": "IMPLEMENTED_SOURCE",
+      "detail": "25 foundation domains spanning foods, oils, plants, animals, textiles, manufacturing, infrastructure, fuel, anatomy, biology, Tree of Life, vocations, governance, patents, technology, and human techniques."
+    },
+    {
+      "name": "Patents & Inventions Registry",
+      "state": "IMPLEMENTED_SOURCE",
+      "detail": "Idea/status separation, inventors/contributors, prior art, novelty, prototype/test evidence, disclosure, filing, jurisdiction, ownership/license, and linked source files."
+    },
+    {
+      "name": "Technology Continuum",
+      "state": "IMPLEMENTED_SOURCE",
+      "detail": "Handcraft through automated/AI and speculative levels; user-defined degrees retain evidence-state labels."
+    },
+    {
+      "name": "Library of Alexandria",
+      "state": "IMPLEMENTED_SOURCE",
+      "detail": "Comparative research shell for owned-source intake, source/rights tracking, Map of Creation, Ademic Cantus, runes, meaning course, and occult/esoteric study."
+    },
+    {
+      "name": "Map of Creation + Layers of Creation",
+      "state": "IMPLEMENTED_SOURCE",
+      "detail": "Biblical path, recurring imagery, and eight explicitly labeled physical/biological/ecological/human/symbolic/interior/moral/theological lenses. Not physical coordinates to heaven."
+    },
+    {
+      "name": "Ademic Cantus + Resonance",
+      "state": "IMPLEMENTED_SOURCE",
+      "detail": "Interactive semantic decomposition plus tone/force/mode/intent/posture/register/certainty layer."
+    },
+    {
+      "name": "Ademic Rune Compression",
+      "state": "IMPLEMENTED_SOURCE_EXPERIMENTAL",
+      "detail": "Deterministic generated compound glyphs from Cantus records. Original notation; never labeled ancient, biblical, or supernatural."
+    },
+    {
+      "name": "Historical Runes + Sigil Craft",
+      "state": "FOUNDATION_CONTENT",
+      "detail": "Starter Elder Futhark reference plus rune/sigil construction principles and source-separation rules; artifact-level scholarship still needs expansion."
+    },
+    {
+      "name": "The Human Art of Meaning Course",
+      "state": "IMPLEMENTED_SOURCE",
+      "detail": "12-unit course on language, resonance, symbols, ritual, belief, historical magic claims, Recursive Eye, creativity, and discernment."
+    },
+    {
+      "name": "Occult & Esoteric Research Shelf",
+      "state": "IMPLEMENTED_SOURCE",
+      "detail": "Source intake and Recursive Eye truth-test workflow. Claims remain claims; harmful material is studied without being optimized for harm."
+    },
+    {
+      "name": "Human Techniques",
+      "state": "IMPLEMENTED_SOURCE",
+      "detail": "Soil Method, Adaptive Fortress, Compost Principle, distance-first lethal-threat safety, continuity, and capability transfer."
+    },
+    {
+      "name": "Constructor Backend Navigator",
+      "state": "IMPLEMENTED_SOURCE_PARTIAL_NATIVE",
+      "detail": "Native local status/search/project index retained; V19 UI makes Constructor responsible for file/project navigation, manifests, hashes, missing references, imports/exports, and rollback policy. Deeper automated classification remains future work."
+    },
+    {
+      "name": "Red-Letter Display Layer",
+      "state": "PARTIAL_REVIEW_REQUIRED",
+      "detail": "Reversible annotation approach exists; complete certified speech-boundary dataset is not yet verified."
+    },
+    {
+      "name": "Browser Preview Bridge",
+      "state": "IMPLEMENTED_SOURCE",
+      "detail": "Non-production localStorage shim permits UI preview outside Android without overriding the native bridge."
+    },
+    {
+      "name": "Signed Google Play AAB",
+      "state": "NOT_YET_VERIFIED",
+      "detail": "No claim of signed bundle, physical-phone acceptance, Play approval, or store readiness in this build."
+    }
   ]
 }

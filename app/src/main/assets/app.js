@@ -34,7 +34,7 @@ const RECORD_TOOLS=[
  ['continuity','Continuity','Migration ledger, unresolved references, exact-byte evidence and promotion lock'],
  ['argus','Argus','Safe HTTPS intake with private-network blocking']
 ];
-const CORE_NAV=[['home','Home'],['bible','Scripture'],['understand','Understand'],['live','Live'],['alexandria','Alexandria'],['humanity','Humanity Ark'],['ancestors','Ancestors'],['constructor','Constructor'],['mywork','My Notes']];
+const CORE_NAV=[['home','Home'],['homebase','Home Base'],['bible','Scripture'],['alexandria','Alexandria'],['cantuslab','Ademic Cantus'],['library','Library'],['constructor','Constructor']];
 
 function parse(s){try{return JSON.parse(s)}catch(e){return {ok:false,error:String(e)}}}
 function call(name,...args){if(!B||typeof B[name]!=='function')return {ok:false,error:`Native bridge method ${name} unavailable`};try{return parse(B[name](...args))}catch(e){return {ok:false,error:String(e)}}}
@@ -103,6 +103,18 @@ function wireActions(root=view){root.querySelectorAll('[data-action]').forEach(b
 function render(){let r=routeFromHash();state.route=r.route;state.op=r.op;renderNav();
   switch(state.route){
     case 'home':return renderHome();
+    case 'homebase':return renderHomeBase();
+    case 'mywork':return renderMyWork();
+    case 'files':return renderFiles();
+    case 'games':return renderGames();
+    case 'production':return renderProduction();
+    case 'engineering':return renderEngineering();
+    case 'garden':return renderGarden();
+    case 'farm':return renderFarm();
+    case 'cantus':return renderCantus();
+    case 'kernel':return renderKernel();
+    case 'systems':return renderSystems();
+    case 'continuity':return renderContinuity();
     case 'bible':return renderBibleWorkspace();
     case 'understand':return renderUnderstand();
     case 'live':return renderLive();
@@ -125,9 +137,39 @@ function render(){let r=routeFromHash();state.route=r.route;state.op=r.op;render
     case 'tradition':return renderLivingTradition();
     case 'ancestors':return renderAncestors();
     case 'library':return renderLibrary();
-    case 'mywork':return renderMyNotes();
-    default:return renderNotFound();
+    case 'notes':return renderMyNotes();
+    default:{
+      const tool=RECORD_TOOLS.find(x=>x[0]===state.route);
+      if(tool)return renderGenericTool(tool[0],tool[1],tool[2]);
+      return renderNotFound();
+    }
   }
+}
+
+
+function renderHomeBase(){
+ refreshBoot();
+ const spec=call('homeBaseUnitySpec');
+ const s=state.boot?.stats||{};
+ const cards=[
+  ['mywork','MY WORK','Projects & Auto Finish','Run, inspect, finish, and preserve real local projects.','▣'],
+  ['files','FILES','Managed Files','Import, hash, route, open, and preserve files without silent overwrite.','▤'],
+  ['games','GAMES','Games & Garden','Imported web games, Garden branches, and external ROM handoff.','◈'],
+  ['library','LIBRARY','Private Books','Your personal books, study documents, Alexandria sources, and citations.','▥'],
+  ['engineering','ENGINEERING','Design & Inventions','Artifacts, designs, constraints, physics, materials, patents, and lifecycle.','⌁'],
+  ['production','PRODUCTION','Production Records','Jobs, revisions, lots, tests, release evidence, and history.','⚒'],
+  ['kernel','KERNEL','144 Circuit','12 systems × 12 operations with explicit routing.','⊞'],
+  ['systems','SYSTEMS','Audit & Recovery','Runtime truth, backups, adapters, feature ledger, and diagnostics.','⚙'],
+  ['continuity','CONTINUITY','Continuity Lock','Missing, reference-only, mismatched, or unverified items stay visible.','↺'],
+  ['cantus','CANTUS LOGS','Evidence Chain','Append-only mutation history with SHA-256 chaining.','∞'],
+  ['cantuslab','ADEMIC CANTUS','Meaning Engine','Semantic decomposition, resonance, and reversible runic compression.','ᚱ'],
+  ['constructor','CONSTRUCTOR','Backend Navigator','Files, projects, provenance, imports, exports, hashes, rollback, and navigation.','⌘']
+ ];
+ view.innerHTML=sectionTitle('Home Base — United','HeritageFaith and the Home Base workbench now share one private local app and one managed evidence system. Nothing here is for sale or public redistribution.')+
+ `<div class="grid"><div class="card"><div class="tag">PRIVATE MODE</div><div class="metric good">ONE USER</div><div class="small muted">No public-store boundary is assumed for your personal library.</div></div><div class="card"><div class="tag">PROJECTS</div><div class="metric">${s.projects||0}</div></div><div class="card"><div class="tag">MANAGED FILES</div><div class="metric">${s.managed_files||0}</div></div><div class="card"><div class="tag">ADEMIC CANTUS</div><div class="metric good">${spec.ademic_cantus||'ENABLED'}</div></div></div>
+ <div class="grid homebase-grid">${cards.map(([r,tag,title,desc,icon])=>routeCard(r,tag,title,desc,icon)).join('')}</div>
+ <div class="notice"><b>United continuity rule</b><div class="small">The Home Base backend and HeritageFaith study system coexist. Imports are additive, Constructor owns navigation, Cantus logs mutations, and continuity gaps remain visible instead of being silently discarded.</div></div>`;
+ wireRouteCards();
 }
 
 function renderJesusCenter(){
@@ -194,7 +236,7 @@ function renderLive(){
  ${routeCard('familygifts','FAMILY GIFTS','Gifts & Traditions','Record family crafts, service, stories, recipes, languages, devotional practices, and skills.','♡')}
  ${routeCard('techniques','HUMAN TECHNIQUES','Learning & Adaptation','Soil Method, Adaptive Fortress, Compost Principle, continuity, and capability transfer.','↻')}
  ${routeCard('ancestors','ANCESTORS','Where Am I From?','Remember people, places, migrations, occupations, languages, and stories with evidence labels.','♧')}
- ${routeCard('mywork','PRIVATE','My Notes','Personal study records created on this device.','✎')}
+ ${routeCard('notes','PRIVATE','My Notes','Personal study records created on this device.','✎')}
  </div>
  <div class="card"><h2>Prayer note</h2><form id="livePrayerForm" class="form"><label>Title<input id="livePrayerTitle" placeholder="Prayer / gratitude / intention" required></label><label>Private note<textarea id="livePrayerBody" placeholder="Write plainly. This is your private note, not a claim of revelation."></textarea></label><div class="actions"><button class="primary">Save locally</button></div></form></div>`;
  wireRouteCards();
@@ -442,9 +484,24 @@ function renderFiles(){const p=call('projects');view.innerHTML=sectionTitle('Uni
 
 function renderGames(){const p=call('projects');const games=(p.projects||[]).filter(x=>['game','garden'].includes(x.family));view.innerHTML=sectionTitle('Games','Play bundled/imported HTML games inside the isolated R10 runner. User-owned ROMs are handed to a compatible Android emulator; R10 does not bundle commercial ROMs.')+`<div class="actions">${actionButton('Import game / ROM','import-game',true)}${actionButton('Install offline Garden Field Lab','install-garden-lab')}</div><div class="notice"><b>Two launch paths</b><div class="small">HTML/Web games run inside R10. ROM formats use an Android app chooser/default emulator. Saves owned by imported web games remain in the project WebView origin; external emulator saves stay with that emulator.</div></div><h2>Game library</h2>${projectCards(games)}`;wireActions();wireProjectButtons();}
 
-function renderLibrary(){const lib=call('records','library',false,500).records||[];const bible=lib.find(x=>x.id==='library-arkforge-study-bible');view.innerHTML=sectionTitle('Library','Books, references, source records, and customer-authorized digital documents. HeritageFaith keeps the source, notes, and comparison layers distinct so provenance stays clear.')+
-`${bible?`<div class="card ark-book"><div class="module-icon">✝</div><div class="tag">SCRIPTURE WORKSPACE · FAITH REFERENCE</div><h2>HeritageFaith Scripture Workspace</h2><div class="small muted">Old and New Testament · public-domain / properly licensed corpus</div><p><b>Purpose:</b> Scripture study, prayer, theological reference, notes, questions, resolutions, commentary leaves, and church-group study.</p><div class="notice"><b>Digital-text status</b><div class="small">No private Bible scan or proprietary study edition is bundled. Import only public-domain, licensed, or personally authorized material.</div></div><div class="actions"><button id="openBibleWorkspace" class="primary">Open Scripture Workspace</button><button data-action="import-library">Import another book / document</button></div></div>`:''}
-<div class="actions">${actionButton('Import book / document','import-library',true)}${actionButton('New library note','new-library')}</div>`+recordList('library');wireActions();wireRecordButtons();const ob=$('#openBibleWorkspace');if(ob)ob.onclick=()=>navigate('bible');}
+function renderLibrary(){
+ const lib=call('records','library',false,500).records||[];
+ const projects=(call('projects').projects||[]).filter(x=>x.family==='library');
+ const sources=call('privateLibrarySources');
+ const folders=sources.sources||[];
+ const bible=lib.find(x=>x.id==='library-arkforge-study-bible');
+ view.innerHTML=sectionTitle('Private Library','This is your personal HeritageFaith library. User-owned books can be imported for private study and Alexandria comparison; the app does not redistribute them.')+
+ `<div class="notice"><b>Six Google Drive shelves registered</b><div class="small">The folder locations are preserved below. Tap a shelf to open it in Google Drive, or use “Import multiple books” and choose files from Drive in Android’s document picker.</div></div>
+ <div class="actions"><button data-action="import-books" class="primary">Import multiple books</button>${actionButton('Import one book / document','import-library')}${actionButton('New library note','new-library')}</div>
+ <div class="grid">${folders.map((f,i)=>`<article class="card"><div class="tag">PRIVATE DRIVE SHELF ${i+1}</div><h3>Book source ${i+1}</h3><div class="small mono muted">${esc(f.folder_id)}</div><p class="small">Rights: ${esc(f.rights_status)} · ${esc(f.redistribution)}</p><button data-drive-folder="${esc(f.url)}">Open Google Drive folder</button></article>`).join('')}</div>
+ <h2>Imported book projects</h2>
+ ${projects.length?projectCards(projects):'<div class="card muted">No book bytes imported into managed storage yet. Use Import multiple books and select the files from Google Drive.</div>'}
+ ${bible?`<div class="card ark-book"><div class="module-icon">✝</div><div class="tag">SCRIPTURE WORKSPACE</div><h2>HeritageFaith Scripture Workspace</h2><p><b>Scripture stays distinct from your private research library.</b></p><div class="actions"><button id="openBibleWorkspace" class="primary">Open Scripture Workspace</button></div></div>`:''}
+ <h2>Library notes & source records</h2>${recordList('library')}`;
+ wireActions();wireRecordButtons();wireProjectButtons();
+ view.querySelectorAll('[data-drive-folder]').forEach(b=>b.onclick=()=>B.openUrl(b.dataset.driveFolder));
+ const ob=$('#openBibleWorkspace');if(ob)ob.onclick=()=>navigate('bible');
+}
 
 function renderBibleWorkspace(){
  const pack=call('bibleAtlasSpec');
@@ -582,7 +639,7 @@ function handleAction(action,button){
   if(op==='help'){return navigate('constructor');}
  }
  const map={
-  'import-project':()=>B.importFile('project'),'import-file':()=>B.importFile('project'),'import-game':()=>B.importFile('game'),'import-library':()=>B.importFile('library'),'import-image':()=>B.importFile('image'),'import-garden':()=>B.importFile('garden'),'import-kernel':()=>B.importFile('kernel'),'import-heritage':()=>B.importFile('heritage'),'import-backup':()=>B.importFile('backup'),'import-continuity':()=>B.importFile('continuity'),
+  'import-project':()=>B.importFile('project'),'import-file':()=>B.importFile('project'),'import-game':()=>B.importFile('game'),'import-library':()=>B.importFile('library'),'import-books':()=>B.importFile('library-batch'),'import-image':()=>B.importFile('image'),'import-garden':()=>B.importFile('garden'),'import-kernel':()=>B.importFile('kernel'),'import-heritage':()=>B.importFile('heritage'),'import-backup':()=>B.importFile('backup'),'import-continuity':()=>B.importFile('continuity'),
   'export-backup':()=>B.exportBackup(),'print':()=>B.printCurrent(),
   'new-project':()=>{let name=prompt('Project name');if(!name)return;let desc=prompt('Short description')||'';let r=call('createProject',name,desc,'project');if(r.ok){toast('Project created');refreshBoot();renderMyWork()}else toast(r.error,true)},
   'search-continuity':()=>{let q=prompt('Search original path, family, version or migration status');if(q==null)return;showContinuityResults(q)},
@@ -596,6 +653,7 @@ function handleAction(action,button){
 }
 
 window.R10={
+ onNativeImportBatch(payload){toast(`Private library import: ${payload.imported||0} imported · ${payload.failed||0} failed`,Number(payload.failed||0)>0);refreshBoot();navigate('library')},
  onNativeImport(payload){state.lastImport=payload;if(payload.ok){if(state.pendingBibleAttach){state.pendingBibleAttach=false;const rr=call('addRecord','bible_digital_attachment',payload.name||payload.project_name||'Bible digital copy','User-authorized digital attachment for HeritageFaith Scripture Workspace.',JSON.stringify({book_id:'library-arkforge-study-bible',project_id:payload.id||'',filename:payload.name||payload.project_name||'',sha256:payload.sha256||'',bytes:payload.bytes||0,source_uri:payload.source_uri||''}));toast(rr.ok?'Digital copy attached to Bible Workspace':'File imported, but Bible attachment record needs review',!rr.ok);refreshBoot();return renderBibleWorkspace()}toast(`Imported/indexed: ${payload.name||payload.project_name||payload.id||'item'}`);refreshBoot();render()}else{state.pendingBibleAttach=false;toast(payload.error||'Import failed',true)}},
  onNativeError(payload){toast(payload.error||'Native action failed',true)},
  onBackupExport(payload){toast(payload.ok?`Backup exported · ${payload.managed_files||0} managed files`:payload.error||'Backup failed',!payload.ok)}

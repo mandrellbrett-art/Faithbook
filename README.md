@@ -1,3 +1,9 @@
+# HeritageFaith V20 — United Private Build
+
+This is the private single-user fusion of HeritageFaith and the Home Base / Thunderforge workbench.
+
+It is not for sale. User-owned books may be imported locally for personal study. Ademic Cantus is first-class.
+
 # HeritageFaith V19 Foundation
 
 HeritageFaith is a local-first, Scripture-first Christian study application with a quiet paper-and-leather interface. V19 turns the accumulated design into a working source foundation while keeping experimental research layers visibly separate from Scripture.

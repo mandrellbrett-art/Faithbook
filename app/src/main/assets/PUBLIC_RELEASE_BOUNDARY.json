@@ -2,7 +2,7 @@
   "schema": "faithbook.public-release-boundary.v19",
   "product": "HeritageFaith",
   "version": "19.0.0-foundation",
-  "mode": "PUBLIC_CLEAN_ROOM",
+  "mode": "PRIVATE_SINGLE_USER",
   "promotion_allowed": false,
   "private_owner_data_bundled": false,
   "package_id": "com.arkforge.faith",
@@ -22,5 +22,7 @@
     "Full historical rune/sigil artifact scholarship",
     "Deep Constructor automatic file classification",
     "Google Play approval"
-  ]
+  ],
+  "store_distribution": "NOT_FOR_SALE",
+  "note": "V20 United is a private personal build. Public-store separation rules are retained only as historical safety boundaries; the user's personal library may be imported locally but must not be redistributed."
 }

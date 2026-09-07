@@ -1,0 +1,63 @@
+{
+  "schema": "heritagefaith.private-library.sources.v1",
+  "product": "HeritageFaith",
+  "mode": "PRIVATE_SINGLE_USER",
+  "distribution": "NOT_FOR_SALE",
+  "rule": "These folders are personal library source locations. Files are imported only when the user explicitly selects them through Android/Google Drive or a connected Drive account. Imported bytes stay in app-private managed storage unless the user exports them.",
+  "sources": [
+    {
+      "id": "drive-set-01",
+      "provider": "Google Drive",
+      "folder_id": "1HCVIcO0Ddt5iOHPlGIhftoS8mFWJm6NG",
+      "url": "https://drive.google.com/drive/folders/1HCVIcO0Ddt5iOHPlGIhftoS8mFWJm6NG",
+      "rights_status": "PRIVATE_USER_OWNED_OR_USER_AUTHORIZED",
+      "redistribution": "DO_NOT_BUNDLE_OR_REDISTRIBUTE",
+      "import_status": "SOURCE_REGISTERED_BYTES_NOT_YET_IMPORTED"
+    },
+    {
+      "id": "drive-set-02",
+      "provider": "Google Drive",
+      "folder_id": "1KVO1DgBIdW5PcfQ9Cf6ewqCO9tqrMxyR",
+      "url": "https://drive.google.com/drive/folders/1KVO1DgBIdW5PcfQ9Cf6ewqCO9tqrMxyR",
+      "rights_status": "PRIVATE_USER_OWNED_OR_USER_AUTHORIZED",
+      "redistribution": "DO_NOT_BUNDLE_OR_REDISTRIBUTE",
+      "import_status": "SOURCE_REGISTERED_BYTES_NOT_YET_IMPORTED"
+    },
+    {
+      "id": "drive-set-03",
+      "provider": "Google Drive",
+      "folder_id": "16U6fpiMn-KsdNkSnSVcavypb5upcwks2",
+      "url": "https://drive.google.com/drive/folders/16U6fpiMn-KsdNkSnSVcavypb5upcwks2",
+      "rights_status": "PRIVATE_USER_OWNED_OR_USER_AUTHORIZED",
+      "redistribution": "DO_NOT_BUNDLE_OR_REDISTRIBUTE",
+      "import_status": "SOURCE_REGISTERED_BYTES_NOT_YET_IMPORTED"
+    },
+    {
+      "id": "drive-set-04",
+      "provider": "Google Drive",
+      "folder_id": "1lJPNT-G50X4AI9oPU33Sm1kj3TZ0KMqQ",
+      "url": "https://drive.google.com/drive/folders/1lJPNT-G50X4AI9oPU33Sm1kj3TZ0KMqQ",
+      "rights_status": "PRIVATE_USER_OWNED_OR_USER_AUTHORIZED",
+      "redistribution": "DO_NOT_BUNDLE_OR_REDISTRIBUTE",
+      "import_status": "SOURCE_REGISTERED_BYTES_NOT_YET_IMPORTED"
+    },
+    {
+      "id": "drive-set-05",
+      "provider": "Google Drive",
+      "folder_id": "1bCQ7WJ0MoBTGK8CmGWZbSVZr6ZFGx3so",
+      "url": "https://drive.google.com/drive/folders/1bCQ7WJ0MoBTGK8CmGWZbSVZr6ZFGx3so",
+      "rights_status": "PRIVATE_USER_OWNED_OR_USER_AUTHORIZED",
+      "redistribution": "DO_NOT_BUNDLE_OR_REDISTRIBUTE",
+      "import_status": "SOURCE_REGISTERED_BYTES_NOT_YET_IMPORTED"
+    },
+    {
+      "id": "drive-set-06",
+      "provider": "Google Drive",
+      "folder_id": "1OAwVOUXT3p9tG171Sy8CnWHkJWbZVpLc",
+      "url": "https://drive.google.com/drive/folders/1OAwVOUXT3p9tG171Sy8CnWHkJWbZVpLc",
+      "rights_status": "PRIVATE_USER_OWNED_OR_USER_AUTHORIZED",
+      "redistribution": "DO_NOT_BUNDLE_OR_REDISTRIBUTE",
+      "import_status": "SOURCE_REGISTERED_BYTES_NOT_YET_IMPORTED"
+    }
+  ]
+}

@@ -2,9 +2,9 @@
   "schema": "faithbook.qa.v19",
   "product": "HeritageFaith",
   "version": "19.0.0-foundation",
-  "passed": 104,
+  "passed": 103,
   "total": 104,
-  "failed": 0,
+  "failed": 1,
   "android_compiled": false,
   "signed_aab_verified": false,
   "physical_phone_verified": false,
@@ -398,7 +398,7 @@
     },
     {
       "name": "feature release state",
-      "pass": true,
+      "pass": false,
       "detail": ""
     },
     {
@@ -467,12 +467,17 @@
       "detail": ""
     },
     {
-      "name": "java braces:AutoFinishManager.java",
+      "name": "java braces:BibleCorpusImporter.java",
       "pass": true,
       "detail": "balance=0, end_state=code"
     },
     {
-      "name": "java braces:ManagedFileProvider.java",
+      "name": "java braces:ProjectRunnerActivity.java",
+      "pass": true,
+      "detail": "balance=0, end_state=code"
+    },
+    {
+      "name": "java braces:ImportManager.java",
       "pass": true,
       "detail": "balance=0, end_state=code"
     },
@@ -482,17 +487,7 @@
       "detail": "balance=0, end_state=code"
     },
     {
-      "name": "java braces:R10Database.java",
-      "pass": true,
-      "detail": "balance=0, end_state=code"
-    },
-    {
-      "name": "java braces:ContinuityManager.java",
-      "pass": true,
-      "detail": "balance=0, end_state=code"
-    },
-    {
-      "name": "java braces:ImportManager.java",
+      "name": "java braces:MainActivity.java",
       "pass": true,
       "detail": "balance=0, end_state=code"
     },
@@ -507,17 +502,17 @@
       "detail": "balance=0, end_state=code"
     },
     {
-      "name": "java braces:ProjectRunnerActivity.java",
+      "name": "java braces:ManagedFileProvider.java",
       "pass": true,
       "detail": "balance=0, end_state=code"
     },
     {
-      "name": "java braces:BibleCorpusImporter.java",
+      "name": "java braces:NetworkTools.java",
       "pass": true,
       "detail": "balance=0, end_state=code"
     },
     {
-      "name": "java braces:MainActivity.java",
+      "name": "java braces:ContinuityManager.java",
       "pass": true,
       "detail": "balance=0, end_state=code"
     },
@@ -527,7 +522,12 @@
       "detail": "balance=0, end_state=code"
     },
     {
-      "name": "java braces:NetworkTools.java",
+      "name": "java braces:AutoFinishManager.java",
+      "pass": true,
+      "detail": "balance=0, end_state=code"
+    },
+    {
+      "name": "java braces:R10Database.java",
       "pass": true,
       "detail": "balance=0, end_state=code"
     }

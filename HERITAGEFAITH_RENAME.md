@@ -3,9 +3,9 @@
 Public-facing product name changed from **Faithbook** to **HeritageFaith**.
 
 Continuity preserved:
-- Android application ID remains `com.arkforge.faith`.
+- Android application ID remains `com.arkforge.faith` for upgrade/data continuity.
 - Internal `faithbook.*` schema identifiers remain stable.
 - Existing database IDs and preview persistence keys remain stable.
-- Pre-rename source is preserved in Git tag `faithbook-v19-before-heritagefaith`.
+- No prior source was deleted; this is an additive renamed candidate.
 
-This is a branding migration, not a Scripture/source-boundary change.
+This rename changes branding, not Scripture/source boundaries or release status.

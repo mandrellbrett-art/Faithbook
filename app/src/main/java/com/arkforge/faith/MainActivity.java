@@ -2,6 +2,7 @@ package com.arkforge.faith;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
+import android.content.ClipData;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.webkit.WebViewClient;
 import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -66,6 +68,7 @@ public class MainActivity extends Activity {
             Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
             i.addCategory(Intent.CATEGORY_OPENABLE);
             i.setType("*/*");
+            if ("library-batch".equals(pendingImportKind)) i.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
             i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
             try { startActivityForResult(i, REQ_PICK); }
             catch (ActivityNotFoundException e) { callback("onNativeError", error("No Android document picker is available.")); }
@@ -85,7 +88,63 @@ public class MainActivity extends Activity {
 
     @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != RESULT_OK || data == null || data.getData() == null) return;
+        if (resultCode != RESULT_OK || data == null) return;
+
+        if (requestCode == REQ_PICK && "library-batch".equals(pendingImportKind)) {
+            final java.util.ArrayList<Uri> uris = new java.util.ArrayList<>();
+            ClipData clip = data.getClipData();
+            if (clip != null) {
+                for (int i=0;i<clip.getItemCount();i++) uris.add(clip.getItemAt(i).getUri());
+            } else if (data.getData() != null) {
+                uris.add(data.getData());
+            }
+            if (uris.isEmpty()) return;
+            for (Uri u: uris) {
+                try {
+                    int flags = data.getFlags() & (Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                    getContentResolver().takePersistableUriPermission(u, flags & Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                } catch (Exception ignored) {}
+            }
+            executor.execute(() -> {
+                JSONObject batch = new JSONObject();
+                JSONArray items = new JSONArray();
+                int okCount = 0, failCount = 0;
+                try {
+                    for (Uri u: uris) {
+                        try {
+                            JSONObject item = ImportManager.importUri(this, db, u, "library");
+                            String title = item.optString("name", item.optString("project_name", item.optString("id","Imported book")));
+                            JSONObject meta = new JSONObject();
+                            meta.put("project_id", item.optString("id"));
+                            meta.put("filename", title);
+                            meta.put("sha256", item.optString("sha256"));
+                            meta.put("bytes", item.optLong("bytes"));
+                            meta.put("source_uri", u.toString());
+                            meta.put("rights_status", "PRIVATE_USER_OWNED_OR_AUTHORIZED");
+                            meta.put("distribution", "PRIVATE_ONLY");
+                            db.addRecord("library", title, "Private book imported through Android document provider.", meta.toString());
+                            item.put("ok", true); items.put(item); okCount++;
+                        } catch (Exception e) {
+                            JSONObject fail = error(e.getMessage());
+                            try { fail.put("source_uri", String.valueOf(u)); } catch (Exception ignored) {}
+                            items.put(fail); failCount++;
+                            db.log("library","batch-import","FAIL",String.valueOf(u)+" · "+e.getMessage());
+                        }
+                    }
+                    batch.put("ok", failCount==0);
+                    batch.put("imported", okCount);
+                    batch.put("failed", failCount);
+                    batch.put("items", items);
+                    db.log("library","batch-import",failCount==0?"PASS":"PARTIAL","imported="+okCount+" failed="+failCount);
+                    callback("onNativeImportBatch", batch);
+                } catch (Exception e) {
+                    callback("onNativeError", error(e.getMessage()));
+                }
+            });
+            return;
+        }
+
+        if (data.getData() == null) return;
         Uri uri = data.getData();
         try {
             int flags = data.getFlags() & (Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);

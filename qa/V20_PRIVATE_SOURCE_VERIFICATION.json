@@ -1,0 +1,154 @@
+{
+  "schema": "heritagefaith.qa.v20",
+  "product": "HeritageFaith",
+  "version": "20.0.0-united-private",
+  "passed": 29,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "private mode",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "six drive shelves",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "drive shelves private-only",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "home base route",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "route mywork",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "route files",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "route games",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "route production",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "route engineering",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "route garden",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "route farm",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "route cantus",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "route kernel",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "route systems",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "route continuity",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "generic record tools",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "multi-book action",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "multi-book picker",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "multi-book callback",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "private source accessor",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "unity accessor",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "ademic cantus route",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "ademic enabled",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "package continuity",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "not for sale",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "constructor present",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "auto finish present",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "backup present",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "continuity present",
+      "ok": true,
+      "detail": ""
+    }
+  ]
+}

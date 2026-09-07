@@ -19,7 +19,7 @@ public class NativeBridge {
     public NativeBridge(MainActivity activity,R10Database db){this.activity=activity;this.db=db;}
 
     @JavascriptInterface public String bootstrap(){
-        try{JSONObject o=new JSONObject();o.put("ok",true);o.put("product","HeritageFaith");o.put("version","19.0.0-foundation");o.put("runtime","android-native-webview");o.put("termux_required",false);o.put("localhost_required",false);o.put("port_required",false);o.put("projects",db.listProjects(false));o.put("stats",db.stats());o.put("features",readAssetJson("feature-ledger.json"));o.put("continuity",db.migrationSummary());o.put("continuity_lock",readAssetJson("PUBLIC_RELEASE_BOUNDARY.json"));return o.toString();}catch(Exception e){return MainActivity.error(e.getMessage()).toString();}
+        try{JSONObject o=new JSONObject();o.put("ok",true);o.put("product","HeritageFaith");o.put("version","20.0.0-united-private");o.put("runtime","android-native-webview");o.put("termux_required",false);o.put("localhost_required",false);o.put("port_required",false);o.put("projects",db.listProjects(false));o.put("stats",db.stats());o.put("features",readAssetJson("feature-ledger.json"));o.put("continuity",db.migrationSummary());o.put("continuity_lock",readAssetJson("PUBLIC_RELEASE_BOUNDARY.json"));return o.toString();}catch(Exception e){return MainActivity.error(e.getMessage()).toString();}
     }
 
     @JavascriptInterface public String projects(){try{JSONObject o=new JSONObject();o.put("ok",true);o.put("projects",db.listProjects(false));return o.toString();}catch(Exception e){return MainActivity.error(e.getMessage()).toString();}}
@@ -72,6 +72,8 @@ public class NativeBridge {
 
     @JavascriptInterface public String stats(){try{return db.stats().toString();}catch(Exception e){return MainActivity.error(e.getMessage()).toString();}}
     @JavascriptInterface public String featureLedger(){try{return readAssetJson("feature-ledger.json").toString();}catch(Exception e){return MainActivity.error(e.getMessage()).toString();}}
+    @JavascriptInterface public String privateLibrarySources(){try{JSONObject o=readAssetJson("private-library-sources.json");o.put("ok",true);return o.toString();}catch(Exception e){return MainActivity.error(e.getMessage()).toString();}}
+    @JavascriptInterface public String homeBaseUnitySpec(){try{JSONObject o=readAssetJson("homebase-unity-spec.json");o.put("ok",true);return o.toString();}catch(Exception e){return MainActivity.error(e.getMessage()).toString();}}
 
     @JavascriptInterface public void printCurrent(){activity.printCurrent();}
     @JavascriptInterface public void shareText(String subject,String text){activity.shareText(subject,text);}

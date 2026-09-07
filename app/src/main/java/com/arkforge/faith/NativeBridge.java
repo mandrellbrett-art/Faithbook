@@ -75,6 +75,11 @@ public class NativeBridge {
     @JavascriptInterface public String privateLibrarySources(){try{JSONObject o=readAssetJson("private-library-sources.json");o.put("ok",true);return o.toString();}catch(Exception e){return MainActivity.error(e.getMessage()).toString();}}
     @JavascriptInterface public String homeBaseUnitySpec(){try{JSONObject o=readAssetJson("homebase-unity-spec.json");o.put("ok",true);return o.toString();}catch(Exception e){return MainActivity.error(e.getMessage()).toString();}}
 
+    @JavascriptInterface public String assistantSettings(){try{return AssistantBridgeManager.settings(activity).toString();}catch(Exception e){return MainActivity.error(e.getMessage()).toString();}}
+    @JavascriptInterface public String setAssistantSetting(String key,boolean value){try{return AssistantBridgeManager.setSetting(activity,key,value).toString();}catch(Exception e){return MainActivity.error(e.getMessage()).toString();}}
+    @JavascriptInterface public String exportAssistantContext(String mode){try{activity.requestAssistantContextExport(mode);JSONObject o=new JSONObject();o.put("ok",true);o.put("pending",true);o.put("mode",mode);return o.toString();}catch(Exception e){return MainActivity.error(e.getMessage()).toString();}}
+    @JavascriptInterface public String shareAssistantContext(String mode){try{activity.shareAssistantContext(mode);JSONObject o=new JSONObject();o.put("ok",true);o.put("pending",true);o.put("mode",mode);return o.toString();}catch(Exception e){return MainActivity.error(e.getMessage()).toString();}}
+
     @JavascriptInterface public void printCurrent(){activity.printCurrent();}
     @JavascriptInterface public void shareText(String subject,String text){activity.shareText(subject,text);}
 

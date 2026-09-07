@@ -1,0 +1,82 @@
+{
+  "schema": "heritagefaith.qa.v21",
+  "passed": 15,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "AssistantBridgeManager exists",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Settings route",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Settings navigation",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Standard context export",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Share context",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Assistant Return import",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "No background access declaration",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "No code execution",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "No raw book bytes",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Credentials excluded",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Ademic Cantus exported",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "V21 versionCode",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "V21 versionName",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Bridge spec JSON",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Bridge documentation",
+      "pass": true,
+      "detail": ""
+    }
+  ]
+}

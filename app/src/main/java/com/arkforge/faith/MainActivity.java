@@ -24,10 +24,12 @@ import java.util.concurrent.Executors;
 public class MainActivity extends Activity {
     private static final int REQ_PICK = 1001;
     private static final int REQ_BACKUP_EXPORT = 1002;
+    private static final int REQ_ASSISTANT_EXPORT = 1003;
     private WebView web;
     private R10Database db;
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
     private String pendingImportKind = "project";
+    private String pendingAssistantExportMode = "standard";
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +85,49 @@ public class MainActivity extends Activity {
             i.putExtra(Intent.EXTRA_TITLE, "HeritageFaith_Backup_" + System.currentTimeMillis() + ".zip");
             try { startActivityForResult(i, REQ_BACKUP_EXPORT); }
             catch (ActivityNotFoundException e) { callback("onNativeError", error("No Android document creator is available.")); }
+        });
+    }
+
+    public void requestAssistantContextExport(String mode) {
+        pendingAssistantExportMode = "full".equalsIgnoreCase(mode) ? "full" : "standard";
+        runOnUiThread(() -> {
+            Intent i = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+            i.addCategory(Intent.CATEGORY_OPENABLE);
+            i.setType("application/zip");
+            i.putExtra(Intent.EXTRA_TITLE, "HeritageFaith_Assistant_Context_" + System.currentTimeMillis() + ".zip");
+            try { startActivityForResult(i, REQ_ASSISTANT_EXPORT); }
+            catch (ActivityNotFoundException e) { callback("onNativeError", error("No Android document creator is available.")); }
+        });
+    }
+
+    public void shareAssistantContext(String mode) {
+        final String safeMode = "full".equalsIgnoreCase(mode) ? "full" : "standard";
+        executor.execute(() -> {
+            try {
+                File bundle = AssistantBridgeManager.createShareBundle(this, db, safeMode);
+                Uri uri = ManagedFileProvider.uriForFile(this, bundle);
+                runOnUiThread(() -> {
+                    try {
+                        Intent i = new Intent(Intent.ACTION_SEND);
+                        i.setType("application/zip");
+                        i.putExtra(Intent.EXTRA_SUBJECT, "HeritageFaith Assistant Context");
+                        i.putExtra(Intent.EXTRA_STREAM, uri);
+                        i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        startActivity(Intent.createChooser(i, "Share HeritageFaith context"));
+                        JSONObject out = new JSONObject();
+                        out.put("ok", true);
+                        out.put("kind", "assistant-context-share");
+                        out.put("mode", safeMode);
+                        out.put("bytes", bundle.length());
+                        callback("onAssistantShare", out);
+                        db.log("assistant-bridge","share","PASS","mode="+safeMode+" bytes="+bundle.length());
+                    } catch (Exception e) {
+                        callback("onNativeError", error("Could not open Android share sheet: " + e.getMessage()));
+                    }
+                });
+            } catch (Exception e) {
+                callback("onNativeError", error("Could not create Assistant Context bundle: " + e.getMessage()));
+            }
         });
     }
 
@@ -160,6 +205,12 @@ public class MainActivity extends Activity {
             executor.execute(() -> {
                 try { callback("onBackupExport", BackupManager.exportToUri(this, db, uri)); }
                 catch (Exception e) { db.log("backup", "export", "FAIL", e.getMessage()); callback("onNativeError", error(e.getMessage())); }
+            });
+        } else if (requestCode == REQ_ASSISTANT_EXPORT) {
+            final String mode = pendingAssistantExportMode;
+            executor.execute(() -> {
+                try { callback("onAssistantExport", AssistantBridgeManager.exportToUri(this, db, uri, mode)); }
+                catch (Exception e) { db.log("assistant-bridge", "context-export", "FAIL", e.getMessage()); callback("onNativeError", error(e.getMessage())); }
             });
         }
     }

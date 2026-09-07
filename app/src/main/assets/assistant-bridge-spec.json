@@ -1,0 +1,34 @@
+{
+  "schema": "heritagefaith.assistant_bridge.spec.v1",
+  "version": "21.0.0",
+  "access_model": "EXPLICIT_USER_HANDOFF_ONLY",
+  "background_remote_access": false,
+  "credential_export": false,
+  "raw_book_bytes_in_context_bundle": false,
+  "return_code_execution": false,
+  "context_schema": "heritagefaith.assistant_context.v1",
+  "return_schema": "heritagefaith.assistant_return.v1",
+  "handoff_paths": [
+    "Android share sheet (choose ChatGPT if available)",
+    "Android document picker -> Google Drive or local storage",
+    "Upload exported ZIP manually into a ChatGPT conversation"
+  ],
+  "import_paths": [
+    "Assistant Return JSON/ZIP",
+    "Private book/document batch",
+    "Project/ZIP",
+    "Continuity bundle",
+    "HeritageFaith backup"
+  ],
+  "ademic_cantus": {
+    "enabled": true,
+    "pipeline": [
+      "Source expression",
+      "Plain meaning",
+      "Ademic Cantus",
+      "Resonance",
+      "Runic compression",
+      "Plain-language expansion"
+    ]
+  }
+}

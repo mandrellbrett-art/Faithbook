@@ -34,7 +34,7 @@ const RECORD_TOOLS=[
  ['continuity','Continuity','Migration ledger, unresolved references, exact-byte evidence and promotion lock'],
  ['argus','Argus','Safe HTTPS intake with private-network blocking']
 ];
-const CORE_NAV=[['home','Home'],['homebase','Home Base'],['bible','Scripture'],['alexandria','Alexandria'],['cantuslab','Ademic Cantus'],['library','Library'],['constructor','Constructor']];
+const CORE_NAV=[['home','Home'],['homebase','Home Base'],['bible','Scripture'],['alexandria','Alexandria'],['cantuslab','Ademic Cantus'],['library','Library'],['constructor','Constructor'],['settings','Settings']];
 
 function parse(s){try{return JSON.parse(s)}catch(e){return {ok:false,error:String(e)}}}
 function call(name,...args){if(!B||typeof B[name]!=='function')return {ok:false,error:`Native bridge method ${name} unavailable`};try{return parse(B[name](...args))}catch(e){return {ok:false,error:String(e)}}}
@@ -130,6 +130,7 @@ function render(){let r=routeFromHash();state.route=r.route;state.op=r.op;render
     case 'familygifts':return renderFamilyGifts();
     case 'techniques':return renderHumanTechniques();
     case 'constructor':return renderConstructor();
+    case 'settings':return renderSettings();
     case 'jesus':return renderJesusCenter();
     case 'study':return renderStudyLab();
     case 'worksheets':return renderFaithWorksheets();
@@ -146,6 +147,54 @@ function render(){let r=routeFromHash();state.route=r.route;state.op=r.op;render
   }
 }
 
+
+
+function renderSettings(){
+ const s=call('assistantSettings');
+ const checks=[
+  ['include_projects','Project index','Projects, descriptions, status, versions and managed roots.'],
+  ['include_file_index','Managed file index','Names, hashes, sizes, types and provenance. Raw file bytes stay excluded.'],
+  ['include_study_records','Study records','Notes, research records, citations and other non-excluded records.'],
+  ['include_private_records','Sensitive/private records','Explicitly include ancestry, family, prayer, medical, location and similar records. OFF by default.'],
+  ['include_cantus_logs','Ademic Cantus + Cantus evidence','Meaning system declaration, verification and recent mutation logs.'],
+  ['include_continuity','Continuity state','Migration summary, unresolved references and continuity status.'],
+  ['include_library_catalog','Private library catalog','Book/source metadata and Drive shelf registrations; not raw book bytes.'],
+  ['allow_return_import','Allow Assistant Return import','Permit structured notes/proposals to be imported additively. No returned code is executed.']
+ ];
+ view.innerHTML=sectionTitle('Settings — Import & Assistant Bridge','HeritageFaith stays private on your phone. External access happens only when you explicitly export, share, import, or place a bundle in an authorized connected source.')+
+ `<div class="notice"><b>Access model: EXPLICIT USER HANDOFF ONLY</b><div class="small">There is no hidden server, remote-control port, background ChatGPT access, credential export, or automatic upload. To let ChatGPT work with the installed app, export/share a context bundle or save one to Google Drive and authorize that source separately.</div></div>
+ <div class="split">
+  <section class="card"><div class="tag">ASSISTANT CONTEXT</div><h2>What leaves the app</h2>
+   <div id="assistantSettingList">${checks.map(([k,title,desc])=>`<label class="setting-row"><input type="checkbox" data-assistant-setting="${esc(k)}" ${s[k]?'checked':''}><span><b>${esc(title)}</b><small>${esc(desc)}</small></span></label>`).join('')}</div>
+   <p class="small muted">Passwords/tokens are never intentionally exported. Context bundles never contain raw managed project/book bytes.</p>
+  </section>
+  <section class="card"><div class="tag">HANDOFF</div><h2>Send context to ChatGPT</h2>
+   <p>Use <b>Share</b> to open Android's share sheet and choose ChatGPT if it accepts the ZIP. Or use <b>Save</b> and choose Google Drive in Android's document picker.</p>
+   <div class="actions"><button class="primary" id="assistantShareStandard">Share standard context</button><button id="assistantSaveStandard">Save standard context</button></div>
+   <details><summary>Full private context</summary><p class="small">Full mode includes all database records and metadata currently available to the bridge, including categories normally excluded as sensitive. It still excludes raw book/project bytes and credentials.</p><div class="actions"><button id="assistantShareFull">Share full private context</button><button id="assistantSaveFull">Save full private context</button></div></details>
+  </section>
+ </div>
+ <div class="split">
+  <section class="card"><div class="tag">IMPORT</div><h2>Bring material into HeritageFaith</h2>
+   <div class="actions"><button class="primary" id="assistantImportReturn">Import Assistant Return</button><button id="assistantImportBooks">Import books / documents</button><button id="assistantImportProject">Import project / ZIP</button><button id="assistantImportContinuity">Import continuity bundle</button><button id="assistantRestoreBackup">Restore HeritageFaith backup</button></div>
+   <p class="small muted">Assistant Return bundles may add notes or proposals. They cannot execute code, silently overwrite source files, or bypass Constructor/continuity rules.</p>
+  </section>
+  <section class="card"><div class="tag">WORKFLOW</div><h2>How I can work with the installed app</h2>
+   <ol><li>HeritageFaith creates a scoped context ZIP.</li><li>You share it into this chat, or save it to an authorized Google Drive location.</li><li>I analyze only what you deliberately shared.</li><li>I can return a structured <code>heritagefaith.assistant_return.v1</code> file.</li><li>You import that file; HeritageFaith records it additively and never executes it as code.</li></ol>
+   <blockquote>Your phone remains the authority over what leaves and what returns.</blockquote>
+  </section>
+ </div>`;
+ view.querySelectorAll('[data-assistant-setting]').forEach(x=>x.onchange=()=>{const r=call('setAssistantSetting',x.dataset.assistantSetting,x.checked);toast(r.ok?'Assistant Bridge setting saved':r.error||'Could not save setting',!r.ok)});
+ $('#assistantShareStandard').onclick=()=>{const r=call('shareAssistantContext','standard');toast(r.ok?'Preparing Android share sheet…':r.error||'Could not prepare context',!r.ok)};
+ $('#assistantSaveStandard').onclick=()=>{const r=call('exportAssistantContext','standard');toast(r.ok?'Choose where to save the context ZIP…':r.error||'Could not start export',!r.ok)};
+ $('#assistantShareFull').onclick=()=>{if(confirm('Full private context may include sensitive personal records. Continue?')){const r=call('shareAssistantContext','full');toast(r.ok?'Preparing full private context…':r.error||'Could not prepare context',!r.ok)}};
+ $('#assistantSaveFull').onclick=()=>{if(confirm('Full private context may include sensitive personal records. Continue?')){const r=call('exportAssistantContext','full');toast(r.ok?'Choose where to save the full context ZIP…':r.error||'Could not start export',!r.ok)}};
+ $('#assistantImportReturn').onclick=()=>B&&B.importFile&&B.importFile('assistant-return');
+ $('#assistantImportBooks').onclick=()=>B&&B.importFile&&B.importFile('library-batch');
+ $('#assistantImportProject').onclick=()=>B&&B.importFile&&B.importFile('project');
+ $('#assistantImportContinuity').onclick=()=>B&&B.importFile&&B.importFile('continuity');
+ $('#assistantRestoreBackup').onclick=()=>B&&B.importFile&&B.importFile('backup');
+}
 
 function renderHomeBase(){
  refreshBoot();
@@ -656,7 +705,9 @@ window.R10={
  onNativeImportBatch(payload){toast(`Private library import: ${payload.imported||0} imported · ${payload.failed||0} failed`,Number(payload.failed||0)>0);refreshBoot();navigate('library')},
  onNativeImport(payload){state.lastImport=payload;if(payload.ok){if(state.pendingBibleAttach){state.pendingBibleAttach=false;const rr=call('addRecord','bible_digital_attachment',payload.name||payload.project_name||'Bible digital copy','User-authorized digital attachment for HeritageFaith Scripture Workspace.',JSON.stringify({book_id:'library-arkforge-study-bible',project_id:payload.id||'',filename:payload.name||payload.project_name||'',sha256:payload.sha256||'',bytes:payload.bytes||0,source_uri:payload.source_uri||''}));toast(rr.ok?'Digital copy attached to Bible Workspace':'File imported, but Bible attachment record needs review',!rr.ok);refreshBoot();return renderBibleWorkspace()}toast(`Imported/indexed: ${payload.name||payload.project_name||payload.id||'item'}`);refreshBoot();render()}else{state.pendingBibleAttach=false;toast(payload.error||'Import failed',true)}},
  onNativeError(payload){toast(payload.error||'Native action failed',true)},
- onBackupExport(payload){toast(payload.ok?`Backup exported · ${payload.managed_files||0} managed files`:payload.error||'Backup failed',!payload.ok)}
+ onBackupExport(payload){toast(payload.ok?`Backup exported · ${payload.managed_files||0} managed files`:payload.error||'Backup failed',!payload.ok)},
+ onAssistantExport(payload){toast(payload.ok?`Assistant context saved · ${payload.mode||'standard'} · ${payload.bytes||0} bytes`:payload.error||'Assistant export failed',!payload.ok)},
+ onAssistantShare(payload){toast(payload.ok?`Assistant context ready to share · ${payload.mode||'standard'}`:payload.error||'Assistant share failed',!payload.ok)}
 };
 
 window.addEventListener('hashchange',render);

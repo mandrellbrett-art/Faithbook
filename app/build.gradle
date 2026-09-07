@@ -10,8 +10,8 @@ android {
         applicationId 'com.arkforge.faith'
         minSdk 26
         targetSdk 35
-        versionCode 190001
-        versionName '19.0.0-foundation'
+        versionCode 210001
+        versionName '21.0.0-assistant-bridge'
     }
 
     buildTypes {

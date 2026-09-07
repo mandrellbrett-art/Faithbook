@@ -1,4 +1,4 @@
-# Faithbook V19 Foundation Architecture
+# HeritageFaith V19 Foundation Architecture
 
 ## Surface
 **Read → Understand → Live**. The surface is intentionally quiet and non-gamified.

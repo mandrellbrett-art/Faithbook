@@ -1,7 +1,7 @@
 {
   "schema": "faithbook.scripture-context-atlas.v19",
-  "title": "Faithbook Scripture Context Atlas + Seven-Leaf Commentary",
-  "purpose": "Build a detailed, source-labeled study companion around Faithbook Scripture without changing the source text.",
+  "title": "HeritageFaith Scripture Context Atlas + Seven-Leaf Commentary",
+  "purpose": "Build a detailed, source-labeled study companion around HeritageFaith Scripture without changing the source text.",
   "page_model": "Each Scripture reference can own seven expandable commentary leaves. Seven is a research structure, not a hard word count.",
   "exact_edition_boundary": "The built-in public Scripture layer and any customer-selected local documents remain distinct. Comparison texts are separate source layers.",
   "red_letter": "Jesus-word highlighting is a reversible annotation layer. Preserve source/authority and confidence; never alter the immutable Scripture source.",

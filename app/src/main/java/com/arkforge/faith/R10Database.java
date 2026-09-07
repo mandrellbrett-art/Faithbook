@@ -84,7 +84,7 @@ public class R10Database extends SQLiteOpenHelper {
         db.execSQL("CREATE INDEX idx_files_project ON managed_files(project_id,rel_path)");
         db.execSQL("CREATE INDEX idx_corpus_path ON corpus_files(path)");
         db.execSQL("CREATE INDEX idx_corpus_family ON corpus_files(family,version_token)");
-        logInternal(db, "system", "database-create", "PASS", "Faithbook local database created");
+        logInternal(db, "system", "database-create", "PASS", "HeritageFaith local database created");
         seedSystemRecords(db);
         seedBibleLibraryRecord(db);
     }
@@ -106,7 +106,7 @@ public class R10Database extends SQLiteOpenHelper {
         ContentValues book = new ContentValues();
         book.put("id", "library-arkforge-study-bible");
         book.put("type", "library");
-        book.put("title", "Faithbook Scripture Workspace");
+        book.put("title", "HeritageFaith Scripture Workspace");
         book.put("body", "Jesus-centered personal study workspace. Import a public-domain or properly licensed Bible corpus, then add local notes, questions, resolution notes, commentary leaves, timelines, maps and church-group study records.");
         book.put("meta_json", "{\"medium\":\"digital_workspace\",\"content_state\":\"PUBLIC_DOMAIN_CORPUS_REQUIRED\",\"study_workspace\":true,\"page_notes\":true,\"questions\":true,\"resolution_notes\":true,\"church_group_book\":true,\"purpose\":\"Scripture study, prayer, theological research and church-group study.\",\"ark_category\":\"faith/scripture\"}");
         book.put("created_at", t); book.put("updated_at", t); book.put("archived", 0);

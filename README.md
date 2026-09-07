@@ -1,6 +1,6 @@
-# Faithbook V19 Foundation
+# HeritageFaith V19 Foundation
 
-Faithbook is a local-first, Scripture-first Christian study application with a quiet paper-and-leather interface. V19 turns the accumulated design into a working source foundation while keeping experimental research layers visibly separate from Scripture.
+HeritageFaith is a local-first, Scripture-first Christian study application with a quiet paper-and-leather interface. V19 turns the accumulated design into a working source foundation while keeping experimental research layers visibly separate from Scripture.
 
 ## Core navigation
 

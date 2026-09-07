@@ -1,7 +1,7 @@
 {
   "schema": "faithbook.bible-study-workspace.v19",
   "book_id": "arkforge-faith-scripture",
-  "purpose": "Local-first Scripture study workspace for Faithbook.",
+  "purpose": "Local-first Scripture study workspace for HeritageFaith.",
   "record_types": {
     "bible_note": [
       "page",

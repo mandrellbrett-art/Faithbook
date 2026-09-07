@@ -1,6 +1,6 @@
-# Faithbook — Public / Private Separation
+# HeritageFaith — Public / Private Separation
 
-## Public: Faithbook
+## Public: HeritageFaith
 Scripture-first retail application, clean local database, public study datasets, generic feature templates, customer-created local records.
 
 ## Private: Home Base / development archives

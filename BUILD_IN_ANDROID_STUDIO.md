@@ -1,7 +1,7 @@
-# Build Faithbook V19 in Android Studio
+# Build HeritageFaith V19 in Android Studio
 
-1. Extract `Faithbook_V19_Foundation_Source.zip`.
-2. Open the `Faithbook_V19_Foundation` folder in a current Android Studio installation.
+1. Extract `HeritageFaith_V19_Foundation_Source.zip`.
+2. Open the `HeritageFaith_V19_Foundation` folder in a current Android Studio installation.
 3. Allow Gradle/SDK dependencies to resolve.
 4. Build a **debug** APK first.
 5. Install only on a test device/profile and exercise Read, Understand, Live, Alexandria, Humanity Ark, Ancestors, Constructor, import/export, persistence, and rollback paths.

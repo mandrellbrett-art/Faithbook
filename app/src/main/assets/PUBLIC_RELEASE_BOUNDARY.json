@@ -1,6 +1,6 @@
 {
   "schema": "faithbook.public-release-boundary.v19",
-  "product": "Faithbook",
+  "product": "HeritageFaith",
   "version": "19.0.0-foundation",
   "mode": "PUBLIC_CLEAN_ROOM",
   "promotion_allowed": false,

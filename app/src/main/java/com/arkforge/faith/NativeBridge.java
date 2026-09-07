@@ -19,7 +19,7 @@ public class NativeBridge {
     public NativeBridge(MainActivity activity,R10Database db){this.activity=activity;this.db=db;}
 
     @JavascriptInterface public String bootstrap(){
-        try{JSONObject o=new JSONObject();o.put("ok",true);o.put("product","Faithbook");o.put("version","19.0.0-foundation");o.put("runtime","android-native-webview");o.put("termux_required",false);o.put("localhost_required",false);o.put("port_required",false);o.put("projects",db.listProjects(false));o.put("stats",db.stats());o.put("features",readAssetJson("feature-ledger.json"));o.put("continuity",db.migrationSummary());o.put("continuity_lock",readAssetJson("PUBLIC_RELEASE_BOUNDARY.json"));return o.toString();}catch(Exception e){return MainActivity.error(e.getMessage()).toString();}
+        try{JSONObject o=new JSONObject();o.put("ok",true);o.put("product","HeritageFaith");o.put("version","19.0.0-foundation");o.put("runtime","android-native-webview");o.put("termux_required",false);o.put("localhost_required",false);o.put("port_required",false);o.put("projects",db.listProjects(false));o.put("stats",db.stats());o.put("features",readAssetJson("feature-ledger.json"));o.put("continuity",db.migrationSummary());o.put("continuity_lock",readAssetJson("PUBLIC_RELEASE_BOUNDARY.json"));return o.toString();}catch(Exception e){return MainActivity.error(e.getMessage()).toString();}
     }
 
     @JavascriptInterface public String projects(){try{JSONObject o=new JSONObject();o.put("ok",true);o.put("projects",db.listProjects(false));return o.toString();}catch(Exception e){return MainActivity.error(e.getMessage()).toString();}}

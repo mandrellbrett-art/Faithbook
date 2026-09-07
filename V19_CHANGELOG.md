@@ -1,4 +1,4 @@
-# Faithbook V19 — Foundation Changelog
+# HeritageFaith V19 — Foundation Changelog
 
 ## Added
 - Quiet READ / UNDERSTAND / LIVE home architecture.

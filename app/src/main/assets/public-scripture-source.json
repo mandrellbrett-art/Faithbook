@@ -9,7 +9,7 @@
   "license_source": "https://github.com/janvier-s/original-douay-rheims/blob/main/LICENSE",
   "repository": "https://github.com/janvier-s/original-douay-rheims",
   "raw_url_template": "https://raw.githubusercontent.com/janvier-s/original-douay-rheims/main/bible/raw/{slug}.json",
-  "rights_note": "Faithbook relies on the repository CC0 license for this dataset. The app downloads canonical book files directly from the CC0 repository and caches them in app-private storage. No Ignatius/RSV-2CE text or study notes are bundled.",
+  "rights_note": "HeritageFaith relies on the repository CC0 license for this dataset. The app downloads canonical book files directly from the CC0 repository and caches them in app-private storage. No Ignatius/RSV-2CE text or study notes are bundled.",
   "appendix_excluded_by_default": [
     "3-esdras",
     "4-esdras",

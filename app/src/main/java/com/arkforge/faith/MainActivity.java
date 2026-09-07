@@ -77,7 +77,7 @@ public class MainActivity extends Activity {
             Intent i = new Intent(Intent.ACTION_CREATE_DOCUMENT);
             i.addCategory(Intent.CATEGORY_OPENABLE);
             i.setType("application/zip");
-            i.putExtra(Intent.EXTRA_TITLE, "Faithbook_Backup_" + System.currentTimeMillis() + ".zip");
+            i.putExtra(Intent.EXTRA_TITLE, "HeritageFaith_Backup_" + System.currentTimeMillis() + ".zip");
             try { startActivityForResult(i, REQ_BACKUP_EXPORT); }
             catch (ActivityNotFoundException e) { callback("onNativeError", error("No Android document creator is available.")); }
         });
@@ -148,8 +148,8 @@ public class MainActivity extends Activity {
         runOnUiThread(() -> {
             try {
                 android.print.PrintManager pm=(android.print.PrintManager)getSystemService(PRINT_SERVICE);
-                android.print.PrintDocumentAdapter adapter=web.createPrintDocumentAdapter("Faithbook");
-                pm.print("Faithbook",adapter,new android.print.PrintAttributes.Builder().build());
+                android.print.PrintDocumentAdapter adapter=web.createPrintDocumentAdapter("HeritageFaith");
+                pm.print("HeritageFaith",adapter,new android.print.PrintAttributes.Builder().build());
                 db.log("output","print","PASS","Android print service opened");
             } catch(Exception e){ callback("onNativeError", error("Print service unavailable: "+e.getMessage())); }
         });
@@ -158,7 +158,7 @@ public class MainActivity extends Activity {
     public void shareText(String subject,String text) {
         runOnUiThread(() -> {
             try {
-                Intent i=new Intent(Intent.ACTION_SEND);i.setType("text/plain");i.putExtra(Intent.EXTRA_SUBJECT,subject==null?"Faithbook":subject);i.putExtra(Intent.EXTRA_TEXT,text==null?"":text);startActivity(Intent.createChooser(i,"Share from Faithbook"));db.log("output","share","PASS",subject==null?"":subject);
+                Intent i=new Intent(Intent.ACTION_SEND);i.setType("text/plain");i.putExtra(Intent.EXTRA_SUBJECT,subject==null?"HeritageFaith":subject);i.putExtra(Intent.EXTRA_TEXT,text==null?"":text);startActivity(Intent.createChooser(i,"Share from HeritageFaith"));db.log("output","share","PASS",subject==null?"":subject);
             } catch(Exception e){callback("onNativeError",error("Share action unavailable."));}
         });
     }

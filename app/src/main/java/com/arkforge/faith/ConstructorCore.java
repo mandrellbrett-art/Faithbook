@@ -12,10 +12,10 @@ public final class ConstructorCore {
     public static JSONObject ask(R10Database db,String message)throws Exception{
         String raw=message==null?"":message.trim();if(raw.isEmpty())throw new IllegalArgumentException("Message is required");String q=raw.toLowerCase(Locale.US);JSONObject out=new JSONObject();out.put("ok",true);out.put("mode","offline-local-constructor");
         if(q.equals("help")||q.contains("what can you do")){
-            out.put("reply","I work on Faithbook's local managed database. Try: status; projects; files <project id>; search <words>; corpus <words>; continuity; verify cantus. I navigate indexed local evidence but do not run arbitrary shell commands or invent physical test results.");return out;
+            out.put("reply","I work on HeritageFaith's local managed database. Try: status; projects; files <project id>; search <words>; corpus <words>; continuity; verify cantus. I navigate indexed local evidence but do not run arbitrary shell commands or invent physical test results.");return out;
         }
         if(q.equals("status")||q.contains("system status")){
-            JSONObject s=db.stats();out.put("data",s);out.put("reply","Faithbook local status: "+s.optLong("projects")+" projects, "+s.optLong("managed_files")+" managed files, "+s.optLong("records")+" active records, "+s.optLong("corpus_files")+" heritage-index entries, "+s.optLong("cantus_events")+" Cantus events. SQLite integrity: "+s.optString("db_integrity")+".");return out;
+            JSONObject s=db.stats();out.put("data",s);out.put("reply","HeritageFaith local status: "+s.optLong("projects")+" projects, "+s.optLong("managed_files")+" managed files, "+s.optLong("records")+" active records, "+s.optLong("corpus_files")+" heritage-index entries, "+s.optLong("cantus_events")+" Cantus events. SQLite integrity: "+s.optString("db_integrity")+".");return out;
         }
         if(q.equals("projects")||q.contains("list projects")){
             JSONArray p=db.listProjects(false);out.put("data",p);out.put("reply","I found "+p.length()+" active local projects. Open Constructor or the managed-project view to inspect them.");return out;
@@ -44,6 +44,6 @@ public final class ConstructorCore {
         if(q.startsWith("finish ")){
             out.put("reply","Use the My Work → Auto Finish button for the selected project. The native finisher deliberately requires an explicit project selection so a chat sentence cannot execute arbitrary code or mutate an unintended project.");return out;
         }
-        JSONObject s=db.stats();out.put("reply","I am the offline Constructor inside Faithbook. I navigate the local project/file index and continuity/Cantus evidence without requiring Termux. Right now there are "+s.optLong("projects")+" projects and "+s.optLong("corpus_files")+" indexed heritage paths. For exact work, use status, projects, files <project id>, search <term>, corpus <term>, continuity, or verify cantus.");return out;
+        JSONObject s=db.stats();out.put("reply","I am the offline Constructor inside HeritageFaith. I navigate the local project/file index and continuity/Cantus evidence without requiring Termux. Right now there are "+s.optLong("projects")+" projects and "+s.optLong("corpus_files")+" indexed heritage paths. For exact work, use status, projects, files <project id>, search <term>, corpus <term>, continuity, or verify cantus.");return out;
     }
 }

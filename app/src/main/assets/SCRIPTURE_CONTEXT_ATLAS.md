@@ -1,4 +1,4 @@
-# Faithbook — Scripture Context Atlas
+# HeritageFaith — Scripture Context Atlas
 
 The Scripture Context Atlas surrounds Scripture with clearly labeled research without editing the source text.
 

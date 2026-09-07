@@ -25,8 +25,8 @@ gradle=(APP/'build.gradle').read_text()
 check('versionCode 190001','versionCode 190001' in gradle)
 check('versionName 19.0.0-foundation',"versionName '19.0.0-foundation'" in gradle)
 check('package id continuity',"applicationId 'com.arkforge.faith'" in gradle)
-check('root project Faithbook',"rootProject.name = 'Faithbook'" in (ROOT/'settings.gradle').read_text())
-check('app label Faithbook','>Faithbook<' in (APP/'src/main/res/values/strings.xml').read_text())
+check('root project HeritageFaith',"rootProject.name = 'HeritageFaith'" in (ROOT/'settings.gradle').read_text())
+check('app label HeritageFaith','>HeritageFaith<' in (APP/'src/main/res/values/strings.xml').read_text())
 
 html=(ASSETS/'index.html').read_text()
 for script in ['faith/faith-worksheets.js','faith/public-study-data.js','faith/jesus-study-data.js','faith/foundation-data.js','preview-bridge.js','app.js']:
@@ -115,7 +115,7 @@ for p in JAVA.glob('*.java'):
 
 passed=sum(c['pass'] for c in checks); total=len(checks)
 result={
- 'schema':'faithbook.qa.v19','product':'Faithbook','version':'19.0.0-foundation',
+ 'schema':'faithbook.qa.v19','product':'HeritageFaith','version':'19.0.0-foundation',
  'passed':passed,'total':total,'failed':total-passed,
  'android_compiled':False,'signed_aab_verified':False,'physical_phone_verified':False,'play_approved':False,
  'note':'Source/static verification only. Android SDK/Gradle compilation was not available in this environment.',

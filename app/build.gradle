@@ -10,8 +10,8 @@ android {
         applicationId 'com.arkforge.faith'
         minSdk 26
         targetSdk 35
-        versionCode 220001
-        versionName '22.0.0-drive-folder-import'
+        versionCode 230001
+        versionName '23.0.0-reader-index-patent-archive'
     }
 
     buildTypes {

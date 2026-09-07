@@ -19,7 +19,7 @@ import java.util.UUID;
 
 public class R10Database extends SQLiteOpenHelper {
     public static final String DB_NAME = "arkforge-faith.db";
-    private static final int DB_VERSION = 7;
+    private static final int DB_VERSION = 8;
     private final Context context;
 
     public R10Database(Context context) {
@@ -31,6 +31,30 @@ public class R10Database extends SQLiteOpenHelper {
     @Override public void onConfigure(SQLiteDatabase db) {
         super.onConfigure(db);
         db.setForeignKeyConstraintsEnabled(true);
+    }
+
+
+    private static void createLegacyPatentSchema(SQLiteDatabase db) {
+        db.execSQL("CREATE TABLE IF NOT EXISTS legacy_patents (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "publication_number TEXT NOT NULL DEFAULT ''," +
+                "title TEXT NOT NULL DEFAULT ''," +
+                "grant_date TEXT NOT NULL DEFAULT ''," +
+                "filing_date TEXT NOT NULL DEFAULT ''," +
+                "priority_date TEXT NOT NULL DEFAULT ''," +
+                "inventor TEXT NOT NULL DEFAULT ''," +
+                "assignee TEXT NOT NULL DEFAULT ''," +
+                "jurisdiction TEXT NOT NULL DEFAULT ''," +
+                "classification TEXT NOT NULL DEFAULT ''," +
+                "source TEXT NOT NULL DEFAULT ''," +
+                "source_url TEXT NOT NULL DEFAULT ''," +
+                "imported_at TEXT NOT NULL," +
+                "UNIQUE(publication_number,jurisdiction))");
+        db.execSQL("CREATE INDEX IF NOT EXISTS idx_legacy_patent_date ON legacy_patents(grant_date)");
+        db.execSQL("CREATE INDEX IF NOT EXISTS idx_legacy_patent_number ON legacy_patents(publication_number)");
+        db.execSQL("CREATE INDEX IF NOT EXISTS idx_legacy_patent_title ON legacy_patents(title)");
+        db.execSQL("CREATE INDEX IF NOT EXISTS idx_legacy_patent_inventor ON legacy_patents(inventor)");
+        db.execSQL("CREATE INDEX IF NOT EXISTS idx_legacy_patent_assignee ON legacy_patents(assignee)");
     }
 
     @Override public void onCreate(SQLiteDatabase db) {
@@ -84,6 +108,7 @@ public class R10Database extends SQLiteOpenHelper {
         db.execSQL("CREATE INDEX idx_files_project ON managed_files(project_id,rel_path)");
         db.execSQL("CREATE INDEX idx_corpus_path ON corpus_files(path)");
         db.execSQL("CREATE INDEX idx_corpus_family ON corpus_files(family,version_token)");
+        createLegacyPatentSchema(db);
         logInternal(db, "system", "database-create", "PASS", "HeritageFaith local database created");
         seedSystemRecords(db);
         seedBibleLibraryRecord(db);
@@ -115,8 +140,12 @@ public class R10Database extends SQLiteOpenHelper {
     }
 
     @Override public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Public package com.arkforge.faith begins with a clean database.
-        // Future public schema migrations belong here and must never import owner-private state implicitly.
+        // Additive migrations only. Existing Home Base / HeritageFaith data is preserved.
+        if (oldVersion < 8) {
+            createLegacyPatentSchema(db);
+            logInternal(db, "patents", "legacy-patent-schema-upgrade", "PASS",
+                    "Added 70+ year legacy patent inventory without replacing existing records");
+        }
     }
 
     public static String now() {
@@ -272,6 +301,74 @@ public class R10Database extends SQLiteOpenHelper {
             while (c.moveToNext()) a.put(cursorRow(c));
         }
         return a;
+    }
+
+
+    public synchronized void upsertLegacyPatentBatch(JSONArray batch) throws Exception {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            for (int i = 0; i < batch.length(); i++) {
+                JSONObject o = batch.getJSONObject(i);
+                ContentValues v = new ContentValues();
+                v.put("publication_number", o.optString("publication_number"));
+                v.put("title", o.optString("title"));
+                v.put("grant_date", o.optString("grant_date"));
+                v.put("filing_date", o.optString("filing_date"));
+                v.put("priority_date", o.optString("priority_date"));
+                v.put("inventor", o.optString("inventor"));
+                v.put("assignee", o.optString("assignee"));
+                v.put("jurisdiction", o.optString("jurisdiction"));
+                v.put("classification", o.optString("classification"));
+                v.put("source", o.optString("source"));
+                v.put("source_url", o.optString("source_url"));
+                v.put("imported_at", now());
+                db.insertWithOnConflict("legacy_patents", null, v, SQLiteDatabase.CONFLICT_REPLACE);
+            }
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
+    }
+
+    public synchronized JSONObject legacyPatentStats(String cutoff) throws Exception {
+        JSONObject out = new JSONObject();
+        try (Cursor c = getReadableDatabase().rawQuery(
+                "SELECT COUNT(*) AS total,COUNT(DISTINCT jurisdiction) AS jurisdictions," +
+                        "MIN(grant_date) AS earliest,MAX(grant_date) AS latest " +
+                        "FROM legacy_patents WHERE grant_date<>'' AND grant_date<?",
+                new String[]{cutoff})) {
+            if (c.moveToFirst()) {
+                out.put("count", c.getLong(0));
+                out.put("jurisdictions", c.getLong(1));
+                out.put("earliest", c.isNull(2) ? "" : c.getString(2));
+                out.put("latest", c.isNull(3) ? "" : c.getString(3));
+            }
+        }
+        out.put("ok", true);
+        out.put("cutoff", cutoff);
+        out.put("coverage_state", out.optLong("count",0) > 0 ? "IMPORTED_PARTIAL_OR_COMPLETE_PER_SOURCE" : "NOT_IMPORTED");
+        return out;
+    }
+
+    public synchronized JSONArray searchLegacyPatents(String query, String jurisdiction, String cutoff, int limit) throws Exception {
+        JSONArray out = new JSONArray();
+        int safeLimit = Math.max(1, Math.min(limit, 500));
+        String q = "%" + (query == null ? "" : query.trim()) + "%";
+        String j = jurisdiction == null ? "" : jurisdiction.trim();
+        String sql =
+                "SELECT publication_number,title,grant_date,filing_date,priority_date,inventor,assignee,jurisdiction,classification,source,source_url " +
+                "FROM legacy_patents WHERE grant_date<>'' AND grant_date<? " +
+                (j.isEmpty() ? "" : "AND jurisdiction=? ") +
+                "AND (publication_number LIKE ? OR title LIKE ? OR inventor LIKE ? OR assignee LIKE ? OR classification LIKE ?) " +
+                "ORDER BY grant_date DESC,publication_number LIMIT " + safeLimit;
+        String[] args = j.isEmpty()
+                ? new String[]{cutoff,q,q,q,q,q}
+                : new String[]{cutoff,j,q,q,q,q,q};
+        try (Cursor c = getReadableDatabase().rawQuery(sql, args)) {
+            while (c.moveToNext()) out.put(cursorRow(c));
+        }
+        return out;
     }
 
 

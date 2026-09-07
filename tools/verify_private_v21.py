@@ -23,7 +23,7 @@ c("No raw book bytes", "raw_book_bytes_included" in mgr)
 c("Credentials excluded", "credentials_included" in mgr)
 c("Ademic Cantus exported", '"ademic_cantus"' in mgr and "Runic compression" in mgr)
 m=re.search(r"versionCode\s+(\d+)",grad); c("V21+ versionCode", bool(m) and int(m.group(1))>=210001)
-c("Assistant Bridge version lineage", "assistant-bridge" in grad or "drive-folder-import" in grad)
+c("Assistant Bridge version lineage", "assistant-bridge" in grad or "drive-folder-import" in grad or "reader-index-patent-archive" in grad)
 c("Bridge spec JSON", (root/"app/src/main/assets/assistant-bridge-spec.json").is_file())
 c("Bridge documentation", (root/"ASSISTANT_BRIDGE.md").is_file())
 failed=[x for x in checks if not x[1]]

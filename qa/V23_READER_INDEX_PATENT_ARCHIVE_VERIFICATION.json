@@ -1,0 +1,142 @@
+{
+  "schema": "heritagefaith.qa.v23",
+  "passed": 27,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "DB version 8",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "additive legacy patent migration",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy patent table",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "batch patent ingest",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "70 year cutoff",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "CSV import",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "NDJSON import",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "unknown dates skipped",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy patent bridge",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "patent UI import",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "library indexed catalog",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "library duplicate hash",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "paged scripture mode",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "page numbering",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "swipe page turn",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "chapter settings",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "reader settings persisted",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "quiet page animation",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "patent source registry",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "BigQuery export query",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Ademic Cantus preserved",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Home Base preserved",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Constructor preserved",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Drive folder import preserved",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Assistant Bridge preserved",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "V23 versionCode",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "V23 versionName",
+      "pass": true,
+      "detail": ""
+    }
+  ]
+}

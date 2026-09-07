@@ -1,0 +1,26 @@
+{
+  "schema": "heritagefaith.legacy_patent_sources.v1",
+  "cutoff_rule": "grant_date < device_date_minus_70_years",
+  "scope": "inventory metadata; source-dependent coverage",
+  "sources": [
+    {
+      "name": "USPTO Historical Patent Data Files",
+      "authority": "USPTO",
+      "url": "https://www.uspto.gov/ip-policy/economic-research/research-datasets/historical-patent-data-files",
+      "use": "Historical U.S. patent research datasets and bulk-data references"
+    },
+    {
+      "name": "USPTO Patent Grant XML Resources",
+      "authority": "USPTO",
+      "url": "https://www.uspto.gov/learning-and-resources/xml-resources",
+      "use": "Patent grant documentation and historical-to-current grant XML resources"
+    },
+    {
+      "name": "Google Patents Public Data",
+      "authority": "Google / IFI CLAIMS",
+      "url": "https://console.cloud.google.com/marketplace/product/google_patents_public_datasets/google-patents-public-data",
+      "license": "CC BY 4.0 per dataset documentation",
+      "use": "Worldwide bibliographic patent publications and U.S. full text through BigQuery"
+    }
+  ]
+}

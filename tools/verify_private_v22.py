@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from pathlib import Path
-import json, sys
+import json, re, sys
 root=Path(__file__).resolve().parents[1]
 checks=[]
 def c(name, ok, detail=""): checks.append((name,bool(ok),detail))
@@ -19,8 +19,8 @@ c("private only provenance",'PRIVATE_USER_OWNED_OR_AUTHORIZED' in imp and 'PRIVA
 c("folder import JS bridge","importLibraryFolder" in bridge)
 c("settings folder button","assistantImportFolder" in app and "Import entire Drive / document folder" in app)
 c("folder callback","onNativeFolderImport" in app)
-c("V22 versionCode","versionCode 220001" in grad)
-c("V22 versionName","22.0.0-drive-folder-import" in grad)
+m=re.search(r"versionCode\s+(\d+)",grad); c("V22+ versionCode", bool(m) and int(m.group(1))>=220001)
+c("Drive folder import lineage","drive-folder-import" in grad or "reader-index-patent-archive" in grad)
 c("V21 bridge preserved",(root/"app/src/main/java/com/arkforge/faith/AssistantBridgeManager.java").is_file())
 c("Ademic Cantus preserved",(root/"ADEMIC_CANTUS.md").is_file() and "Ademic Cantus + Resonance" in app and "Runic compression" in app)
 failed=[x for x in checks if not x[1]]

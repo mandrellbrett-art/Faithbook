@@ -45,6 +45,7 @@ public final class ImportManager {
         if ("backup".equals(purpose)) return BackupManager.restoreFromUri(context, db, uri);
         if ("bible_corpus".equals(purpose)) return BibleCorpusImporter.importText(context, db, uri);
         if ("assistant-return".equals(purpose)) return AssistantBridgeManager.importReturnUri(context, db, uri);
+        if ("legacy-patents".equals(purpose)) return LegacyPatentImporter.importUri(context, db, uri);
 
         String name = displayName(context, uri);
         String ext = extension(name);

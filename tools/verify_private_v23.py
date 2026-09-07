@@ -1,0 +1,46 @@
+#!/usr/bin/env python3
+from pathlib import Path
+import json,re,sys
+root=Path(__file__).resolve().parents[1]
+checks=[]
+def c(name,ok,detail=""): checks.append((name,bool(ok),detail))
+db=(root/"app/src/main/java/com/arkforge/faith/R10Database.java").read_text()
+imp=(root/"app/src/main/java/com/arkforge/faith/LegacyPatentImporter.java").read_text()
+bridge=(root/"app/src/main/java/com/arkforge/faith/NativeBridge.java").read_text()
+app=(root/"app/src/main/assets/app.js").read_text()
+css=(root/"app/src/main/assets/styles.css").read_text()
+grad=(root/"app/build.gradle").read_text()
+c("DB version 8","DB_VERSION = 8" in db)
+c("additive legacy patent migration","if (oldVersion < 8)" in db and "createLegacyPatentSchema" in db)
+c("legacy patent table","CREATE TABLE IF NOT EXISTS legacy_patents" in db)
+c("batch patent ingest","upsertLegacyPatentBatch" in db)
+c("70 year cutoff","minusYears(70)" in imp)
+c("CSV import","csvLine" in imp and ".csv" in imp)
+c("NDJSON import","ndjson" in imp and "new JSONObject(line)" in imp)
+c("unknown dates skipped","rows_missing_grant_date" in imp)
+c("legacy patent bridge","legacyPatentStats" in bridge and "legacyPatentSearch" in bridge)
+c("patent UI import","import-legacy-patents" in app)
+c("library indexed catalog","bookIndexFromLibrary" in app and "libraryIndexSearch" in app)
+c("library duplicate hash","DUPLICATE HASH" in app)
+c("paged scripture mode","publicReaderMode" in app and "Page turning" in app)
+c("page numbering","reader-page-number" in app and "Page ${state.publicReaderPage}" in app)
+c("swipe page turn","ontouchstart" in app and "ontouchend" in app)
+c("chapter settings","publicReaderChapter" in app and "publicBibleBookInfo" in app)
+c("reader settings persisted","heritagefaith.bible.reader.settings.v1" in app)
+c("quiet page animation","heritagePageNext" in css and "prefers-reduced-motion" in css)
+c("patent source registry",(root/"app/src/main/assets/legacy-patent-sources.json").is_file())
+c("BigQuery export query",(root/"legacy_patent_inventory_bigquery.sql").is_file())
+c("Ademic Cantus preserved",(root/"ADEMIC_CANTUS.md").is_file() and "Ademic Cantus + Resonance" in app)
+c("Home Base preserved","function renderHomeBase" in app)
+c("Constructor preserved","function renderConstructor" in app)
+c("Drive folder import preserved",(root/"app/src/main/java/com/arkforge/faith/DriveFolderImporter.java").is_file())
+c("Assistant Bridge preserved",(root/"app/src/main/java/com/arkforge/faith/AssistantBridgeManager.java").is_file())
+c("V23 versionCode","versionCode 230001" in grad)
+c("V23 versionName","23.0.0-reader-index-patent-archive" in grad)
+failed=[x for x in checks if not x[1]]
+out={"schema":"heritagefaith.qa.v23","passed":len(checks)-len(failed),"failed":len(failed),
+"checks":[{"name":n,"pass":ok,"detail":d} for n,ok,d in checks]}
+qa=root/"qa";qa.mkdir(exist_ok=True)
+(qa/"V23_READER_INDEX_PATENT_ARCHIVE_VERIFICATION.json").write_text(json.dumps(out,indent=2))
+print(json.dumps(out,indent=2))
+sys.exit(1 if failed else 0)

@@ -1,0 +1,50 @@
+{
+  "schema": "faithbook.bible-study-workspace.v19",
+  "book_id": "arkforge-faith-scripture",
+  "purpose": "Local-first Scripture study workspace for Faithbook.",
+  "record_types": {
+    "bible_note": [
+      "page",
+      "scripture_reference",
+      "note_type",
+      "body"
+    ],
+    "bible_question": [
+      "page",
+      "scripture_reference",
+      "question",
+      "context"
+    ],
+    "bible_resolution": [
+      "question_id",
+      "page",
+      "scripture_reference",
+      "resolution",
+      "source_or_reasoning"
+    ],
+    "church_group_session": [
+      "date",
+      "group_name",
+      "facilitator",
+      "topic",
+      "scripture_reference",
+      "page",
+      "participants",
+      "discussion",
+      "resolution_notes",
+      "next_steps",
+      "prayer_support_notes"
+    ],
+    "bible_digital_attachment": [
+      "project_id",
+      "filename",
+      "sha256",
+      "bytes",
+      "source_uri"
+    ]
+  },
+  "privacy": "Local-first. Participant names and group notes stay in app-private SQLite unless the user explicitly shares/prints/backs them up.",
+  "copyright_boundary": "Only rights-cleared/public-domain Scripture is configured for bundled/installable public use. Customer imports remain customer-supplied local material.",
+  "cantus": "Create/update/archive/import actions are Cantus logged by the existing records/files layers.",
+  "principle": "Scripture source text remains unchanged; every added layer is separately labeled and reversible."
+}

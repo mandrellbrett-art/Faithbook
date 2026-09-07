@@ -1,0 +1,15 @@
+{
+  "schema": "faithbook.constructor.v19",
+  "product": "Faithbook",
+  "version": "19.0.0-foundation",
+  "role": "backend_file_project_navigation",
+  "principles": [
+    "The human navigates concepts and projects; Constructor navigates managed files and evidence.",
+    "Never silently delete or overwrite source data.",
+    "Preserve canonical paths, hashes, provenance, versions, rollback, and unresolved references.",
+    "A platform move is not promoted until import, reconciliation, persistence, acceptance, and rollback checks pass."
+  ],
+  "states": ["LOCAL_MANAGED", "IMPORTED", "REFERENCE_ONLY", "MISSING", "NOT_MIGRATED", "UNVERIFIED_ON_TARGET", "MISMATCH", "ARCHIVED"],
+  "commands": ["status", "projects", "files <project id>", "search <term>", "corpus <term>", "continuity", "verify cantus"],
+  "future": ["automatic content classification", "duplicate/orphan remediation proposals", "human-readable canonical manifest editor"]
+}

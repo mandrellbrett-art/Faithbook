@@ -1,0 +1,249 @@
+{
+  "schema": "thunderforge.angel-core.v3",
+  "title": "Angel Core",
+  "legacy_name": "5th Millennial Pocket Chrono-Compass / Chrono-Compass",
+  "status": "CONCEPTUAL_SIMULATION_ARCHITECTURE",
+  "truth_boundary": "Angel Core models stage continuity, habitat compatibility, identity preservation, relocation, ark preservation and provenance. It does not claim demonstrated time travel, transcendence, immortality, alternate-day stages, or protective armor capable of surviving unknown physical environments.",
+  "objective": "Preserve every person-class being across transitions in the model while minimizing ecological, biological and identity harm, and preserve every invention with an explicit purpose and provenance in the Angel Core Ark.",
+  "core_invariants": [
+    {
+      "id": 1,
+      "name": "Stage is not rank",
+      "rule": "Origin stage or morphology never grants ownership, caste, or superior personhood."
+    },
+    {
+      "id": 2,
+      "name": "Compatibility membrane",
+      "rule": "Cross-stage interaction passes through a stage/day/organism compatibility filter; capabilities are constrained to what the destination can safely absorb."
+    },
+    {
+      "id": 3,
+      "name": "Custodial strength",
+      "rule": "Greater capability creates a greater duty of restraint; strength does not create a right to dominate."
+    },
+    {
+      "id": 4,
+      "name": "Habitat plurality",
+      "rule": "One civilization may contain many compatible habitats; coexistence does not require identical environmental niches."
+    },
+    {
+      "id": 5,
+      "name": "Non-consumption of persons",
+      "rule": "Recognized persons cannot be treated as prey, fuel, breeding stock, territory, property, or expendable resources."
+    },
+    {
+      "id": 6,
+      "name": "Provenance without ownership",
+      "rule": "Influence, ancestry, traces, or derived morphology are recorded without turning either origin or descendant into property."
+    },
+    {
+      "id": 7,
+      "name": "Invariant identity core",
+      "rule": "A traveler retains an identity core while stage-specific expression may change. Core continuity must be provable independently of morphology."
+    },
+    {
+      "id": 8,
+      "name": "Heaven invariant / umbrella refuge",
+      "rule": "The model reserves a stable refuge layer whose protections do not fluctuate with lower-stage conditions: personhood, consent, refuge, identity, non-predation, repair, and belonging."
+    },
+    {
+      "id": 9,
+      "name": "Relocation circuits",
+      "rule": "Breakdown, incompatibility, panic, ecological overload, or armor failure routes to a safe zone rather than forcing continued traversal."
+    },
+    {
+      "id": 10,
+      "name": "Ark continuity banks",
+      "rule": "Genetic references, seeds, crops, microbiome references, habitat recipes, cultural records, and restoration plans are preserved with provenance and access controls."
+    },
+    {
+      "id": 11,
+      "name": "Matter/environment stages",
+      "rule": "Stage profiles separate atmosphere, pressure, temperature, radiation, gravity/inertia, chemistry, water activity, energy density, and substrate instead of treating 'time' as a single physical property."
+    },
+    {
+      "id": 12,
+      "name": "Triangulated proof segments",
+      "rule": "Every transition requires independent Origin, Core, and Destination anchors plus a Cantus event; disagreement blocks promotion of the transition as verified."
+    },
+    {
+      "id": 13,
+      "name": "Armor adaptation filters",
+      "rule": "Armor configuration is generated from the destination stage, day variant, organism profile, and matter/environment profile; unknown values fail closed to refuge/quarantine."
+    },
+    {
+      "id": 14,
+      "name": "Biological quarantine gate",
+      "rule": "Outbound and inbound pathogen/ecology checks prevent a traveler from becoming a plague vector in either direction."
+    },
+    {
+      "id": 15,
+      "name": "Return and rollback path",
+      "rule": "No planned transition is accepted without a safe-zone target, rollback/origin reference, and failure-state behavior."
+    },
+    {
+      "id": 16,
+      "name": "Consent and autonomy",
+      "rule": "Travel, transformation, habitat assignment, and repair should preserve individual autonomy wherever compatible with immediate safety."
+    }
+  ],
+  "stage_address": {
+    "format": "<LETTER><INDEX> with an independent day_variant and environment profile",
+    "examples": [
+      "A0",
+      "A7",
+      "Z10"
+    ],
+    "note": "Addresses are model labels, not claims that such physical timelines are known to exist."
+  },
+  "armor_filter_stack": [
+    "identity/core integrity",
+    "atmosphere and breathing medium",
+    "pressure",
+    "temperature and heat flux",
+    "radiation/ionizing exposure",
+    "gravity, acceleration and inertia",
+    "chemistry, toxins and corrosion",
+    "water/osmotic balance",
+    "pathogen and microbiome containment",
+    "food/metabolic compatibility",
+    "sensory and communication bandwidth",
+    "morphology/size and habitat clearance",
+    "energy/power budget",
+    "social/personhood/consent boundary",
+    "return/relocation reserve"
+  ],
+  "relocation_circuits": [
+    {
+      "id": "R0",
+      "name": "Immediate Safe Zone",
+      "trigger": "unknown or incompatible condition",
+      "action": "halt traversal; stabilize; preserve core; log Cantus event"
+    },
+    {
+      "id": "R1",
+      "name": "Biosecurity Refuge",
+      "trigger": "pathogen/ecology uncertainty",
+      "action": "quarantine both traveler and destination interfaces without punitive isolation"
+    },
+    {
+      "id": "R2",
+      "name": "Habitat Match",
+      "trigger": "morphology or environmental mismatch",
+      "action": "route to compatible habitat rather than forcing adaptation"
+    },
+    {
+      "id": "R3",
+      "name": "Origin Rollback",
+      "trigger": "armor/core failure or failed proof triangle",
+      "action": "return to last verified origin/safe checkpoint when the model permits"
+    },
+    {
+      "id": "R4",
+      "name": "Ark Refuge",
+      "trigger": "population/ecosystem collapse risk",
+      "action": "protect restoration references, seeds, genetic records, crops, cultures and habitat recipes"
+    },
+    {
+      "id": "RH",
+      "name": "Heaven Refuge",
+      "trigger": "model-level terminal refuge",
+      "action": "stable personhood and non-predation invariant; no stage-based caste"
+    }
+  ],
+  "ark_sections": [
+    "invention and purpose registry",
+    "seed and crop bank",
+    "genetic reference bank",
+    "microbiome reference bank",
+    "habitat and soil recipes",
+    "water chemistry references",
+    "cultural/language archive",
+    "engineering repair corpus",
+    "species care requirements",
+    "provenance and consent records"
+  ],
+  "proof_triangle": {
+    "origin_anchor": "Where/when/stage/day the transition began; source evidence and last verified safe state.",
+    "core_anchor": "Identity continuity record independent of temporary morphology; hash/provenance/consent in the software model.",
+    "destination_anchor": "Expected stage/day/environment signature and compatible safe-zone address.",
+    "cantus_anchor": "Append-only event joining all three anchors, result, uncertainties, and rollback target.",
+    "rule": "Two matching anchors are not enough. Any disagreement leaves the transition UNVERIFIED and routes to review/safe zone."
+  },
+  "personhood_goal": {
+    "statement": "Immortality for everyone considered people is a design/theological goal inside the Angel Core model, not an established engineering capability.",
+    "protections": [
+      "identity continuity",
+      "non-predation",
+      "refuge",
+      "repair",
+      "autonomy",
+      "habitat compatibility",
+      "no stage caste"
+    ]
+  },
+  "arthur_clause": {
+    "name": "Arthur Clause",
+    "status": "SPECULATIVE_CONTINUITY_ARCHITECTURE",
+    "purpose": "Arthur is modeled as a stage surveyor/custodian who can create a consent-bound continuity kernel for each person-class life form, preserve its history/provenance, and prepare additive kernel upgrades for a later stage or Heaven refuge.",
+    "kernel_rule": "A continuity kernel is a redundant, hash-linked record of identity claims, history, preferences, consent, stage provenance, compatibility needs and Cantus events. The project word entangled means mutually cross-referenced/redundant; it does not assert quantum entanglement.",
+    "example_record": {
+      "stage": "A0",
+      "person_id": "Person",
+      "location": "home region",
+      "age": "24 (user-supplied example; not asserted as current age)",
+      "possible_morphology": "x / hypothesis only",
+      "plausible_life_expectancy": "y / model placeholder, not an individualized medical prediction"
+    },
+    "scan_policy": [
+      "Life detection may be broad in the fictional/simulation model.",
+      "Person-class identity/history capture is consent-bound and privacy-preserving except immediate life-safety stabilization.",
+      "No stage, species, morphology or capability level grants ownership over another person."
+    ],
+    "kernel_upgrade_policy": [
+      "Never overwrite the prior kernel; create a new immutable revision linked to the prior one.",
+      "Use Origin/Core/Destination triangulation plus Cantus before promotion.",
+      "Recompute stage/day/organism armor filters and bidirectional biosecurity.",
+      "Keep an explicit safe-zone, Ark and rollback address.",
+      "Optimize only inside the person\u2019s stated goals, consent, dignity, relationships, safety and rest/autonomy needs.",
+      "Unknowns remain UNKNOWN/UNVERIFIED and block transition promotion."
+    ],
+    "continuation_after_biological_death": {
+      "goal": "continued experience and life after the origin-stage biological life ends",
+      "software_capability": "preserve continuity records, provenance, memories supplied to the system, preferences, history, compatibility plans and candidate vessel requirements",
+      "consciousness_capture": "UNDEMONSTRATED",
+      "consciousness_transfer": "UNDEMONSTRATED",
+      "new_biological_vessel": "CONCEPTUAL_ONLY_PENDING_REAL_EVIDENCE",
+      "rule": "A death event can close an origin-stage record, but does not by itself prove that subjective consciousness entered the kernel. Any future bridge must have independent scientific evidence, person-level consent and reversible safety gates."
+    },
+    "optimization_dimensions": [
+      "identity continuity",
+      "autonomy/consent",
+      "physical safety",
+      "psychological/social continuity",
+      "relationships",
+      "communication",
+      "capabilities",
+      "habitat fit",
+      "biosecurity",
+      "rest",
+      "reversibility",
+      "provenance integrity"
+    ],
+    "heaven_interface": "RH remains a non-predation/refuge invariant. Kernel admission is not stage rank and does not require a person to have completed earlier stages perfectly."
+  },
+  "invention_ark": {
+    "rule": "Every invention registered in R10 has an Angel Core Ark entry linking the invention to its stated purpose, category, provenance and source record/project. The original invention record remains in its original workspace.",
+    "purpose_policy": "Purpose is never silently invented. If legacy material has no explicit purpose, Angel Core records PURPOSE_NOT_RECORDED until a person supplies or verifies it.",
+    "automatic_sources": [
+      "invention records",
+      "Artifact Studio records",
+      "Design Studio records",
+      "Patent Vault records",
+      "CIVIS records",
+      "legacy Chrono-Compass records",
+      "projects explicitly classified as invention/engineering/CIVIS/Chrono"
+    ],
+    "self_entry": "Angel Core itself is planted in the Ark with its purpose."
+  }
+}

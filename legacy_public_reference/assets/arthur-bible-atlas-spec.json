@@ -1,0 +1,155 @@
+{
+  "schema": "arkforge.arthur-bible-atlas.v1",
+  "title": "Arthur Bible Atlas + Seven-Leaf Commentary",
+  "purpose": "Build a detailed, source-labeled study companion around Arkforge Faith Scripture.",
+  "arthur_role": "Curator, researcher, mapper, indexer, timeline keeper, citation checker, and explainer. Arthur does not invent missing evidence and does not overwrite the source Bible.",
+  "page_model": "Each Scripture reference can own seven expandable commentary leaves. Seven is a research structure, not a hard word count.",
+  "exact_edition_boundary": "The built-in public Scripture layer and any customer-selected local documents remain distinct. Comparison texts are separate source layers.",
+  "red_letter": "Jesus-word highlighting is a reversible annotation layer. Preserve source/authority and confidence; never alter the immutable Scripture source.",
+  "entity_types": [
+    "person",
+    "place",
+    "people_group",
+    "family",
+    "tribe",
+    "empire",
+    "institution",
+    "object",
+    "artifact",
+    "plant",
+    "animal",
+    "food",
+    "coin",
+    "measure",
+    "language",
+    "book",
+    "event",
+    "concept"
+  ],
+  "seven_leaves": [
+    {
+      "leaf": 1,
+      "name": "Text + Translation",
+      "questions": [
+        "What passage is on this Scripture passage?",
+        "How do KJV, Douay-Rheims, and the active source edition differ in wording?",
+        "Are there manuscript, textual, or translation issues?"
+      ],
+      "required_source_classes": [
+        "PRIMARY_TEXT"
+      ],
+      "rule": "Never silently replace the wording of the source Bible. Comparison texts are separate layers."
+    },
+    {
+      "leaf": 2,
+      "name": "Names + Language",
+      "questions": [
+        "What do the book, person, place, and key-word names mean?",
+        "What Hebrew, Aramaic, Greek, or Latin forms matter?",
+        "Which etymologies are disputed?"
+      ],
+      "required_source_classes": [
+        "PRIMARY_TEXT",
+        "ACADEMIC"
+      ],
+      "rule": "Mark folk etymologies and uncertain derivations."
+    },
+    {
+      "leaf": 3,
+      "name": "People + Peoples + Relationships",
+      "questions": [
+        "Who appears here?",
+        "What family, political, social, or religious relationships matter?",
+        "Which historical peoples/cultures are involved?"
+      ],
+      "required_source_classes": [
+        "PRIMARY_TEXT",
+        "ACADEMIC"
+      ],
+      "rule": "Use \u201cpeoples/cultures/ethnic groups\u201d rather than projecting modern racial categories backward unless a source specifically justifies the term."
+    },
+    {
+      "leaf": 4,
+      "name": "Places + Maps + Environment",
+      "questions": [
+        "Where are the places?",
+        "How certain are proposed identifications?",
+        "What terrain, climate, roads, water, distances, and political boundaries matter?"
+      ],
+      "required_source_classes": [
+        "GEOGRAPHY_DATA",
+        "ACADEMIC"
+      ],
+      "rule": "Show alternate location hypotheses and confidence."
+    },
+    {
+      "leaf": 5,
+      "name": "Objects + Institutions + Daily Life",
+      "questions": [
+        "What tools, foods, crops, animals, clothing, coins, buildings, offices, laws, rituals, and technologies appear?",
+        "What would they look and feel like in their period?"
+      ],
+      "required_source_classes": [
+        "ACADEMIC",
+        "PRIMARY_ANCIENT"
+      ],
+      "rule": "Distinguish archaeological evidence from reconstruction."
+    },
+    {
+      "leaf": 6,
+      "name": "Timeline + Historical Setting",
+      "questions": [
+        "Where does this fit in biblical narrative time?",
+        "What conventional historical dates are proposed?",
+        "Which rulers, empires, wars, migrations, and temple periods overlap?"
+      ],
+      "required_source_classes": [
+        "ACADEMIC",
+        "PRIMARY_ANCIENT"
+      ],
+      "rule": "Use ranges and confidence instead of false precision."
+    },
+    {
+      "leaf": 7,
+      "name": "Theology + Interpretations + Resolution",
+      "questions": [
+        "What is the passage doing in its literary context?",
+        "What Catholic teaching is relevant?",
+        "What Jewish, patristic, ecumenical, or historical-critical readings differ?",
+        "What questions remain unresolved?",
+        "What can a church group discuss or practice?"
+      ],
+      "required_source_classes": [
+        "OFFICIAL_CATHOLIC",
+        "ACADEMIC",
+        "PUBLIC_DOMAIN_REFERENCE"
+      ],
+      "rule": "Label traditions and viewpoints. Do not turn one interpretive school into unqualified historical fact."
+    }
+  ],
+  "timeline_fields": [
+    "label",
+    "start_year",
+    "end_year",
+    "era",
+    "precision",
+    "confidence",
+    "source_ids",
+    "related_people",
+    "related_places",
+    "related_books",
+    "notes"
+  ],
+  "map_fields": [
+    "name",
+    "ancient_name",
+    "modern_reference",
+    "lat",
+    "lon",
+    "confidence",
+    "alternate_locations",
+    "source_ids",
+    "related_references"
+  ],
+  "source_rule": "For finished commentary, aim for at least three independent source families where available and preserve disagreements."
+}

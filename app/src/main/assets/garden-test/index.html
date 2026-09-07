@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0d2019">
+<title>Garden Immortals — R10 Field Lab</title>
+<style>
+:root{color-scheme:dark;font-family:system-ui,sans-serif;--p:#0d2019;--c:#183328;--l:#33594a;--t:#eef8ef;--m:#b8cdbd;--a:#e5cc78}*{box-sizing:border-box}body{margin:0;background:var(--p);color:var(--t)}main{max-width:920px;margin:auto;padding:10px}.hud{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}.chip{background:var(--c);border:1px solid var(--l);border-radius:99px;padding:7px 10px;font-size:13px}.stage{position:relative;border:1px solid var(--l);border-radius:16px;overflow:hidden;background:#98b778;min-height:330px}canvas{width:100%;display:block;aspect-ratio:16/9;background:#88ad70}.panel{background:var(--c);border:1px solid var(--l);border-radius:14px;padding:12px;margin-top:9px}.controls{display:grid;grid-template-columns:repeat(3,64px);justify-content:center;gap:7px}.controls button,.actions button{min-height:50px;border:1px solid var(--l);border-radius:13px;background:#244535;color:var(--t);font-weight:800;font-size:16px}.controls .blank{visibility:hidden}.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}.actions button{padding:8px 12px}.actions .gold{background:var(--a);color:#182118}.log{max-height:130px;overflow:auto;font-size:13px;color:var(--m);line-height:1.45}.resting{opacity:.72}h1{font-size:20px;margin:4px 0}p{margin:5px 0}.small{font-size:13px;color:var(--m)}
+</style></head>
+<body><main>
+<h1>Garden Immortals · R10 Field Lab</h1><p class="small">Offline runtime proof — not a substitute for an imported historical Garden branch.</p>
+<div class="hud"><span class="chip" id="day">Day 1 · Morning</span><span class="chip" id="seed">Seeds 3</span><span class="chip" id="pages">Field pages 0</span><span class="chip" id="mood">Sprig: Curious</span></div>
+<div class="stage"><canvas id="world" width="960" height="540" aria-label="Garden field"></canvas></div>
+<div class="panel"><div class="controls"><button class="blank">.</button><button data-move="up">▲</button><button class="blank">.</button><button data-move="left">◀</button><button id="center">●</button><button data-move="right">▶</button><button class="blank">.</button><button data-move="down">▼</button><button class="blank">.</button></div><div class="actions"><button id="plant" class="gold">Plant gourd</button><button id="observe">Observe</button><button id="rest">Rest</button><button id="save">Save</button><button id="reset">Reset</button></div></div>
+<div class="panel"><b>Field log</b><div id="log" class="log"></div></div>
+<script>
+(()=>{'use strict';
+const C=document.getElementById('world'),x=C.getContext('2d'),logEl=document.getElementById('log');
+const base={px:480,py:300,seeds:3,pages:0,day:1,tick:0,resting:false,plants:[],logs:['Welcome to the R10 Field Lab. Move, plant, observe, or rest.']};
+let s={...base,plants:[],logs:[...base.logs]};try{let q=JSON.parse(localStorage.getItem('r10-garden-field')||'null');if(q&&typeof q==='object')s={...s,...q,plants:Array.isArray(q.plants)?q.plants:[],logs:Array.isArray(q.logs)?q.logs:base.logs}}catch{}
+function note(t){s.logs.unshift(t);s.logs=s.logs.slice(0,30);logEl.innerHTML=s.logs.map(v=>`<div>• ${String(v).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}</div>`).join('')}
+function hud(){document.getElementById('day').textContent=`Day ${s.day} · ${s.resting?'Resting':s.tick%3===0?'Morning':s.tick%3===1?'Afternoon':'Evening'}`;document.getElementById('seed').textContent=`Seeds ${s.seeds}`;document.getElementById('pages').textContent=`Field pages ${s.pages}`;document.getElementById('mood').textContent=`Sprig: ${s.resting?'Resting':'Curious'}`;document.body.classList.toggle('resting',s.resting)}
+function draw(){x.clearRect(0,0,C.width,C.height);let g=x.createLinearGradient(0,0,0,C.height);g.addColorStop(0,'#8ec3d6');g.addColorStop(.5,'#b9d49a');g.addColorStop(1,'#6b9256');x.fillStyle=g;x.fillRect(0,0,C.width,C.height);x.fillStyle='#496d42';for(let i=0;i<14;i++){let tx=(i*91+40)%960,ty=210+(i%3)*38;x.beginPath();x.arc(tx,ty,28,0,Math.PI*2);x.fill()}x.fillStyle='#b8a174';x.fillRect(0,360,960,95);x.fillStyle='#789b5e';x.fillRect(0,455,960,85);for(const p of s.plants){x.fillStyle='#315d34';x.fillRect(p.x-3,p.y-23,6,23);x.fillStyle='#8dbe53';x.beginPath();x.arc(p.x-10,p.y-22,10,0,Math.PI*2);x.arc(p.x+10,p.y-20,10,0,Math.PI*2);x.fill()}x.fillStyle=s.resting?'#7a8c78':'#274c67';x.beginPath();x.arc(s.px,s.py-24,13,0,Math.PI*2);x.fill();x.fillRect(s.px-10,s.py-12,20,30);x.fillStyle='#d7b365';x.beginPath();x.arc(690,315,12,0,Math.PI*2);x.fill();x.fillStyle='#eaf4df';x.font='18px system-ui';x.fillText('Sprig',712,321);if(s.resting){x.fillStyle='#fff';x.font='20px system-ui';x.fillText('z z z',s.px+20,s.py-35)}}
+function advance(){s.tick++;if(s.tick%9===0)s.day++;hud();draw()}
+function move(dx,dy){if(s.resting){note('You are resting. Tap Rest again when you are ready to move.');return}s.px=Math.max(25,Math.min(935,s.px+dx));s.py=Math.max(250,Math.min(435,s.py+dy));advance()}
+document.querySelectorAll('[data-move]').forEach(b=>b.onclick=()=>({up:()=>move(0,-22),down:()=>move(0,22),left:()=>move(-22,0),right:()=>move(22,0)})[b.dataset.move]());
+document.getElementById('plant').onclick=()=>{if(s.resting)return note('Planting can wait until after rest.');if(s.seeds<1)return note('No seeds left in the field kit.');s.seeds--;s.plants.push({x:s.px,y:s.py+25});note('You planted a gourd seed. The garden can grow without forcing anyone to work.');advance()};
+document.getElementById('observe').onclick=()=>{if(s.resting)return note('You quietly observe while resting. Nothing requires a task right now.');let d=Math.hypot(s.px-690,s.py-315);if(d<170){s.pages++;note('Field page recorded: Sprig approached voluntarily. No capture required.')}else note('Field note: grasses, path edges, and young trees. Move closer to Sprig for a creature observation.');advance()};
+document.getElementById('rest').onclick=()=>{s.resting=!s.resting;note(s.resting?'You and Sprig take free time. Rest is a normal state, not a penalty.':'Rest finished when you chose to continue.');advance()};
+document.getElementById('save').onclick=()=>{localStorage.setItem('r10-garden-field',JSON.stringify(s));note('Saved on this device.');hud();draw()};
+document.getElementById('reset').onclick=()=>{if(confirm('Reset the Field Lab save?')){localStorage.removeItem('r10-garden-field');s={...base,plants:[],logs:[...base.logs]};note('Field Lab reset.');hud();draw()}};
+document.addEventListener('keydown',e=>{if(e.key==='ArrowUp'||e.key==='w')move(0,-22);if(e.key==='ArrowDown'||e.key==='s')move(0,22);if(e.key==='ArrowLeft'||e.key==='a')move(-22,0);if(e.key==='ArrowRight'||e.key==='d')move(22,0)});
+note(s.logs[0]);hud();draw();
+})();
+</script></main></body></html>

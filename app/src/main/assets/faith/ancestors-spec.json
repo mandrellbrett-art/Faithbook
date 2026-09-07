@@ -1,0 +1,57 @@
+{
+  "schema": "faithbook.ancestors.v1",
+  "title": "Ancestors \u2014 Where Am I From?",
+  "version": "18.0.0-ancestors",
+  "principles": [
+    "Every person has equal dignity before God.",
+    "Ancestry is for understanding family history, place, culture, migration and inheritance\u2014not ranking people or assigning destiny.",
+    "Claims carry evidence and uncertainty labels.",
+    "Living relatives' private information should not be published without permission.",
+    "Biblical genealogies are Scripture-study context and are never treated as proof of a modern user's lineage."
+  ],
+  "confidence_labels": [
+    "DOCUMENTED",
+    "PROBABLE",
+    "FAMILY_TRADITION",
+    "DISPUTED",
+    "UNKNOWN"
+  ],
+  "person_fields": [
+    "name",
+    "birth_name",
+    "born",
+    "died",
+    "birth_place",
+    "migration",
+    "work",
+    "languages",
+    "traditions",
+    "story",
+    "source",
+    "citation",
+    "confidence",
+    "genealogy_reference"
+  ],
+  "relationship_types": [
+    "BIOLOGICAL_PARENT",
+    "ADOPTIVE_PARENT",
+    "GUARDIAN_CAREGIVER",
+    "STEP_PARENT",
+    "OTHER_FAMILY_LINK"
+  ],
+  "biblical_genealogy_starting_points": [
+    "Genesis 5",
+    "Genesis 10",
+    "Genesis 11:10-32",
+    "Ruth 4:18-22",
+    "1 Chronicles 1-9",
+    "Matthew 1",
+    "Luke 3:23-38"
+  ],
+  "privacy": {
+    "storage": "app-private local records",
+    "raw_dna_import": false,
+    "race_ranking": false,
+    "living_person_publication": "requires user judgment/consent"
+  }
+}

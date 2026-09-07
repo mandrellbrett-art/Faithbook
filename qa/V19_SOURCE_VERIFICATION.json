@@ -1,0 +1,535 @@
+{
+  "schema": "faithbook.qa.v19",
+  "product": "Faithbook",
+  "version": "19.0.0-foundation",
+  "passed": 104,
+  "total": 104,
+  "failed": 0,
+  "android_compiled": false,
+  "signed_aab_verified": false,
+  "physical_phone_verified": false,
+  "play_approved": false,
+  "note": "Source/static verification only. Android SDK/Gradle compilation was not available in this environment.",
+  "checks": [
+    {
+      "name": "required:app/src/main/assets/index.html",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "required:app/src/main/assets/app.js",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "required:app/src/main/assets/styles.css",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "required:app/src/main/assets/faith/foundation-data.js",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "required:app/src/main/assets/preview-bridge.js",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "required:app/src/main/assets/feature-ledger.json",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "required:app/src/main/assets/PUBLIC_RELEASE_BOUNDARY.json",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "required:app/src/main/assets/SCRIPTURE_CONTEXT_ATLAS.md",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "required:app/src/main/assets/scripture-context-atlas-spec.json",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "required:app/src/main/assets/CONSTRUCTOR_BACKEND_SPEC.json",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "required:README.md",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "required:V19_CHANGELOG.md",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "required:FOUNDATION_ARCHITECTURE.md",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "required:ALEXANDRIA.md",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "required:ADEMIC_CANTUS.md",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "required:HUMANITY_ARK_V19.md",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "versionCode 190001",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "versionName 19.0.0-foundation",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "package id continuity",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "root project Faithbook",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "app label Faithbook",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "html script:faith/faith-worksheets.js",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "html script:faith/public-study-data.js",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "html script:faith/jesus-study-data.js",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "html script:faith/foundation-data.js",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "html script:preview-bridge.js",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "html script:app.js",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "quiet theme meta",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "javascript syntax:app.js",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "javascript syntax:preview-bridge.js",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "javascript syntax:faith/foundation-data.js",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "javascript syntax:faith/faith-worksheets.js",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "javascript syntax:faith/public-study-data.js",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "javascript syntax:faith/jesus-study-data.js",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "route:home",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "route:bible",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "route:understand",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "route:live",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "route:alexandria",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "route:humanity",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "route:ancestors",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "route:constructor",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "route:creationmap",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "route:cantuslab",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "route:runes",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "route:meaningcourse",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "route:occult",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "route:patents",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "route:technology",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "route:familygifts",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "route:techniques",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "single active renderConstructor",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Ademic rune generator",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Cantus reversible expansion",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Recursive Eye UI",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Patent registry UI",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Constructor backend responsibilities",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "foundation:Infrastructure",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "foundation:Textiles",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "foundation:Manufacturing",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "foundation:Fuel & Energy",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "foundation:Anatomy",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "foundation:Biology",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "foundation:Tree of Life",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "foundation:Stonemasons & Builders",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "foundation:Police & Public Safety",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "foundation:Patents & Inventions",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "foundation:Technology",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "foundation:Family Gifts & Traditions",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "foundation:Human Techniques",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "alexandria:Ademic Cantus",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "alexandria:Resonance",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "alexandria:Occult & Esoteric Traditions",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "alexandria:The Human Art of Meaning",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "alexandria:Map of Creation",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "12-unit meaning course",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "feature ledger schema",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "feature release state",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "release boundary v19",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "promotion locked",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "private data not bundled declaration",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "runtime free of removed private/legacy identities",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "not bundled:app/src/main/java/com/arkforge/faith/AngelCore.java",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "not bundled:app/src/main/java/com/arkforge/faith/ArthurClause.java",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "not bundled:app/src/main/assets/angel-core-spec.json",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "not bundled:app/src/main/assets/arthur-guide.png",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "not bundled:app/src/main/assets/faith/approved_jesus_centered_home.png",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy private history preserved",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy DB history preserved",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "no sensitive core permissions",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "cleartext disabled",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "java braces:AutoFinishManager.java",
+      "pass": true,
+      "detail": "balance=0, end_state=code"
+    },
+    {
+      "name": "java braces:ManagedFileProvider.java",
+      "pass": true,
+      "detail": "balance=0, end_state=code"
+    },
+    {
+      "name": "java braces:NativeBridge.java",
+      "pass": true,
+      "detail": "balance=0, end_state=code"
+    },
+    {
+      "name": "java braces:R10Database.java",
+      "pass": true,
+      "detail": "balance=0, end_state=code"
+    },
+    {
+      "name": "java braces:ContinuityManager.java",
+      "pass": true,
+      "detail": "balance=0, end_state=code"
+    },
+    {
+      "name": "java braces:ImportManager.java",
+      "pass": true,
+      "detail": "balance=0, end_state=code"
+    },
+    {
+      "name": "java braces:PublicBibleStore.java",
+      "pass": true,
+      "detail": "balance=0, end_state=code"
+    },
+    {
+      "name": "java braces:ConstructorCore.java",
+      "pass": true,
+      "detail": "balance=0, end_state=code"
+    },
+    {
+      "name": "java braces:ProjectRunnerActivity.java",
+      "pass": true,
+      "detail": "balance=0, end_state=code"
+    },
+    {
+      "name": "java braces:BibleCorpusImporter.java",
+      "pass": true,
+      "detail": "balance=0, end_state=code"
+    },
+    {
+      "name": "java braces:MainActivity.java",
+      "pass": true,
+      "detail": "balance=0, end_state=code"
+    },
+    {
+      "name": "java braces:BackupManager.java",
+      "pass": true,
+      "detail": "balance=0, end_state=code"
+    },
+    {
+      "name": "java braces:NetworkTools.java",
+      "pass": true,
+      "detail": "balance=0, end_state=code"
+    }
+  ]
+}

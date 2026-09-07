@@ -1,0 +1,161 @@
+{
+  "schema": "arkforge.faith.v15.source-verification",
+  "version": "15.0.0-scripture-reader",
+  "passed": 30,
+  "total": 30,
+  "ok": true,
+  "checks": [
+    {
+      "name": "required-v15-files",
+      "ok": true,
+      "detail": "16 required"
+    },
+    {
+      "name": "xml:app/src/main/AndroidManifest.xml",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "xml:app/src/main/res/values/strings.xml",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "xml:app/src/main/res/values/styles.xml",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "public-package-id",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "v15-version",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "jesus-centered",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "arthur-visible-guide",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "73-book-source-manifest",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "canonical-name-parity",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "appendix-excluded",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "cc0-rights-basis",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "fixed-https-source",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "download-safety",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "download-resume",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "public-reader-ui",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "verse-notes-questions",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "red-letter-is-layer",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "arthur-context",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "living-church",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "living-tradition",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "study-lab",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "300-worksheets",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "source-lens",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "numerology-boundary",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "app-js-syntax",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "study-data-js-syntax",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "public-owner-privacy-scan",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "no-sensitive-manifest-permissions",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "no-ignatius-rsv-assets",
+      "ok": true,
+      "detail": "[]"
+    }
+  ],
+  "privacy_findings": [],
+  "build_level": "SOURCE_ONLY_NOT_SIGNED_AAB"
+}

@@ -1,0 +1,183 @@
+{
+  "schema": "arkforge.faith.v16.source-verification",
+  "passed": 35,
+  "total": 35,
+  "all_pass": true,
+  "checks": [
+    {
+      "name": "V16 version name",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Public package id",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Public namespace",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "ArkforgeNative JS bridge",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Jesus study data loaded",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Jesus nav route",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "timeline >= 20",
+      "pass": true,
+      "detail": "27"
+    },
+    {
+      "name": "parables >= 25",
+      "pass": true,
+      "detail": "30"
+    },
+    {
+      "name": "miracles >= 25",
+      "pass": true,
+      "detail": "30"
+    },
+    {
+      "name": "teachings >= 15",
+      "pass": true,
+      "detail": "20"
+    },
+    {
+      "name": "titles >= 10",
+      "pass": true,
+      "detail": "14"
+    },
+    {
+      "name": "Seven Leaves direct UI",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Logic Path handoff",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Parable template UI",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Deep Scripture links",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "300 faith worksheets",
+      "pass": true,
+      "detail": "300"
+    },
+    {
+      "name": "No camera permission",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "No mic permission",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "No fine location permission",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "No coarse location permission",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "No contacts permission",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "No SMS permission",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "No call log permission",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "No private Termux home path",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "No embedded real email address",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "No proprietary study-Bible asset filenames",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "JS syntax app.js",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "JS syntax faith/public-study-data.js",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "JS syntax faith/faith-worksheets.js",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "JS syntax faith/jesus-study-data.js",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "JSON jesus-study-data.json",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "JSON faith-worksheets.json",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "JSON public-scripture-source.json",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "JSON feature-ledger.json",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "JSON arthur-bible-atlas-spec.json",
+      "pass": true,
+      "detail": ""
+    }
+  ]
+}

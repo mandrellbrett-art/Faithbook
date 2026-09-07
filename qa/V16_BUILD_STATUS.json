@@ -1,0 +1,30 @@
+{
+  "schema": "arkforge.faith.v16.build-status",
+  "product": "Arkforge Faith",
+  "version": "16.0.0-jesus-study-engine",
+  "application_id": "com.arkforge.faith",
+  "namespace": "com.arkforge.faith",
+  "price_target_usd": 4.99,
+  "pricing_model": "one_time_paid_app",
+  "source_verified": true,
+  "source_checks_passed": 35,
+  "source_checks_total": 35,
+  "signed_aab_built": false,
+  "physical_phone_acceptance": false,
+  "google_play_approved": false,
+  "red_letter_complete": false,
+  "red_letter_status": "annotation engine present; full phrase-level Jesus-speech alignment still requires reviewed source alignment",
+  "public_private_separation": "PASS_SOURCE_SCAN",
+  "promotion_allowed": false,
+  "open_release_gates": [
+    "Android SDK/Gradle compile",
+    "signed release AAB",
+    "physical phone/tablet acceptance",
+    "final rights/content review",
+    "privacy policy URL",
+    "Play Data Safety form",
+    "store listing assets/content rating",
+    "closed testing"
+  ],
+  "note": "Source verification does not equal Android compilation, signing, physical-device acceptance, or Google Play approval."
+}

@@ -1,0 +1,26 @@
+{
+  "schema": "faithbook.public-release-boundary.v19",
+  "product": "Faithbook",
+  "version": "19.0.0-foundation",
+  "mode": "PUBLIC_CLEAN_ROOM",
+  "promotion_allowed": false,
+  "private_owner_data_bundled": false,
+  "package_id": "com.arkforge.faith",
+  "rules": [
+    "Never package owner-private Home Base databases, continuity exports, personal archives, health records, contacts, private ancestry, or private projects in the retail APK/AAB.",
+    "Never seed a real person's private note, location, family record, or other personal data into the retail database.",
+    "Never bundle user-owned copyrighted scans or proprietary study notes without redistribution rights.",
+    "Scripture source bytes are never silently edited by commentary, red-letter annotations, Ademic Cantus, runes, Alexandria, or personal notes.",
+    "Customer-created content stays local unless the customer explicitly exports or shares it.",
+    "Unknown rights status is not permission to redistribute.",
+    "Promotion requires source verification, Android compilation, physical-device acceptance, persistence testing, rollback/export testing, and store/legal review."
+  ],
+  "known_unverified": [
+    "Signed Google Play AAB",
+    "Physical Android phone acceptance",
+    "Complete red-letter speech-boundary review",
+    "Full historical rune/sigil artifact scholarship",
+    "Deep Constructor automatic file classification",
+    "Google Play approval"
+  ]
+}

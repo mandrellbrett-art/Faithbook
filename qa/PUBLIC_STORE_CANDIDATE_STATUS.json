@@ -1,0 +1,15 @@
+{
+  "version": "15.0.0-scripture-reader",
+  "application_id": "com.arkforge.faith",
+  "target_price_usd": 4.99,
+  "jesus_centered": true,
+  "arthur_visible_guide": true,
+  "living_church": true,
+  "living_tradition": true,
+  "study_lab": true,
+  "worksheets": 300,
+  "public_scripture": "Original Douay-Rheims 73-book CC0 download-once offline cache",
+  "privacy_audit_pass": true,
+  "source_verification": "30/30 PASS",
+  "build_level": "SOURCE_ONLY_NOT_SIGNED_AAB"
+}

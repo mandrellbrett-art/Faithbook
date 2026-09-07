@@ -1,0 +1,80 @@
+{
+  "schema": "faithbook.qa.v18",
+  "version": "18.0.0-ancestors",
+  "checks": [
+    {
+      "name": "visible product name Faithbook",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "ancestors in primary nav",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "ancestors route renders",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "ancestor person record type",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "ancestor relationship record type",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "confidence states present",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "equal dignity boundary present",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "biblical genealogy separated",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "raw DNA not implemented",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "no sensitive runtime permissions added",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "public feature ledger updated",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "package continuity retained",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "ancestry docs present",
+      "ok": true,
+      "detail": ""
+    }
+  ],
+  "passed": 13,
+  "total": 13,
+  "all_passed": true,
+  "release_truth": {
+    "android_compiled": false,
+    "signed_aab": false,
+    "physical_phone_accepted": false,
+    "google_play_approved": false
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schema": "arkforge.faith.v15.build-status",
+  "version": "15.0.0-scripture-reader",
+  "source_verification": "30/30 PASS",
+  "application_id": "com.arkforge.faith",
+  "target_price_usd": 4.99,
+  "scripture_source": "Original Douay-Rheims 1582-1610, CC0 repository",
+  "canonical_books": 73,
+  "scripture_delivery": "explicit download-once to app-private cache",
+  "apk_built": false,
+  "aab_built": false,
+  "phone_accepted": false,
+  "store_approved": false,
+  "truth_boundary": "Source verified only. No signed APK/AAB, physical phone acceptance, or Google Play approval is claimed. Red-letter coverage is an annotation system and is not yet claimed complete for every saying of Jesus."
+}

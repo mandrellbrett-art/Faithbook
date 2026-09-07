@@ -1,0 +1,115 @@
+{
+  "schema": "arkforge.bible.sources.v1",
+  "policy": {
+    "minimum_commentary_sources": 3,
+    "rule": "Every completed commentary leaf should cite multiple independent sources when the subject permits. Separate primary text, historical evidence, geography/archaeology, theological tradition, and interpretation.",
+    "labels": [
+      "PRIMARY_TEXT",
+      "OFFICIAL_CATHOLIC",
+      "ACADEMIC",
+      "GEOGRAPHY_DATA",
+      "PRIMARY_ANCIENT",
+      "PUBLIC_DOMAIN_REFERENCE",
+      "SUPPLEMENTARY"
+    ],
+    "uncertainty": "Disputed dates, identities, locations, etymologies, authorship, and interpretations must retain uncertainty labels rather than being flattened into a single answer."
+  },
+  "sources": [
+    {
+      "id": "gutenberg-kjv",
+      "name": "Project Gutenberg — King James Version",
+      "class": "PRIMARY_TEXT",
+      "license": "Public domain in the USA; Project Gutenberg distribution terms apply",
+      "url": "https://www.gutenberg.org/ebooks/30",
+      "use": "Public-domain English comparison text and traditional KJV book naming."
+    },
+    {
+      "id": "gutenberg-douay",
+      "name": "Project Gutenberg — Douay-Rheims, Challoner Revision",
+      "class": "PRIMARY_TEXT",
+      "license": "Public domain in the USA; Project Gutenberg distribution terms apply",
+      "url": "https://www.gutenberg.org/ebooks/8300",
+      "use": "Public-domain Catholic English comparison corpus including deuterocanonical books."
+    },
+    {
+      "id": "usccb-understanding",
+      "name": "United States Conference of Catholic Bishops — Understanding the Bible",
+      "class": "OFFICIAL_CATHOLIC",
+      "license": "Reference/link; do not copy wholesale",
+      "url": "https://www.usccb.org/bible/understanding-the-bible",
+      "use": "Catholic guidance on canon, genre, prayerful reading, and interpretation."
+    },
+    {
+      "id": "vatican-catechism",
+      "name": "Vatican — Catechism of the Catholic Church",
+      "class": "OFFICIAL_CATHOLIC",
+      "license": "Reference/link; quote only as permitted",
+      "url": "https://www.vatican.va/archive/ENG0015/_INDEX.HTM",
+      "use": "Catholic doctrinal context; label as Catholic teaching, not neutral historical fact."
+    },
+    {
+      "id": "openbible-geocoding",
+      "name": "OpenBible.info Bible Geocoding Data",
+      "class": "GEOGRAPHY_DATA",
+      "license": "CC BY 4.0 dataset; OpenStreetMap-derived portions may carry ODbL",
+      "url": "https://www.openbible.info/geo/",
+      "use": "Place candidates, coordinates, resolution paths, and confidence. Credit OpenBible.info and retain disputed-location confidence."
+    },
+    {
+      "id": "pleiades",
+      "name": "Pleiades Gazetteer of the Ancient World",
+      "class": "GEOGRAPHY_DATA",
+      "license": "Open-data terms vary by component; preserve attribution",
+      "url": "https://pleiades.stoa.org/",
+      "use": "Ancient place identifiers and historical geography cross-check."
+    },
+    {
+      "id": "bible-odyssey",
+      "name": "Bible Odyssey — Society of Biblical Literature",
+      "class": "ACADEMIC",
+      "license": "Reference/paraphrase; copyrighted articles",
+      "url": "https://www.bibleodyssey.org/",
+      "use": "Accessible academic biblical scholarship; cite specific article and author."
+    },
+    {
+      "id": "perseus",
+      "name": "Perseus Digital Library",
+      "class": "PRIMARY_ANCIENT",
+      "license": "Varies by text; many public-domain translations",
+      "url": "https://www.perseus.tufts.edu/",
+      "use": "Greek/Roman primary texts and lexicon/context comparisons."
+    },
+    {
+      "id": "sefaria",
+      "name": "Sefaria",
+      "class": "PRIMARY_ANCIENT",
+      "license": "Varies by text; preserve source-specific licensing",
+      "url": "https://www.sefaria.org/",
+      "use": "Jewish textual tradition and classical commentary; present as Jewish interpretation, not as a Catholic doctrinal source."
+    },
+    {
+      "id": "new-advent",
+      "name": "New Advent — Catholic Encyclopedia / Fathers",
+      "class": "PUBLIC_DOMAIN_REFERENCE",
+      "license": "Many hosted historical works are public domain; verify item-specific status",
+      "url": "https://www.newadvent.org/",
+      "use": "Historical Catholic commentary and patristic references; note age of older scholarship."
+    },
+    {
+      "id": "met",
+      "name": "The Metropolitan Museum of Art — Heilbrunn Timeline of Art History",
+      "class": "ACADEMIC",
+      "license": "Reference/paraphrase; images have item-specific rights",
+      "url": "https://www.metmuseum.org/toah/",
+      "use": "Material culture, objects, empires, and visual context."
+    },
+    {
+      "id": "britannica",
+      "name": "Encyclopaedia Britannica",
+      "class": "ACADEMIC",
+      "license": "Reference/paraphrase; copyrighted",
+      "url": "https://www.britannica.com/",
+      "use": "High-level historical and biographical cross-check."
+    }
+  ]
+}

@@ -1,0 +1,418 @@
+{
+  "schema": "arkforge.bible.atlas.starter.v1",
+  "notice": "Starter records only. Expand from cited sources and user-owned text. Coordinates are modern reference points, not claims that every ancient boundary or site is certain.",
+  "people_groups": [
+    {
+      "name": "Israelites",
+      "period": "Bronze/Iron Age biblical tradition through later Israelite/Judahite history",
+      "note": "Ancient Levantine people described in biblical and extrabiblical sources; internal tribal and regional identities varied."
+    },
+    {
+      "name": "Judeans / Jews",
+      "period": "Especially First Temple, exilic, Second Temple, Roman and later periods",
+      "note": "Terms change across periods; “Judean” can be geographic/political while “Jew” can carry ethnic/religious dimensions."
+    },
+    {
+      "name": "Samaritans",
+      "period": "First millennium BCE onward",
+      "note": "Community centered on Mount Gerizim with Israelite heritage and its own Pentateuchal tradition."
+    },
+    {
+      "name": "Romans",
+      "period": "Roman Republic/Empire",
+      "note": "Political/civic identity spanning many local peoples across the Mediterranean."
+    },
+    {
+      "name": "Greeks / Hellenes",
+      "period": "Classical and Hellenistic eras into Roman period",
+      "note": "Language and cultural identity spread widely after Alexander; local identities remained diverse."
+    },
+    {
+      "name": "Canaanites",
+      "period": "Bronze and early Iron Age Levant",
+      "note": "Umbrella term used in ancient texts for multiple Levantine populations/city-states; not one modern “race.”"
+    },
+    {
+      "name": "Philistines",
+      "period": "Iron Age southern Levant",
+      "note": "Associated with the coastal pentapolis; archaeology indicates complex Aegean and Levantine interactions."
+    },
+    {
+      "name": "Assyrians",
+      "period": "Especially Neo-Assyrian Empire, 9th–7th c. BCE",
+      "note": "Imperial power that conquered the northern kingdom of Israel and pressured Judah."
+    },
+    {
+      "name": "Babylonians",
+      "period": "Especially Neo-Babylonian Empire, 7th–6th c. BCE",
+      "note": "Empire that destroyed Jerusalem and the First Temple in 587/586 BCE."
+    },
+    {
+      "name": "Persians",
+      "period": "Achaemenid Empire, 6th–4th c. BCE",
+      "note": "Imperial context for return from exile and Second Temple restoration."
+    },
+    {
+      "name": "Egyptians",
+      "period": "Multiple dynasties across biblical periods",
+      "note": "A long-lived civilization whose political relationship with the Levant changed repeatedly."
+    }
+  ],
+  "persons": [
+    {
+      "name": "Abraham",
+      "range": "traditional patriarchal period; historical dating debated",
+      "books": [
+        "Genesis"
+      ],
+      "confidence": "TRADITIONAL_NARRATIVE",
+      "note": "Patriarch central to Jewish, Christian, and Islamic traditions."
+    },
+    {
+      "name": "Moses",
+      "range": "traditional Exodus period; historical dating debated",
+      "books": [
+        "Exodus",
+        "Leviticus",
+        "Numbers",
+        "Deuteronomy"
+      ],
+      "confidence": "TRADITIONAL_NARRATIVE",
+      "note": "Lawgiver and leader of the Exodus narrative."
+    },
+    {
+      "name": "David",
+      "range": "c. 10th century BCE conventional chronology",
+      "books": [
+        "1 Samuel",
+        "2 Samuel",
+        "1 Kings",
+        "1 Chronicles",
+        "Psalms"
+      ],
+      "confidence": "HISTORICAL_CORE_WITH_DEBATE",
+      "note": "King associated with Jerusalem and the Davidic dynasty."
+    },
+    {
+      "name": "Hezekiah",
+      "range": "late 8th–early 7th century BCE",
+      "books": [
+        "2 Kings",
+        "2 Chronicles",
+        "Isaiah"
+      ],
+      "confidence": "HIGH",
+      "note": "King of Judah during Assyrian expansion."
+    },
+    {
+      "name": "Jeremiah",
+      "range": "late 7th–early 6th century BCE",
+      "books": [
+        "Jeremiah",
+        "Lamentations"
+      ],
+      "confidence": "HIGH_FOR_PERIOD",
+      "note": "Prophetic figure associated with Judah’s final decades before Babylonian conquest."
+    },
+    {
+      "name": "Cyrus II of Persia",
+      "range": "reigned c. 559–530 BCE",
+      "books": [
+        "Ezra",
+        "Isaiah",
+        "Daniel"
+      ],
+      "confidence": "HIGH",
+      "note": "Achaemenid ruler associated with policies permitting displaced communities to return and restore cult sites."
+    },
+    {
+      "name": "Herod the Great",
+      "range": "reigned 37–4 BCE",
+      "books": [
+        "Matthew",
+        "Luke"
+      ],
+      "confidence": "HIGH",
+      "note": "Roman client king of Judea; major builder."
+    },
+    {
+      "name": "Jesus of Nazareth",
+      "range": "born c. 6–4 BCE; death commonly dated c. 30 or 33 CE",
+      "books": [
+        "Matthew",
+        "Mark",
+        "Luke",
+        "John",
+        "Acts"
+      ],
+      "confidence": "HIGH_FOR_EXISTENCE; DATES_APPROXIMATE",
+      "note": "Central figure of Christianity. Red-letter annotation concerns reported direct speech in Gospel narrative."
+    },
+    {
+      "name": "Peter",
+      "range": "1st century CE",
+      "books": [
+        "Matthew",
+        "Mark",
+        "Luke",
+        "John",
+        "Acts",
+        "1 Peter",
+        "2 Peter"
+      ],
+      "confidence": "HIGH_FOR_EARLY_CHRISTIAN_FIGURE",
+      "note": "Prominent apostle and early Christian leader."
+    },
+    {
+      "name": "Paul",
+      "range": "c. early 1st century–60s CE",
+      "books": [
+        "Acts",
+        "Romans",
+        "1 Corinthians",
+        "2 Corinthians",
+        "Galatians",
+        "Ephesians",
+        "Philippians",
+        "Colossians",
+        "1 Thessalonians",
+        "2 Thessalonians",
+        "Philemon"
+      ],
+      "confidence": "HIGH",
+      "note": "Early Christian missionary and letter writer; authorship of individual epistles is discussed separately."
+    }
+  ],
+  "places": [
+    {
+      "name": "Jerusalem",
+      "lat": 31.778,
+      "lon": 35.235,
+      "confidence": "HIGH",
+      "note": "Ancient city; exact locations of specific structures and boundaries vary by period."
+    },
+    {
+      "name": "Bethlehem",
+      "lat": 31.7054,
+      "lon": 35.2024,
+      "confidence": "HIGH",
+      "note": "Town south of Jerusalem; biblical references require passage-specific historical context."
+    },
+    {
+      "name": "Nazareth",
+      "lat": 32.6996,
+      "lon": 35.3035,
+      "confidence": "HIGH",
+      "note": "Galilean settlement associated with Jesus."
+    },
+    {
+      "name": "Capernaum",
+      "lat": 32.8803,
+      "lon": 35.5753,
+      "confidence": "HIGH",
+      "note": "Galilean lakeside settlement associated with Jesus’s ministry."
+    },
+    {
+      "name": "Jericho",
+      "lat": 31.871,
+      "lon": 35.444,
+      "confidence": "HIGH_FOR_REGION; PERIOD_SITE_DETAILS_VARY",
+      "note": "Ancient settlement area near the Jordan Valley with multiple archaeological phases."
+    },
+    {
+      "name": "Rome",
+      "lat": 41.9028,
+      "lon": 12.4964,
+      "confidence": "HIGH",
+      "note": "Capital of the Roman world and destination/context for several New Testament traditions."
+    },
+    {
+      "name": "Antioch on the Orontes",
+      "lat": 36.2021,
+      "lon": 36.1605,
+      "confidence": "HIGH",
+      "note": "Major Hellenistic/Roman city near modern Antakya; important in Acts and early Christianity."
+    },
+    {
+      "name": "Ephesus",
+      "lat": 37.939,
+      "lon": 27.341,
+      "confidence": "HIGH",
+      "note": "Major Roman city in Asia Minor."
+    },
+    {
+      "name": "Corinth",
+      "lat": 37.906,
+      "lon": 22.88,
+      "confidence": "HIGH",
+      "note": "Greek/Roman city associated with Paul and the Corinthian correspondence."
+    },
+    {
+      "name": "Babylon",
+      "lat": 32.5364,
+      "lon": 44.4209,
+      "confidence": "HIGH",
+      "note": "Ancient Mesopotamian city; “Babylon” can also function symbolically in later texts such as Revelation."
+    },
+    {
+      "name": "Nineveh",
+      "lat": 36.359,
+      "lon": 43.152,
+      "confidence": "HIGH",
+      "note": "Neo-Assyrian capital opposite modern Mosul."
+    }
+  ],
+  "objects": [
+    {
+      "name": "Ark of the Covenant",
+      "type": "ritual_object",
+      "note": "Sacred chest described in Torah narratives; no securely identified surviving artifact."
+    },
+    {
+      "name": "Tabernacle",
+      "type": "sanctuary",
+      "note": "Portable sanctuary in Pentateuchal narrative; descriptions have major theological and ritual importance."
+    },
+    {
+      "name": "Jerusalem Temple",
+      "type": "institution/building",
+      "note": "First and Second Temple periods must be distinguished; Herodian expansion belongs to the Second Temple period."
+    },
+    {
+      "name": "Ephod",
+      "type": "priestly_garment/object",
+      "note": "Priestly object/garment described in Exodus and other texts; exact reconstruction is debated."
+    },
+    {
+      "name": "Denarius",
+      "type": "coin",
+      "note": "Roman silver coin appearing in New Testament contexts; purchasing power varies by time/place."
+    },
+    {
+      "name": "Synagogue",
+      "type": "institution/building",
+      "note": "Jewish communal/scriptural institution with varied forms in the Second Temple and Roman periods."
+    }
+  ],
+  "timeline": [
+    {
+      "label": "United monarchy / early Davidic dynasty (conventional chronology)",
+      "start_year": -1010,
+      "end_year": -930,
+      "precision": "approximate",
+      "confidence": "DEBATED_DETAILS",
+      "related_people": [
+        "David",
+        "Solomon"
+      ],
+      "note": "Conventional dates vary among scholars."
+    },
+    {
+      "label": "Fall of Samaria / northern kingdom",
+      "start_year": -722,
+      "end_year": -721,
+      "precision": "narrow range",
+      "confidence": "HIGH",
+      "note": "Assyrian conquest."
+    },
+    {
+      "label": "Destruction of Jerusalem and First Temple",
+      "start_year": -587,
+      "end_year": -586,
+      "precision": "narrow range",
+      "confidence": "HIGH",
+      "note": "Neo-Babylonian conquest; year convention varies."
+    },
+    {
+      "label": "Cyrus conquers Babylon",
+      "start_year": -539,
+      "end_year": -539,
+      "precision": "year",
+      "confidence": "HIGH",
+      "related_people": [
+        "Cyrus II of Persia"
+      ],
+      "note": "Persian imperial transition."
+    },
+    {
+      "label": "Second Temple completion (conventional)",
+      "start_year": -516,
+      "end_year": -515,
+      "precision": "narrow range",
+      "confidence": "HIGH",
+      "note": "Dating convention varies by calendar/regnal reckoning."
+    },
+    {
+      "label": "Maccabean revolt",
+      "start_year": -167,
+      "end_year": -160,
+      "precision": "range",
+      "confidence": "HIGH",
+      "related_books": [
+        "1 Maccabees",
+        "2 Maccabees"
+      ],
+      "note": "Hasmonean uprising against Seleucid rule."
+    },
+    {
+      "label": "Roman intervention in Judea under Pompey",
+      "start_year": -63,
+      "end_year": -63,
+      "precision": "year",
+      "confidence": "HIGH",
+      "note": "Jerusalem enters Roman sphere of dominance."
+    },
+    {
+      "label": "Herod the Great reign",
+      "start_year": -37,
+      "end_year": -4,
+      "precision": "range",
+      "confidence": "HIGH",
+      "related_people": [
+        "Herod the Great"
+      ],
+      "note": "Roman client kingship."
+    },
+    {
+      "label": "Public ministry of Jesus (approximate)",
+      "start_year": 27,
+      "end_year": 33,
+      "precision": "range",
+      "confidence": "DATES_DEBATED",
+      "related_people": [
+        "Jesus of Nazareth"
+      ],
+      "note": "Chronologies commonly place the ministry in the late 20s/early 30s CE."
+    },
+    {
+      "label": "Crucifixion of Jesus (common scholarly candidates)",
+      "start_year": 30,
+      "end_year": 33,
+      "precision": "candidate years",
+      "confidence": "DATE_DEBATED",
+      "related_people": [
+        "Jesus of Nazareth"
+      ],
+      "note": "30 and 33 CE are common proposals."
+    },
+    {
+      "label": "Pauline mission and correspondence",
+      "start_year": 40,
+      "end_year": 65,
+      "precision": "approximate range",
+      "confidence": "HIGH_WITH_INTERNAL_DATING_DEBATES",
+      "related_people": [
+        "Paul"
+      ],
+      "note": "Individual journeys and letters have more specific proposed dates."
+    },
+    {
+      "label": "Destruction of Second Temple",
+      "start_year": 70,
+      "end_year": 70,
+      "precision": "year",
+      "confidence": "HIGH",
+      "note": "Roman destruction during the First Jewish Revolt."
+    }
+  ]
+}

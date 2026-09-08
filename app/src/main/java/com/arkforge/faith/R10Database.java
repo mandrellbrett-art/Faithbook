@@ -19,7 +19,7 @@ import java.util.UUID;
 
 public class R10Database extends SQLiteOpenHelper {
     public static final String DB_NAME = "arkforge-faith.db";
-    private static final int DB_VERSION = 8;
+    private static final int DB_VERSION = 9;
     private final Context context;
 
     public R10Database(Context context) {
@@ -55,6 +55,25 @@ public class R10Database extends SQLiteOpenHelper {
         db.execSQL("CREATE INDEX IF NOT EXISTS idx_legacy_patent_title ON legacy_patents(title)");
         db.execSQL("CREATE INDEX IF NOT EXISTS idx_legacy_patent_inventor ON legacy_patents(inventor)");
         db.execSQL("CREATE INDEX IF NOT EXISTS idx_legacy_patent_assignee ON legacy_patents(assignee)");
+    }
+
+
+    private static void createPhoneIntakeSchema(SQLiteDatabase db) {
+        db.execSQL("CREATE TABLE IF NOT EXISTS phone_intake_runs (" +
+                "id TEXT PRIMARY KEY,tree_uri TEXT NOT NULL DEFAULT '',source_label TEXT NOT NULL DEFAULT ''," +
+                "mode TEXT NOT NULL DEFAULT 'INDEX_ONLY',started_at TEXT NOT NULL,completed_at TEXT NOT NULL DEFAULT ''," +
+                "files_seen INTEGER NOT NULL DEFAULT 0,dirs_seen INTEGER NOT NULL DEFAULT 0,copied_count INTEGER NOT NULL DEFAULT 0," +
+                "linked_count INTEGER NOT NULL DEFAULT 0,failed_count INTEGER NOT NULL DEFAULT 0,bytes_copied INTEGER NOT NULL DEFAULT 0," +
+                "status TEXT NOT NULL DEFAULT 'SCANNING',detail TEXT NOT NULL DEFAULT '')");
+        db.execSQL("CREATE TABLE IF NOT EXISTS phone_intake_files (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT,run_id TEXT NOT NULL,source_uri TEXT NOT NULL DEFAULT ''," +
+                "relative_path TEXT NOT NULL DEFAULT '',name TEXT NOT NULL DEFAULT '',mime TEXT NOT NULL DEFAULT '',size INTEGER NOT NULL DEFAULT -1," +
+                "category TEXT NOT NULL DEFAULT 'other',family TEXT NOT NULL DEFAULT 'unplaced',version_token TEXT NOT NULL DEFAULT ''," +
+                "sha256 TEXT NOT NULL DEFAULT '',managed_project_id TEXT NOT NULL DEFAULT '',intake_status TEXT NOT NULL DEFAULT 'LINKED_INDEXED'," +
+                "detail TEXT NOT NULL DEFAULT '',indexed_at TEXT NOT NULL,FOREIGN KEY(run_id) REFERENCES phone_intake_runs(id) ON DELETE CASCADE)");
+        db.execSQL("CREATE INDEX IF NOT EXISTS idx_phone_path ON phone_intake_files(relative_path)");
+        db.execSQL("CREATE INDEX IF NOT EXISTS idx_phone_family ON phone_intake_files(family,intake_status)");
+        db.execSQL("CREATE INDEX IF NOT EXISTS idx_phone_name ON phone_intake_files(name)");
     }
 
     @Override public void onCreate(SQLiteDatabase db) {
@@ -109,6 +128,7 @@ public class R10Database extends SQLiteOpenHelper {
         db.execSQL("CREATE INDEX idx_corpus_path ON corpus_files(path)");
         db.execSQL("CREATE INDEX idx_corpus_family ON corpus_files(family,version_token)");
         createLegacyPatentSchema(db);
+        createPhoneIntakeSchema(db);
         logInternal(db, "system", "database-create", "PASS", "HeritageFaith local database created");
         seedSystemRecords(db);
         seedBibleLibraryRecord(db);
@@ -145,6 +165,11 @@ public class R10Database extends SQLiteOpenHelper {
             createLegacyPatentSchema(db);
             logInternal(db, "patents", "legacy-patent-schema-upgrade", "PASS",
                     "Added 70+ year legacy patent inventory without replacing existing records");
+        }
+        if (oldVersion < 9) {
+            createPhoneIntakeSchema(db);
+            logInternal(db, "phone-intake", "schema-upgrade", "PASS",
+                    "Added phone intake ledger without replacing prior data");
         }
     }
 
@@ -372,6 +397,55 @@ public class R10Database extends SQLiteOpenHelper {
     }
 
 
+    public synchronized String beginPhoneIntakeRun(String treeUri,String label,String mode){
+        String id="phone_"+UUID.randomUUID().toString().replace("-","");
+        ContentValues v=new ContentValues();v.put("id",id);v.put("tree_uri",treeUri==null?"":treeUri);
+        v.put("source_label",safeText(label,"Phone storage"));v.put("mode",safeText(mode,"INDEX_ONLY"));
+        v.put("started_at",now());v.put("status","SCANNING");getWritableDatabase().insertOrThrow("phone_intake_runs",null,v);
+        log("phone-intake","begin","PASS",id+" · "+label+" · "+mode);return id;
+    }
+
+    public synchronized void addPhoneIntakeBatch(String runId,JSONArray batch)throws Exception{
+        SQLiteDatabase db=getWritableDatabase();db.beginTransaction();
+        try{
+            for(int i=0;i<batch.length();i++){JSONObject o=batch.getJSONObject(i);ContentValues v=new ContentValues();
+                v.put("run_id",runId);v.put("source_uri",o.optString("source_uri"));v.put("relative_path",o.optString("relative_path"));
+                v.put("name",o.optString("name"));v.put("mime",o.optString("mime"));v.put("size",o.optLong("size",-1));
+                v.put("category",o.optString("category","other"));v.put("family",o.optString("family","unplaced"));
+                v.put("version_token",o.optString("version_token"));v.put("sha256",o.optString("sha256"));
+                v.put("managed_project_id",o.optString("managed_project_id"));v.put("intake_status",o.optString("intake_status","LINKED_INDEXED"));
+                v.put("detail",o.optString("detail"));v.put("indexed_at",now());db.insert("phone_intake_files",null,v);}
+            db.setTransactionSuccessful();
+        }finally{db.endTransaction();}
+    }
+
+    public synchronized void finishPhoneIntakeRun(String id,long files,long dirs,long copied,long linked,long failed,long bytes,String status,String detail){
+        ContentValues v=new ContentValues();v.put("completed_at",now());v.put("files_seen",files);v.put("dirs_seen",dirs);
+        v.put("copied_count",copied);v.put("linked_count",linked);v.put("failed_count",failed);v.put("bytes_copied",bytes);
+        v.put("status",safeText(status,"REVIEW"));v.put("detail",detail==null?"":detail);
+        getWritableDatabase().update("phone_intake_runs",v,"id=?",new String[]{id});
+        log("phone-intake","finish",failed==0?"PASS":"REVIEW",id+" files="+files+" copied="+copied+" linked="+linked+" failed="+failed);
+    }
+
+    public synchronized JSONObject phoneIntakeSummary()throws Exception{
+        JSONObject o=new JSONObject();SQLiteDatabase db=getReadableDatabase();
+        o.put("runs",scalar(db,"SELECT COUNT(*) FROM phone_intake_runs"));o.put("items",scalar(db,"SELECT COUNT(*) FROM phone_intake_files"));
+        o.put("copied",scalar(db,"SELECT COUNT(*) FROM phone_intake_files WHERE intake_status='COPIED_MANAGED'"));
+        o.put("linked",scalar(db,"SELECT COUNT(*) FROM phone_intake_files WHERE intake_status='LINKED_INDEXED'"));
+        o.put("unavailable",scalar(db,"SELECT COUNT(*) FROM phone_intake_files WHERE intake_status='NOT_ACCESSIBLE_WITH_ANDROID'"));
+        o.put("homebase_hits",scalar(db,"SELECT COUNT(*) FROM phone_intake_files WHERE family IN ('thunderforge-homebase','kernel','constructor','garden-immortals','cantus','civis','chrono-compass')"));
+        JSONArray families=new JSONArray();try(Cursor c=db.rawQuery("SELECT family,COUNT(*) count FROM phone_intake_files GROUP BY family ORDER BY count DESC,family",null)){while(c.moveToNext())families.put(cursorRow(c));}
+        o.put("families",families);JSONArray runs=new JSONArray();try(Cursor c=db.rawQuery("SELECT * FROM phone_intake_runs ORDER BY started_at DESC LIMIT 30",null)){while(c.moveToNext())runs.put(cursorRow(c));}
+        o.put("recent_runs",runs);o.put("ok",true);return o;
+    }
+
+    public synchronized JSONArray searchPhoneIntake(String query,int limit)throws Exception{
+        JSONArray a=new JSONArray();String q="%"+(query==null?"":query.trim())+"%";int safe=Math.max(1,Math.min(limit,5000));
+        try(Cursor c=getReadableDatabase().rawQuery("SELECT * FROM phone_intake_files WHERE relative_path LIKE ? OR name LIKE ? OR family LIKE ? OR category LIKE ? OR version_token LIKE ? OR intake_status LIKE ? ORDER BY id DESC LIMIT "+safe,new String[]{q,q,q,q,q,q})){while(c.moveToNext())a.put(cursorRow(c));}
+        return a;
+    }
+
+
     public synchronized String beginMigrationRun(String sourceLabel, String sourceUri, String manifestSha256, int itemCount) {
         String id = "mig_" + UUID.randomUUID().toString().replace("-", "");
         ContentValues v = new ContentValues();
@@ -493,6 +567,8 @@ public class R10Database extends SQLiteOpenHelper {
         o.put("bible_verses", scalar(db, "SELECT COUNT(*) FROM bible_verses"));
         o.put("migration_runs", scalar(db, "SELECT COUNT(*) FROM migration_runs"));
         o.put("migration_items", scalar(db, "SELECT COUNT(*) FROM migration_items"));
+        o.put("phone_intake_runs", scalar(db, "SELECT COUNT(*) FROM phone_intake_runs"));
+        o.put("phone_intake_files", scalar(db, "SELECT COUNT(*) FROM phone_intake_files"));
         o.put("migration_unresolved", scalar(db, "SELECT COUNT(*) FROM migration_items WHERE migration_status!='IMPORTED_BYTES'"));
         o.put("db_integrity", integrity());
         return o;

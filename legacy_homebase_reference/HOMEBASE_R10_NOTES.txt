@@ -1,0 +1,19 @@
+Home Base R10 integration pack
+
+Install:
+  bash ~/storage/downloads/INSTALL_HOMEBASE_R10_INTEGRATION.sh
+
+Then open:
+  ~/Seed/bin/homebase-r10-open
+
+What this R10 adds:
+- Game scanning + Android/emulator handoff
+- File browser + Android file opening
+- File import inbox
+- Safe ZIP extraction
+- Project discovery
+- Safe Auto-Finish (validation, inventory, report, snapshot)
+- Status checks for Home Base / Fieldworks / Garden Immortals / downloads
+- Direct button back to Fieldworks R2
+
+It is additive and does not overwrite the existing Home Base.

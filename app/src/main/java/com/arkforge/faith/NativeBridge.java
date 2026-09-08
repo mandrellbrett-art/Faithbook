@@ -83,6 +83,11 @@ public class NativeBridge {
     @JavascriptInterface public String importLibraryFolder(){try{activity.pickLibraryFolder();JSONObject o=new JSONObject();o.put("ok",true);o.put("pending",true);return o.toString();}catch(Exception e){return MainActivity.error(e.getMessage()).toString();}}
     @JavascriptInterface public String legacyPatentStats(){try{return db.legacyPatentStats(LegacyPatentImporter.cutoffYmd()).toString();}catch(Exception e){return MainActivity.error(e.getMessage()).toString();}}
     @JavascriptInterface public String legacyPatentSearch(String query,String jurisdiction,int limit){try{JSONObject o=new JSONObject();o.put("ok",true);o.put("cutoff",LegacyPatentImporter.cutoffYmd());o.put("results",db.searchLegacyPatents(query,jurisdiction,LegacyPatentImporter.cutoffYmd(),limit));return o.toString();}catch(Exception e){return MainActivity.error(e.getMessage()).toString();}}
+    @JavascriptInterface public String phoneIntake(String mode){try{activity.pickPhoneTree(mode);JSONObject o=new JSONObject();o.put("ok",true);o.put("pending",true);return o.toString();}catch(Exception e){return MainActivity.error(e.getMessage()).toString();}}
+    @JavascriptInterface public String phoneIntakeSummary(){try{return db.phoneIntakeSummary().toString();}catch(Exception e){return MainActivity.error(e.getMessage()).toString();}}
+    @JavascriptInterface public String phoneIntakeSearch(String q,int limit){try{JSONObject o=new JSONObject();o.put("ok",true);o.put("results",db.searchPhoneIntake(q,limit));return o.toString();}catch(Exception e){return MainActivity.error(e.getMessage()).toString();}}
+    @JavascriptInterface public String homeBaseBaseline(){try{JSONObject o=new JSONObject();o.put("ok",true);o.put("features",readAssetJson("homebase-feature-registry.json"));o.put("routes",readAssetJson("homebase-route-registry.json"));o.put("lock",readAssetJson("homebase-continuity-lock.json"));o.put("parity",readAssetJson("homebase-v24-parity.json"));o.put("kernel",readAssetJson("kernel-computer-r2-spec.json"));return o.toString();}catch(Exception e){return MainActivity.error(e.getMessage()).toString();}}
+
     @JavascriptInterface public void printCurrent(){activity.printCurrent();}
     @JavascriptInterface public void shareText(String subject,String text){activity.shareText(subject,text);}
 

@@ -1,0 +1,83 @@
+{
+  "schema": "heritagefaith.qa.v24",
+  "passed": 19,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "DB v9",
+      "pass": true
+    },
+    {
+      "name": "phone tables",
+      "pass": true
+    },
+    {
+      "name": "phone manager",
+      "pass": true
+    },
+    {
+      "name": "Android tree picker",
+      "pass": true
+    },
+    {
+      "name": "index mode",
+      "pass": true
+    },
+    {
+      "name": "copy all mode",
+      "pass": true
+    },
+    {
+      "name": "SHA copy",
+      "pass": true
+    },
+    {
+      "name": "free space reserve",
+      "pass": true
+    },
+    {
+      "name": "homebase classifier",
+      "pass": true
+    },
+    {
+      "name": "phone bridge",
+      "pass": true
+    },
+    {
+      "name": "baseline bridge",
+      "pass": true
+    },
+    {
+      "name": "phone route",
+      "pass": true
+    },
+    {
+      "name": "homebase recovery",
+      "pass": true
+    },
+    {
+      "name": "kernel r2",
+      "pass": true
+    },
+    {
+      "name": "feature registry",
+      "pass": true
+    },
+    {
+      "name": "continuity lock",
+      "pass": true
+    },
+    {
+      "name": "parity",
+      "pass": true
+    },
+    {
+      "name": "V24 code",
+      "pass": true
+    },
+    {
+      "name": "V24 name",
+      "pass": true
+    }
+  ]
+}

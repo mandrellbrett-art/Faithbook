@@ -1,0 +1,583 @@
+{
+  "schema": "thunderforge.route-registry.v1",
+  "required_route_count": 144,
+  "rule": "Every canonical route must have a target, render contract, persistence test and user-visible status.",
+  "routes": [
+    {
+      "slot": 1,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 2,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 3,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 4,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 5,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 6,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 7,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 8,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 9,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 10,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 11,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 12,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 13,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 14,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 15,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 16,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 17,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 18,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 19,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 20,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 21,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 22,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 23,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 24,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 25,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 26,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 27,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 28,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 29,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 30,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 31,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 32,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 33,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 34,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 35,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 36,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 37,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 38,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 39,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 40,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 41,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 42,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 43,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 44,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 45,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 46,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 47,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 48,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 49,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 50,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 51,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 52,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 53,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 54,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 55,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 56,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 57,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 58,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 59,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 60,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 61,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 62,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 63,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 64,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 65,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 66,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 67,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 68,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 69,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 70,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 71,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 72,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 73,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 74,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 75,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 76,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 77,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 78,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 79,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 80,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 81,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 82,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 83,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 84,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 85,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 86,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 87,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 88,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 89,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 90,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 91,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 92,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 93,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 94,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 95,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 96,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 97,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 98,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 99,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 100,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 101,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 102,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 103,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 104,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 105,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 106,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 107,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 108,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 109,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 110,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 111,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 112,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 113,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 114,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 115,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 116,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 117,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 118,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 119,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 120,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 121,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 122,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 123,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 124,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 125,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 126,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 127,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 128,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 129,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 130,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 131,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 132,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 133,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 134,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 135,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 136,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 137,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 138,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 139,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 140,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 141,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 142,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 143,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    },
+    {
+      "slot": 144,
+      "status": "TO_BE_BOUND_FROM_CANONICAL_R10_REGISTRY"
+    }
+  ]
+}

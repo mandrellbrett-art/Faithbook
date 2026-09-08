@@ -10,8 +10,8 @@ android {
         applicationId 'com.arkforge.faith'
         minSdk 26
         targetSdk 35
-        versionCode 230001
-        versionName '23.0.0-reader-index-patent-archive'
+        versionCode 240001
+        versionName '24.0.0-homebase-phone-intake'
     }
 
     buildTypes {

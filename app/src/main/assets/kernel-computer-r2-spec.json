@@ -1,0 +1,10 @@
+{
+  "schema": "heritagefaith.kernel.r2.v24",
+  "name": "Kernel Computer R2",
+  "field": "Golden Field 144",
+  "traits": 12,
+  "bands": 12,
+  "cells": 144,
+  "truth_boundary": "Computation produces candidates; candidates are not facts.",
+  "historical_state": "IMPORT_REQUIRED_UNTIL_PROVEN_BY_PHONE_INTAKE_OR_CONTINUITY"
+}

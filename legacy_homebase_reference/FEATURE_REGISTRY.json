@@ -1,0 +1,155 @@
+{
+  "schema": "thunderforge.feature-registry.v1",
+  "features": [
+    {
+      "id": "F001",
+      "name": "Projects / My Work / Workspaces",
+      "required": true,
+      "migration_status": "UNVERIFIED_ON_TARGET"
+    },
+    {
+      "id": "F002",
+      "name": "Universal Files / imports / exports / exact-byte originals",
+      "required": true,
+      "migration_status": "UNVERIFIED_ON_TARGET"
+    },
+    {
+      "id": "F003",
+      "name": "Production jobs / travelers / revisions / lots / tests / failures",
+      "required": true,
+      "migration_status": "UNVERIFIED_ON_TARGET"
+    },
+    {
+      "id": "F004",
+      "name": "Cantus logs / audit history / provenance",
+      "required": true,
+      "migration_status": "UNVERIFIED_ON_TARGET"
+    },
+    {
+      "id": "F005",
+      "name": "Saved items / archive / chats / notes",
+      "required": true,
+      "migration_status": "UNVERIFIED_ON_TARGET"
+    },
+    {
+      "id": "F006",
+      "name": "Library / books / user documents",
+      "required": true,
+      "migration_status": "UNVERIFIED_ON_TARGET"
+    },
+    {
+      "id": "F007",
+      "name": "Games library / manifests / user-owned ROM references / saves / save states",
+      "required": true,
+      "migration_status": "UNVERIFIED_ON_TARGET"
+    },
+    {
+      "id": "F008",
+      "name": "Garden Immortals / First Light source lineage / saves / autonomy-rest policy",
+      "required": true,
+      "migration_status": "UNVERIFIED_ON_TARGET"
+    },
+    {
+      "id": "F009",
+      "name": "Constructor",
+      "required": true,
+      "migration_status": "UNVERIFIED_ON_TARGET"
+    },
+    {
+      "id": "F010",
+      "name": "Kernel Computer / 144 Circuit",
+      "required": true,
+      "migration_status": "UNVERIFIED_ON_TARGET"
+    },
+    {
+      "id": "F011",
+      "name": "Artifact Studio / Design Studio / Blueprints-CAD",
+      "required": true,
+      "migration_status": "UNVERIFIED_ON_TARGET"
+    },
+    {
+      "id": "F012",
+      "name": "Material Canon / Physics Vault / Constraint Graph",
+      "required": true,
+      "migration_status": "UNVERIFIED_ON_TARGET"
+    },
+    {
+      "id": "F013",
+      "name": "Failure Taxonomy / Lifecycle Registry / Provenance Index",
+      "required": true,
+      "migration_status": "UNVERIFIED_ON_TARGET"
+    },
+    {
+      "id": "F014",
+      "name": "CIVIS Gear / Chrono-Compass / manufacturing packages",
+      "required": true,
+      "migration_status": "UNVERIFIED_ON_TARGET"
+    },
+    {
+      "id": "F015",
+      "name": "Calendar / ICS",
+      "required": true,
+      "migration_status": "UNVERIFIED_ON_TARGET"
+    },
+    {
+      "id": "F016",
+      "name": "Maps / GeoJSON / GPS records",
+      "required": true,
+      "migration_status": "UNVERIFIED_ON_TARGET"
+    },
+    {
+      "id": "F017",
+      "name": "Medical organizer",
+      "required": true,
+      "migration_status": "UNVERIFIED_ON_TARGET"
+    },
+    {
+      "id": "F018",
+      "name": "Communications / phone-SMS-email handoffs / voice-note records",
+      "required": true,
+      "migration_status": "UNVERIFIED_ON_TARGET"
+    },
+    {
+      "id": "F019",
+      "name": "Images",
+      "required": true,
+      "migration_status": "UNVERIFIED_ON_TARGET"
+    },
+    {
+      "id": "F020",
+      "name": "Farm Time",
+      "required": true,
+      "migration_status": "UNVERIFIED_ON_TARGET"
+    },
+    {
+      "id": "F021",
+      "name": "Argus / Catalog Zero / network-dependent tools",
+      "required": true,
+      "migration_status": "UNVERIFIED_ON_TARGET"
+    },
+    {
+      "id": "F022",
+      "name": "App settings / route state / permissions state where exportable",
+      "required": true,
+      "migration_status": "UNVERIFIED_ON_TARGET"
+    },
+    {
+      "id": "F023",
+      "name": "93-module historical parity classification",
+      "required": true,
+      "migration_status": "UNVERIFIED_ON_TARGET"
+    },
+    {
+      "id": "F024",
+      "name": "144/144 route registry and render contract",
+      "required": true,
+      "migration_status": "UNVERIFIED_ON_TARGET"
+    },
+    {
+      "id": "F025",
+      "name": "Backups / rollback packages / release manifests / SHA-256 evidence",
+      "required": true,
+      "migration_status": "UNVERIFIED_ON_TARGET"
+    }
+  ]
+}

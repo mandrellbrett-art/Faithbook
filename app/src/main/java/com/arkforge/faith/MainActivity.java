@@ -26,11 +26,13 @@ public class MainActivity extends Activity {
     private static final int REQ_BACKUP_EXPORT = 1002;
     private static final int REQ_ASSISTANT_EXPORT = 1003;
     private static final int REQ_LIBRARY_TREE = 1004;
+    private static final int REQ_PHONE_TREE = 1005;
     private WebView web;
     private R10Database db;
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
     private String pendingImportKind = "project";
     private String pendingAssistantExportMode = "standard";
+    private String pendingPhoneMode = PhoneIntakeManager.MODE_INDEX;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +80,12 @@ public class MainActivity extends Activity {
         });
     }
 
+
+
+    public void pickPhoneTree(String mode){
+        pendingPhoneMode=PhoneIntakeManager.MODE_COPY_ALL.equalsIgnoreCase(mode)?PhoneIntakeManager.MODE_COPY_ALL:PhoneIntakeManager.MODE_INDEX;
+        runOnUiThread(()->{Intent i=new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION|Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION|Intent.FLAG_GRANT_PREFIX_URI_PERMISSION);try{startActivityForResult(i,REQ_PHONE_TREE);}catch(ActivityNotFoundException e){callback("onNativeError",error("No Android folder picker is available."));}});
+    }
 
     public void pickLibraryFolder() {
         runOnUiThread(() -> {
@@ -150,6 +158,13 @@ public class MainActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != RESULT_OK || data == null) return;
 
+
+
+        if(requestCode==REQ_PHONE_TREE){
+            if(data.getData()==null)return;final Uri tree=data.getData();
+            try{getContentResolver().takePersistableUriPermission(tree,Intent.FLAG_GRANT_READ_URI_PERMISSION);}catch(Exception ignored){}
+            final String mode=pendingPhoneMode;executor.execute(()->{try{callback("onPhoneIntake",PhoneIntakeManager.scanTree(this,db,tree,mode));}catch(Exception e){db.log("phone-intake","scan","FAIL",e.getMessage());callback("onNativeError",error(e.getMessage()));}});return;
+        }
 
         if (requestCode == REQ_LIBRARY_TREE) {
             if (data.getData() == null) return;

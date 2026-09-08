@@ -1,0 +1,157 @@
+{
+  "schema": "heritagefaith.qa.v25",
+  "passed": 30,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "Unified global summary",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Federated global search",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Global search source project",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Global search source managed_file",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Global search source record",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Global search source phone",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Global search source continuity",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Global search source bible",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Global search source patent",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Global search source corpus",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Core route",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Global search route",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Viewer route",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Route Atlas route",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "routeCard helper",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "projectCards helper",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "wireRouteCards helper",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "wireProjectButtons helper",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Text viewer bridge",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Constructor core command",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Constructor global command",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Constructor route warning",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Audit embedded",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "V24 preserved",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Ademic Cantus preserved",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Scripture page reader preserved",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Legacy patents preserved",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "V25 version code",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "V25 version name",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "JavaScript syntax",
+      "pass": true,
+      "detail": ""
+    }
+  ]
+}

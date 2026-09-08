@@ -446,6 +446,96 @@ public class R10Database extends SQLiteOpenHelper {
     }
 
 
+    public synchronized JSONObject globalSummary() throws Exception {
+        SQLiteDatabase db=getReadableDatabase();
+        JSONObject o=new JSONObject();
+        o.put("ok",true);
+        o.put("projects",scalar(db,"SELECT COUNT(*) FROM projects WHERE archived=0"));
+        o.put("managed_files",scalar(db,"SELECT COUNT(*) FROM managed_files"));
+        o.put("records",scalar(db,"SELECT COUNT(*) FROM records WHERE archived=0"));
+        o.put("corpus_files",scalar(db,"SELECT COUNT(*) FROM corpus_files"));
+        o.put("continuity_items",scalar(db,"SELECT COUNT(*) FROM migration_items"));
+        o.put("phone_items",scalar(db,"SELECT COUNT(*) FROM phone_intake_files"));
+        o.put("bible_verses",scalar(db,"SELECT COUNT(*) FROM bible_verses"));
+        o.put("legacy_patents",scalar(db,"SELECT COUNT(*) FROM legacy_patents"));
+        o.put("cantus_events",scalar(db,"SELECT COUNT(*) FROM cantus_log"));
+        o.put("db_integrity",integrity());
+        return o;
+    }
+
+    public synchronized JSONArray globalSearch(String query,int limit) throws Exception {
+        JSONArray out=new JSONArray();
+        String term=query==null?"":query.trim();
+        if(term.isEmpty()) return out;
+        String q="%"+term+"%";
+        int safe=Math.max(1,Math.min(limit,500));
+        int per=Math.max(5,Math.min(80,(safe/8)+1));
+        SQLiteDatabase db=getReadableDatabase();
+
+        appendGlobal(out,db,
+                "SELECT 'project' source,id ref_id,name title,description body,family route,status state,updated_at updated_at," +
+                "root_path extra1,source_uri extra2 FROM projects WHERE archived=0 AND " +
+                "(name LIKE ? OR description LIKE ? OR family LIKE ? OR version LIKE ? OR root_path LIKE ?) " +
+                "ORDER BY updated_at DESC LIMIT "+per,
+                new String[]{q,q,q,q,q});
+
+        appendGlobal(out,db,
+                "SELECT 'managed_file' source,m.id ref_id,m.name title,m.rel_path body,'files' route,p.status state," +
+                "m.created_at updated_at,m.project_id extra1,m.rel_path extra2 FROM managed_files m JOIN projects p ON p.id=m.project_id " +
+                "WHERE m.name LIKE ? OR m.rel_path LIKE ? OR m.sha256 LIKE ? OR m.kind LIKE ? OR p.name LIKE ? " +
+                "ORDER BY m.created_at DESC LIMIT "+per,
+                new String[]{q,q,q,q,q});
+
+        appendGlobal(out,db,
+                "SELECT 'record' source,id ref_id,title,body,'notes' route,CASE WHEN archived=1 THEN 'ARCHIVED' ELSE 'ACTIVE' END state," +
+                "updated_at updated_at,type extra1,meta_json extra2 FROM records WHERE title LIKE ? OR body LIKE ? OR type LIKE ? OR meta_json LIKE ? " +
+                "ORDER BY updated_at DESC LIMIT "+per,
+                new String[]{q,q,q,q});
+
+        appendGlobal(out,db,
+                "SELECT 'phone' source,CAST(id AS TEXT) ref_id,name title,relative_path body,'phoneintake' route,intake_status state,indexed_at updated_at," +
+                "family extra1,source_uri extra2 FROM phone_intake_files WHERE name LIKE ? OR relative_path LIKE ? OR family LIKE ? OR category LIKE ? OR version_token LIKE ? OR sha256 LIKE ? " +
+                "ORDER BY id DESC LIMIT "+per,
+                new String[]{q,q,q,q,q,q});
+
+        appendGlobal(out,db,
+                "SELECT 'continuity' source,CAST(id AS TEXT) ref_id,original_path title,detail body,'continuity' route,migration_status state,'' updated_at," +
+                "family extra1,payload_path extra2 FROM migration_items WHERE original_path LIKE ? OR family LIKE ? OR version_token LIKE ? OR migration_status LIKE ? OR sha256 LIKE ? " +
+                "ORDER BY id DESC LIMIT "+per,
+                new String[]{q,q,q,q,q});
+
+        appendGlobal(out,db,
+                "SELECT 'bible' source,CAST(id AS TEXT) ref_id,book||' '||chapter||':'||verse title,text body,'bible' route,'SCRIPTURE' state,'' updated_at," +
+                "corpus_id extra1,book||' '||chapter||':'||verse extra2 FROM bible_verses WHERE book LIKE ? OR text LIKE ? " +
+                "ORDER BY book_no,chapter,verse LIMIT "+per,
+                new String[]{q,q});
+
+        appendGlobal(out,db,
+                "SELECT 'patent' source,CAST(id AS TEXT) ref_id,publication_number||' · '||title title," +
+                "inventor||CASE WHEN assignee<>'' THEN ' · '||assignee ELSE '' END body,'patents' route,'LEGACY_PATENT' state,grant_date updated_at," +
+                "jurisdiction extra1,source_url extra2 FROM legacy_patents WHERE publication_number LIKE ? OR title LIKE ? OR inventor LIKE ? OR assignee LIKE ? OR classification LIKE ? " +
+                "ORDER BY grant_date DESC LIMIT "+per,
+                new String[]{q,q,q,q,q});
+
+        appendGlobal(out,db,
+                "SELECT 'corpus' source,CAST(id AS TEXT) ref_id,path title,family||' · '||kind body,'systems' route,'INDEXED' state,indexed_at updated_at," +
+                "version_token extra1,source_uri extra2 FROM corpus_files WHERE path LIKE ? OR family LIKE ? OR version_token LIKE ? OR kind LIKE ? " +
+                "ORDER BY id DESC LIMIT "+per,
+                new String[]{q,q,q,q});
+
+        // Keep the result bounded even if multiple source groups matched heavily.
+        JSONArray bounded=new JSONArray();
+        for(int i=0;i<out.length()&&i<safe;i++) bounded.put(out.getJSONObject(i));
+        return bounded;
+    }
+
+    private static void appendGlobal(JSONArray out,SQLiteDatabase db,String sql,String[] args) throws Exception {
+        try(Cursor c=db.rawQuery(sql,args)){
+            while(c.moveToNext()) out.put(cursorRow(c));
+        }
+    }
+
+
     public synchronized String beginMigrationRun(String sourceLabel, String sourceUri, String manifestSha256, int itemCount) {
         String id = "mig_" + UUID.randomUUID().toString().replace("-", "");
         ContentValues v = new ContentValues();

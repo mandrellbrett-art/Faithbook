@@ -88,3 +88,10 @@ blockquote{margin:14px 0;padding:10px 16px;border-left:2px solid #755a35;color:#
 .library-index-controls{display:grid;grid-template-columns:2fr repeat(4,minmax(120px,1fr));gap:10px;margin:16px 0}
 .legacy-date{font-size:1.2rem}
 @media(max-width:820px){.library-index-controls{grid-template-columns:1fr 1fr}.reader-page-nav{grid-template-columns:1fr 1fr}.reader-page-number{grid-column:1/-1;grid-row:1}.scripture-paper-page{min-height:58vh;padding:22px 18px}}
+
+
+/* V25 Unified Core */
+.route-card{text-align:left;width:100%;cursor:pointer}
+.core-search{margin:18px 0}
+.universal-text-viewer{white-space:pre-wrap;word-break:break-word;max-height:72vh;overflow:auto;padding:18px;background:rgba(255,250,240,.72);border:1px solid rgba(120,90,50,.18);font-size:.9rem;line-height:1.45}
+.route-atlas-matrix{margin:18px 0}

@@ -19,7 +19,7 @@ public class NativeBridge {
     public NativeBridge(MainActivity activity,R10Database db){this.activity=activity;this.db=db;}
 
     @JavascriptInterface public String bootstrap(){
-        try{JSONObject o=new JSONObject();o.put("ok",true);o.put("product","HeritageFaith");o.put("version","20.0.0-united-private");o.put("runtime","android-native-webview");o.put("termux_required",false);o.put("localhost_required",false);o.put("port_required",false);o.put("projects",db.listProjects(false));o.put("stats",db.stats());o.put("features",readAssetJson("feature-ledger.json"));o.put("continuity",db.migrationSummary());o.put("continuity_lock",readAssetJson("PUBLIC_RELEASE_BOUNDARY.json"));return o.toString();}catch(Exception e){return MainActivity.error(e.getMessage()).toString();}
+        try{JSONObject o=new JSONObject();o.put("ok",true);o.put("product","HeritageFaith");o.put("version","25.0.0-unified-core");o.put("runtime","android-native-webview");o.put("termux_required",false);o.put("localhost_required",false);o.put("port_required",false);o.put("projects",db.listProjects(false));o.put("stats",db.stats());o.put("features",readAssetJson("feature-ledger.json"));o.put("continuity",db.migrationSummary());o.put("continuity_lock",readAssetJson("PUBLIC_RELEASE_BOUNDARY.json"));return o.toString();}catch(Exception e){return MainActivity.error(e.getMessage()).toString();}
     }
 
     @JavascriptInterface public String projects(){try{JSONObject o=new JSONObject();o.put("ok",true);o.put("projects",db.listProjects(false));return o.toString();}catch(Exception e){return MainActivity.error(e.getMessage()).toString();}}
@@ -87,6 +87,31 @@ public class NativeBridge {
     @JavascriptInterface public String phoneIntakeSummary(){try{return db.phoneIntakeSummary().toString();}catch(Exception e){return MainActivity.error(e.getMessage()).toString();}}
     @JavascriptInterface public String phoneIntakeSearch(String q,int limit){try{JSONObject o=new JSONObject();o.put("ok",true);o.put("results",db.searchPhoneIntake(q,limit));return o.toString();}catch(Exception e){return MainActivity.error(e.getMessage()).toString();}}
     @JavascriptInterface public String homeBaseBaseline(){try{JSONObject o=new JSONObject();o.put("ok",true);o.put("features",readAssetJson("homebase-feature-registry.json"));o.put("routes",readAssetJson("homebase-route-registry.json"));o.put("lock",readAssetJson("homebase-continuity-lock.json"));o.put("parity",readAssetJson("homebase-v24-parity.json"));o.put("kernel",readAssetJson("kernel-computer-r2-spec.json"));return o.toString();}catch(Exception e){return MainActivity.error(e.getMessage()).toString();}}
+
+    @JavascriptInterface public String globalSummary(){try{return db.globalSummary().toString();}catch(Exception e){return MainActivity.error(e.getMessage()).toString();}}
+    @JavascriptInterface public String globalSearch(String query,int limit){try{JSONObject o=new JSONObject();o.put("ok",true);o.put("query",query);o.put("results",db.globalSearch(query,limit));return o.toString();}catch(Exception e){return MainActivity.error(e.getMessage()).toString();}}
+    @JavascriptInterface public String v25Audit(){try{JSONObject o=readAssetJson("v25-all-encompassing-audit.json");o.put("ok",true);return o.toString();}catch(Exception e){return MainActivity.error(e.getMessage()).toString();}}
+    @JavascriptInterface public String readProjectText(String projectId,String relativePath){
+        try{
+            JSONObject p=db.getProject(projectId);
+            if(p==null)throw new IllegalArgumentException("Project not found");
+            File root=new File(p.optString("root_path")).getCanonicalFile();
+            File f=new File(root,relativePath).getCanonicalFile();
+            if(!f.getPath().startsWith(root.getPath()+File.separator)||!f.isFile())throw new IllegalArgumentException("File is outside project or missing");
+            long max=2L*1024*1024;
+            if(f.length()>max)throw new IllegalArgumentException("In-app text preview is limited to 2 MiB; use Open externally for larger files.");
+            String lower=f.getName().toLowerCase(java.util.Locale.US);
+            String[] ok={".txt",".md",".json",".xml",".html",".htm",".css",".js",".ts",".py",".java",".kt",".sh",".yaml",".yml",".toml",".gradle",".csv",".ini",".cfg",".log"};
+            boolean allowed=false;for(String ext:ok)if(lower.endsWith(ext)){allowed=true;break;}
+            if(!allowed)throw new IllegalArgumentException("This format is not a text-preview format. Use Open externally.");
+            StringBuilder text=new StringBuilder();
+            try(BufferedReader r=new BufferedReader(new InputStreamReader(new java.io.FileInputStream(f),StandardCharsets.UTF_8))){
+                String line;int lines=0;
+                while((line=r.readLine())!=null){text.append(line).append('\n');if(++lines>50000)break;}
+            }
+            JSONObject o=new JSONObject();o.put("ok",true);o.put("project_id",projectId);o.put("relative_path",relativePath);o.put("name",f.getName());o.put("bytes",f.length());o.put("text",text.toString());return o.toString();
+        }catch(Exception e){return MainActivity.error(e.getMessage()).toString();}
+    }
 
     @JavascriptInterface public void printCurrent(){activity.printCurrent();}
     @JavascriptInterface public void shareText(String subject,String text){activity.shareText(subject,text);}

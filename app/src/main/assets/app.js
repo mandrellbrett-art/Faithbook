@@ -6,7 +6,7 @@ const B=window.ArkforgeNative;
 const state={boot:null,route:'home',op:'overview',selectedProject:null,lastImport:null,pendingBibleAttach:false,
  publicBibleSlug:'matthew',publicBibleChapter:1,publicBibleRedLetters:true,
  publicReaderMode:'page',publicReaderPage:1,publicReaderPerPage:8,publicReaderFont:20,
- publicReaderShowNumbers:true,publicReaderRows:[],publicReaderLabel:'',publicReaderSummary:'',readerTurnDirection:'next'};
+ publicReaderShowNumbers:true,publicReaderRows:[],publicReaderLabel:'',publicReaderSummary:'',readerTurnDirection:'next',viewerProjectId:'',viewerRelPath:''};
 const CIRCUITS=[
  ['mywork','My Work'],['files','Files'],['games','Games'],['library','Library'],
  ['production','Production'],['engineering','Engineering'],['garden','Garden'],['farm','Farm Time'],
@@ -37,12 +37,34 @@ const RECORD_TOOLS=[
  ['continuity','Continuity','Migration ledger, unresolved references, exact-byte evidence and promotion lock'],
  ['argus','Argus','Safe HTTPS intake with private-network blocking']
 ];
-const CORE_NAV=[['home','Home'],['homebase','Home Base'],['bible','Scripture'],['alexandria','Alexandria'],['cantuslab','Ademic Cantus'],['library','Library'],['constructor','Constructor'],['settings','Settings']];
+const CORE_NAV=[['home','Home'],['core','Unified Core'],['homebase','Home Base'],['bible','Scripture'],['library','Library'],['search','Search'],['constructor','Constructor'],['settings','Settings']];
 
 function parse(s){try{return JSON.parse(s)}catch(e){return {ok:false,error:String(e)}}}
 function call(name,...args){if(!B||typeof B[name]!=='function')return {ok:false,error:`Native bridge method ${name} unavailable`};try{return parse(B[name](...args))}catch(e){return {ok:false,error:String(e)}}}
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function metaObj(r){try{return JSON.parse(r?.meta_json||'{}')}catch(e){return {}}}
+
+function routeCard(route,tag,title,description,icon='•'){
+ return `<button type="button" class="card route-card" data-route-card="${esc(route)}"><div class="module-icon">${esc(icon)}</div><div class="tag">${esc(tag)}</div><h3>${esc(title)}</h3><p class="small muted">${esc(description)}</p></button>`;
+}
+function wireRouteCards(root=view){root.querySelectorAll('[data-route-card]').forEach(b=>b.onclick=()=>navigate(b.dataset.routeCard));}
+function projectCards(projects){
+ const a=projects||[];
+ return `<div class="grid">${a.map(p=>`<article class="card"><div class="row"><div class="grow"><div class="tag">${esc(p.family||'project')} · ${esc(p.version||'')}</div><h3>${esc(p.name)}</h3></div><span class="state">${esc(p.status||'')}</span></div><p>${esc(p.description||'')}</p><div class="small muted">${esc(p.root_path||p.source_uri||'managed local project')}</div><div class="actions"><button data-project-run="${esc(p.id)}" class="primary">Open / Run</button><button data-project-list-files="${esc(p.id)}">Files</button></div></article>`).join('')||'<div class="card muted">No projects.</div>'}</div>`;
+}
+function wireProjectButtons(root=view){
+ root.querySelectorAll('[data-project-run]').forEach(b=>b.onclick=()=>B.runProject(b.dataset.projectRun));
+ root.querySelectorAll('[data-project-list-files]').forEach(b=>b.onclick=()=>showProjectFiles(b.dataset.projectListFiles));
+}
+function showProjectFiles(projectId){
+ const p=call('project',projectId),r=call('projectFiles',projectId),files=r.files||[];
+ view.innerHTML=sectionTitle(`Files — ${p.name||projectId}`,'Managed project files. Text/source formats can be previewed inside HeritageFaith; all supported files can be handed to Android.')+
+ `<div class="actions"><button id="projectFilesBack">← Back</button></div><div class="card list">${files.map(f=>`<div class="item"><div class="row"><div class="grow"><b>${esc(f.name)}</b><div class="small muted">${esc(f.rel_path)} · ${Number(f.size||0).toLocaleString()} bytes</div></div><span class="state">${esc(f.kind||'file')}</span></div><div class="small mono muted">${esc(f.sha256||'')}</div><div class="actions"><button data-managed-preview="${esc(projectId)}" data-rel="${esc(f.rel_path)}">Preview text</button><button data-managed-open="${esc(projectId)}" data-rel="${esc(f.rel_path)}">Open externally</button></div></div>`).join('')||'<div class="muted">No managed files.</div>'}</div>`;
+ $('#projectFilesBack').onclick=()=>render();
+ view.querySelectorAll('[data-managed-open]').forEach(b=>b.onclick=()=>{const r=call('openProjectFile',b.dataset.managedOpen,b.dataset.rel);if(!r.ok)toast(r.error||'Could not open file',true)});
+ view.querySelectorAll('[data-managed-preview]').forEach(b=>b.onclick=()=>navigate('viewer',`project=${encodeURIComponent(b.dataset.managedPreview)}&rel=${encodeURIComponent(b.dataset.rel)}`));
+}
+
 function pageLabel(m){const p=String(m?.page||'').trim();const e=String(m?.page_end||'').trim();return p?(e&&e!==p?`pp. ${esc(p)}–${esc(e)}`:`p. ${esc(p)}`):'page not set'}
 function bibleRefKey(ref){return String(ref||'').trim().toLowerCase().replace(/[–—]/g,'-').replace(/\s+/g,' ')}
 function bibleYear(y){const n=Number(y);if(!Number.isFinite(n))return String(y??'');if(n<0)return `${Math.abs(n)} BC`;if(n>0)return `${n} AD`;return 'c. 1 BC/AD boundary'}
@@ -148,7 +170,10 @@ function renderPublicBibleRows(rows,label,starter,redByRef,summary=''){
 
 function toast(msg,bad=false){toastEl.textContent=msg;toastEl.classList.add('show');toastEl.style.borderColor=bad?'#744':'';clearTimeout(toast._t);toast._t=setTimeout(()=>toastEl.classList.remove('show'),3500)}
 function setStatus(){const s=state.boot?.stats||{};$('#runtimeStatus').textContent=`Local-first · SQLite ${s.db_integrity||'…'} · ${s.records||0} study records`;}
-function navigate(route,op='overview'){location.hash=`#${encodeURIComponent(route)}?op=${encodeURIComponent(op.toLowerCase())}`;}
+function navigate(route,op='overview'){
+ if(String(op).includes('=')&&String(op).includes('&')){location.hash=`#${encodeURIComponent(route)}?${op}`;return}
+ location.hash=`#${encodeURIComponent(route)}?op=${encodeURIComponent(String(op).toLowerCase())}`;
+}
 function routeFromHash(){let raw=location.hash.replace(/^#/,'')||'home';let [r,q='']=raw.split('?');r=decodeURIComponent(r||'home');let p=new URLSearchParams(q);return {route:r,op:p.get('op')||'overview'};}
 function renderNav(){nav.innerHTML=CORE_NAV.map(([id,label])=>`<button type="button" data-nav="${esc(id)}" class="${state.route===id?'active':''}">${esc(label)}</button>`).join('');nav.querySelectorAll('[data-nav]').forEach(b=>b.addEventListener('click',()=>navigate(b.dataset.nav)));}
 function refreshBoot(){const b=call('bootstrap');if(b.ok){state.boot=b;setStatus()}else toast(b.error||'Bootstrap failed',true);}
@@ -160,6 +185,7 @@ function wireActions(root=view){root.querySelectorAll('[data-action]').forEach(b
 function render(){let r=routeFromHash();state.route=r.route;state.op=r.op;renderNav();
   switch(state.route){
     case 'home':return renderHome();
+    case 'core':return renderUnifiedCore();
     case 'homebase':return renderHomeBase();
     case 'mywork':return renderMyWork();
     case 'files':return renderFiles();
@@ -173,6 +199,9 @@ function render(){let r=routeFromHash();state.route=r.route;state.op=r.op;render
     case 'systems':return renderSystems();
     case 'continuity':return renderContinuity();
     case 'phoneintake':return renderPhoneIntake();
+    case 'search':return renderGlobalSearch();
+    case 'viewer':return renderUniversalViewer();
+    case 'routeatlas':return renderRouteAtlas();
     case 'bible':return renderBibleWorkspace();
     case 'understand':return renderUnderstand();
     case 'live':return renderLive();
@@ -255,9 +284,62 @@ function renderSettings(){
  $('#assistantRestoreBackup').onclick=()=>B&&B.importFile&&B.importFile('backup');
 }
 
+
+function coreResultCard(x){
+ const src=x.source||'result',route=x.route||'search';
+ let actions='';
+ if(src==='project')actions=`<button data-core-project="${esc(x.ref_id)}">Open project</button>`;
+ else if(src==='managed_file')actions=`<button data-core-preview="${esc(x.extra1)}" data-rel="${esc(x.extra2)}">Preview text</button><button data-core-file="${esc(x.extra1)}" data-rel="${esc(x.extra2)}">Open file</button>`;
+ else if(src==='bible')actions=`<button data-core-bible="${esc(x.extra2)}">Open Scripture</button>`;
+ else actions=`<button data-core-route="${esc(route)}">Open ${esc(route)}</button>`;
+ return `<div class="item"><div class="row"><div class="grow"><b>${esc(x.title||x.ref_id)}</b><div class="small muted">${esc(src)} · ${esc(x.state||'')} ${x.updated_at?'· '+esc(x.updated_at):''}</div></div></div><p>${esc((x.body||'').slice(0,600))}</p><div class="actions">${actions}</div></div>`;
+}
+function wireCoreResults(root=view){
+ root.querySelectorAll('[data-core-project]').forEach(b=>b.onclick=()=>B.runProject(b.dataset.coreProject));
+ root.querySelectorAll('[data-core-file]').forEach(b=>b.onclick=()=>{const r=call('openProjectFile',b.dataset.coreFile,b.dataset.rel);if(!r.ok)toast(r.error||'Could not open file',true)});
+ root.querySelectorAll('[data-core-preview]').forEach(b=>b.onclick=()=>navigate('viewer',`project=${encodeURIComponent(b.dataset.corePreview)}&rel=${encodeURIComponent(b.dataset.rel)}`));
+ root.querySelectorAll('[data-core-bible]').forEach(b=>b.onclick=()=>openBibleReference(b.dataset.coreBible));
+ root.querySelectorAll('[data-core-route]').forEach(b=>b.onclick=()=>navigate(b.dataset.coreRoute));
+}
+function renderUnifiedCore(){
+ const s=call('globalSummary'),audit=call('v25Audit'),phone=call('phoneIntakeSummary'),cont=call('continuityStatus'),base=call('homeBaseBaseline');
+ const gaps=audit.gaps||[],blockers=gaps.filter(g=>g.priority==='BLOCKER'),high=gaps.filter(g=>g.priority==='HIGH');
+ view.innerHTML=sectionTitle('Unified Core','One private navigation/search layer over HeritageFaith, Home Base, Constructor, Kernel, Scripture, library, patents, Continuity and authorized phone files.')+
+ `<div class="grid"><div class="card"><div class="tag">PROJECTS</div><div class="metric">${Number(s.projects||0).toLocaleString()}</div></div><div class="card"><div class="tag">MANAGED FILES</div><div class="metric">${Number(s.managed_files||0).toLocaleString()}</div></div><div class="card"><div class="tag">RECORDS</div><div class="metric">${Number(s.records||0).toLocaleString()}</div></div><div class="card"><div class="tag">PHONE INDEX</div><div class="metric">${Number(s.phone_items||0).toLocaleString()}</div></div><div class="card"><div class="tag">BIBLE VERSES</div><div class="metric">${Number(s.bible_verses||0).toLocaleString()}</div></div><div class="card"><div class="tag">LEGACY PATENTS</div><div class="metric">${Number(s.legacy_patents||0).toLocaleString()}</div></div></div>
+ <section class="card core-search"><form id="coreSearchForm" class="form"><label>Search everything indexed locally<input id="coreSearchQ" autofocus placeholder="Home Base · kernel · Garden · book title · Scripture · patent · project · R10"></label><button class="primary">Search Unified Core</button></form><div id="coreSearchOut"></div></section>
+ <div class="grid"><button class="card route-card" id="corePhone"><div class="tag">RECOVERY</div><h3>Phone Intake</h3><p>${Number(phone.homebase_hits||0).toLocaleString()} Home Base-family hits currently indexed.</p></button><button class="card route-card" id="coreContinuity"><div class="tag">CONTINUITY</div><h3>Migration Ledger</h3><p>${Number(cont.items||0).toLocaleString()} tracked items · ${Number((cont.reference_only||0)+(cont.missing||0)+(cont.mismatches||0)).toLocaleString()} unresolved.</p></button><button class="card route-card" id="coreRoutes"><div class="tag">144 ROUTES</div><h3>Route Atlas</h3><p>${Number(audit.canonical_route_slots_unbound||0)} canonical historical slots still unbound.</p></button><button class="card route-card" id="coreKernel"><div class="tag">KERNEL</div><h3>Kernel Computer R2</h3><p>Golden Field 144 with historical state kept separate from runtime.</p></button></div>
+ <div class="notice"><b>Completion status: NOT PROMOTED</b><div class="small">${blockers.length} blockers · ${high.length} high-priority gaps remain. The app keeps those visible instead of calling missing history complete.</div></div>
+ <h2>Remaining completion gates</h2><div class="card list">${gaps.map(g=>`<div class="item"><div class="row"><b class="grow">${esc(g.id)} · ${esc(g.area)}</b><span class="state">${esc(g.status)}</span></div><div class="small">${esc(g.priority)} · ${esc(g.detail)}</div><div class="small muted">Finish gate: ${esc(g.finish_gate)}</div></div>`).join('')}</div>`;
+ $('#corePhone').onclick=()=>navigate('phoneintake');$('#coreContinuity').onclick=()=>navigate('continuity');$('#coreRoutes').onclick=()=>navigate('routeatlas');$('#coreKernel').onclick=()=>navigate('kernel');
+ $('#coreSearchForm').onsubmit=e=>{e.preventDefault();const q=$('#coreSearchQ').value.trim();if(!q)return;const r=call('globalSearch',q,250),out=$('#coreSearchOut');out.innerHTML=`<div class="small muted">${(r.results||[]).length} results</div><div class="list">${(r.results||[]).map(coreResultCard).join('')||'<div class="muted">No matches.</div>'}</div>`;wireCoreResults(out)};
+}
+function renderGlobalSearch(){
+ const params=new URLSearchParams(location.hash.split('?')[1]||''),initial=params.get('q')||'';
+ view.innerHTML=sectionTitle('Global Search','One federated search surface across projects, managed files, records, phone intake, Continuity, Scripture, legacy patents and corpus metadata.')+
+ `<section class="card"><form id="globalSearchForm" class="form"><label>Search<input id="globalSearchQ" value="${esc(initial)}" placeholder="Search all indexed local knowledge"></label><label>Result limit<select id="globalSearchLimit">${[50,100,250,500].map(n=>`<option value="${n}" ${n===250?'selected':''}>${n}</option>`).join('')}</select></label><button class="primary">Search</button></form><div id="globalSearchOut"></div></section>`;
+ const run=()=>{const q=$('#globalSearchQ').value.trim();if(!q)return;const r=call('globalSearch',q,Number($('#globalSearchLimit').value)||250),out=$('#globalSearchOut'),groups={};for(const x of r.results||[])(groups[x.source]??=[]).push(x);out.innerHTML=`<div class="small muted">${(r.results||[]).length} total results · ${Object.keys(groups).length} source groups</div>${Object.entries(groups).map(([k,a])=>`<details open><summary><b>${esc(k)} (${a.length})</b></summary><div class="card list">${a.map(coreResultCard).join('')}</div></details>`).join('')||'<div class="card muted">No results.</div>'}`;wireCoreResults(out)};
+ $('#globalSearchForm').onsubmit=e=>{e.preventDefault();run()};if(initial)setTimeout(run,20);
+}
+function renderUniversalViewer(){
+ const p=new URLSearchParams(location.hash.split('?')[1]||''),project=p.get('project')||'',rel=p.get('rel')||'';
+ const r=call('readProjectText',project,rel);
+ view.innerHTML=sectionTitle('Universal Text Viewer',r.ok?`${r.name} · ${Number(r.bytes||0).toLocaleString()} bytes`:'Text preview')+
+ `<div class="actions"><button id="viewerBack">← Back</button>${r.ok?'<button id="viewerExternal">Open externally</button>':''}</div>${r.ok?`<pre class="universal-text-viewer">${esc(r.text||'')}</pre>`:`<div class="notice"><b>Preview unavailable</b><div class="small">${esc(r.error||'Unsupported file')}</div></div>`}`;
+ $('#viewerBack').onclick=()=>history.back();if(r.ok)$('#viewerExternal').onclick=()=>{const x=call('openProjectFile',project,rel);if(!x.ok)toast(x.error||'Could not open file',true)};
+}
+function renderRouteAtlas(){
+ const base=call('homeBaseBaseline'),routes=base.routes?.routes||[],audit=call('v25Audit'),slots=routes.length?routes:Array.from({length:144},(_,i)=>({slot:i+1,status:'UNVERIFIED'}));
+ const runtime=new Set(CIRCUITS.flatMap(([id])=>OPS.map(op=>`${id}/${op.toLowerCase()}`)));
+ view.innerHTML=sectionTitle('144 Route Atlas','The 12 × 12 operation matrix is usable as a runtime navigation framework. Historical canonical bindings remain visibly unbound until recovered from R10 evidence.')+
+ `<div class="grid"><div class="card"><div class="tag">CANONICAL SLOTS</div><div class="metric">${slots.length}</div></div><div class="card"><div class="tag">UNBOUND HISTORICAL</div><div class="metric">${Number(audit.canonical_route_slots_unbound||0)}</div></div><div class="card"><div class="tag">RUNTIME MATRIX</div><div class="metric">144</div><div class="small muted">12 domains × 12 operations</div></div></div>
+ <div class="matrix route-atlas-matrix">${CIRCUITS.flatMap(([id,label],ci)=>OPS.map((op,oi)=>`<button class="cell" data-route-runtime="${esc(id)}" data-route-op="${esc(op.toLowerCase())}"><b>${ci+1}.${oi+1}</b><span>${esc(label.split(' ')[0])}</span><span>${esc(op)}</span></button>`)).join('')}</div>
+ <h2>Historical registry slots</h2><div class="card list">${slots.slice(0,144).map((r,i)=>`<div class="item"><div class="row"><b class="grow">Slot ${String(r.slot??i+1).padStart(3,'0')}</b><span class="state">${esc(r.status||'UNVERIFIED')}</span></div><div class="small muted">${esc(r.route||r.name||r.binding||'Historical canonical binding not recovered')}</div></div>`).join('')}</div>`;
+ view.querySelectorAll('[data-route-runtime]').forEach(b=>b.onclick=()=>navigate(b.dataset.routeRuntime,b.dataset.routeOp));
+}
+
 function renderHomeBase(){
  refreshBoot();const base=call('homeBaseBaseline'),phone=call('phoneIntakeSummary'),s=state.boot?.stats||{},features=base.features?.features||[],states=base.parity?.states||{};
- const cards=[['mywork','MY WORK','Projects & Auto Finish','Projects, workspaces, local versions and Auto Finish.','▣'],['files','FILES','Universal Files','Managed imports, hashes and exact-byte copies.','▤'],['phoneintake','PHONE INTAKE','Recover Phone + Home Base','Index or copy every file Android exposes from an authorized folder.','⌕'],['games','GAMES','Games & Garden','Games, Garden branches, ROM references and saves when imported.','◈'],['library','LIBRARY','Private Library','Books, Alexandria and personal documents.','▥'],['production','PRODUCTION','Production','Jobs, revisions, lots, tests and release evidence.','⚒'],['engineering','ENGINEERING','Engineering Systems','Artifacts, materials, physics, constraints, failures and patents.','⌁'],['kernel','KERNEL R2','Golden Field 144','12 × 12 native field; historical kernel state imports separately.','⊞'],['constructor','CONSTRUCTOR','Backend Navigator','Projects, files, provenance, continuity and recovery.','⌘'],['systems','SYSTEMS','Audit & Recovery','Backup, adapters and diagnostics.','⚙'],['continuity','CONTINUITY','Continuity Lock','Missing/reference-only/unverified items remain visible.','↺'],['cantuslab','ADEMIC CANTUS','Meaning Engine','Semantic decomposition, Resonance and reversible runes.','ᚱ']];
+ const cards=[['core','UNIFIED CORE','Everything Index','One search/navigation surface over the entire private app.','◎'],['routeatlas','144 ROUTES','Route Atlas','Runtime matrix plus explicit historical binding gaps.','▦'],['mywork','MY WORK','Projects & Auto Finish','Projects, workspaces, local versions and Auto Finish.','▣'],['files','FILES','Universal Files','Managed imports, hashes and exact-byte copies.','▤'],['phoneintake','PHONE INTAKE','Recover Phone + Home Base','Index or copy every file Android exposes from an authorized folder.','⌕'],['games','GAMES','Games & Garden','Games, Garden branches, ROM references and saves when imported.','◈'],['library','LIBRARY','Private Library','Books, Alexandria and personal documents.','▥'],['production','PRODUCTION','Production','Jobs, revisions, lots, tests and release evidence.','⚒'],['engineering','ENGINEERING','Engineering Systems','Artifacts, materials, physics, constraints, failures and patents.','⌁'],['kernel','KERNEL R2','Golden Field 144','12 × 12 native field; historical kernel state imports separately.','⊞'],['constructor','CONSTRUCTOR','Backend Navigator','Projects, files, provenance, continuity and recovery.','⌘'],['systems','SYSTEMS','Audit & Recovery','Backup, adapters and diagnostics.','⚙'],['continuity','CONTINUITY','Continuity Lock','Missing/reference-only/unverified items remain visible.','↺'],['cantuslab','ADEMIC CANTUS','Meaning Engine','Semantic decomposition, Resonance and reversible runes.','ᚱ']];
  view.innerHTML=sectionTitle('Home Base — United','All known Home Base domains remain visible. Native runtime and historical-data migration are tracked separately.')+`<div class="grid"><div class="card"><div class="tag">PROJECTS</div><div class="metric">${s.projects||0}</div></div><div class="card"><div class="tag">MANAGED FILES</div><div class="metric">${s.managed_files||0}</div></div><div class="card"><div class="tag">PHONE INDEX</div><div class="metric">${phone.items||0}</div></div><div class="card"><div class="tag">HOME BASE HITS</div><div class="metric">${phone.homebase_hits||0}</div></div></div><div class="grid homebase-grid">${cards.map(([r,t,h,d,i])=>routeCard(r,t,h,d,i)).join('')}</div><div class="notice"><b>Continuity rule</b><div class="small">A feature being present does not mean old data has been migrated. Phone Intake and Continuity Import recover real evidence; gaps stay visible.</div></div><h2>Critical Home Base domains</h2><div class="card list">${features.map(f=>`<div class="item"><div class="row"><b class="grow">${esc(f.id)} · ${esc(f.name)}</b><span class="state">${esc(states[f.id]||f.migration_status||'UNKNOWN')}</span></div><div class="small muted">Historical baseline: ${esc(f.migration_status||'UNVERIFIED')}</div></div>`).join('')}</div>`;wireRouteCards();
 }
 
@@ -443,7 +525,7 @@ function handleAction(action,button){
   if(op==='overview')return;
   if(op==='new'){if(route==='mywork'||route==='files')return handleAction('new-project',button);if(route==='games')return handleAction('import-game',button);if(route==='garden')return handleAction('install-garden-lab',button);if(route==='library')return handleAction('new-library',button);if(route==='production')return handleAction('new-production',button);if(route==='farm')return handleAction('new-farm',button);return openRecordEditor(route);}
   if(op==='import'){const kinds={mywork:'project',files:'project',games:'game',library:'library',garden:'garden',kernel:'kernel',systems:'heritage',continuity:'continuity'};return B.importFile(kinds[route]||'project');}
-  if(op==='search'){let q=prompt(`Search ${route}`);if(q==null)return;let r=route==='systems'?call('searchCorpus',q):route==='continuity'?call('searchContinuity',q):call('search',q);view.innerHTML=sectionTitle('Search results',q)+`<button id="opBack">← Back</button><pre>${esc(JSON.stringify(r,null,2))}</pre>`;$('#opBack').onclick=()=>render();return;}
+  if(op==='search'){let q=prompt(`Search ${route}`);if(q==null)return;let r=call('globalSearch',q,250);view.innerHTML=sectionTitle('Search results',q)+`<button id="opBack">← Back</button><pre>${esc(JSON.stringify(r,null,2))}</pre>`;$('#opBack').onclick=()=>render();return;}
   if(op==='open'){if(route==='mywork')return renderMyWork();if(route==='files')return renderFiles();if(route==='games')return renderGames();return toast('Open the item you want from this screen.');}
   if(op==='inspect'){return navigate('systems');}
   if(op==='finish'){return navigate('mywork','finish');}

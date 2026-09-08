@@ -12,7 +12,7 @@ public final class ConstructorCore {
     public static JSONObject ask(R10Database db,String message)throws Exception{
         String raw=message==null?"":message.trim();if(raw.isEmpty())throw new IllegalArgumentException("Message is required");String q=raw.toLowerCase(Locale.US);JSONObject out=new JSONObject();out.put("ok",true);out.put("mode","offline-local-constructor");
         if(q.equals("help")||q.contains("what can you do")){
-            out.put("reply","I work on HeritageFaith's local managed database. Try: status; projects; files <project id>; search <words>; corpus <words>; phone status; phone <words>; homebase; continuity; verify cantus. I navigate indexed local evidence but do not run arbitrary shell commands or invent physical test results.");return out;
+            out.put("reply","I work on HeritageFaith's local managed database. Try: core; global <words>; status; projects; files <project id>; search <words>; corpus <words>; phone status; phone <words>; homebase; routes; continuity; verify cantus. I navigate indexed local evidence but do not run arbitrary shell commands or invent physical test results.");return out;
         }
         if(q.equals("status")||q.contains("system status")){
             JSONObject s=db.stats();out.put("data",s);out.put("reply","HeritageFaith local status: "+s.optLong("projects")+" projects, "+s.optLong("managed_files")+" managed files, "+s.optLong("records")+" active records, "+s.optLong("corpus_files")+" heritage-index entries, "+s.optLong("cantus_events")+" Cantus events. SQLite integrity: "+s.optString("db_integrity")+".");return out;
@@ -26,6 +26,17 @@ public final class ConstructorCore {
             if(project==null) throw new IllegalArgumentException("Project not found: "+id);
             JSONArray files=db.listManagedFiles(id,5000);out.put("data",files);
             out.put("reply","Constructor found "+files.length()+" managed file entries for “"+project.optString("name",id)+"”. Open the project in Constructor to inspect paths and evidence state.");return out;
+        }
+        if(q.equals("core")||q.equals("unified core")){
+            JSONObject s=db.globalSummary();out.put("data",s);
+            out.put("reply","Unified Core sees "+s.optLong("projects")+" projects, "+s.optLong("managed_files")+" managed files, "+s.optLong("records")+" records, "+s.optLong("phone_items")+" phone-index items, "+s.optLong("legacy_patents")+" legacy patents, and "+s.optLong("bible_verses")+" indexed Bible verses.");return out;
+        }
+        if(q.startsWith("global ")){
+            String term=raw.substring(raw.indexOf(' ')+1).trim();JSONArray a=db.globalSearch(term,200);out.put("data",a);
+            out.put("reply","Unified search found "+a.length()+" results across projects, files, records, phone intake, continuity, Scripture, patents and corpus metadata.");return out;
+        }
+        if(q.equals("routes")||q.equals("route atlas")){
+            out.put("reply","The runtime has a 12 × 12 operation matrix, but the historical canonical 144-route registry still contains unbound placeholders. Use the Route Atlas in the app to keep that gap visible rather than inventing bindings.");return out;
         }
         if(q.equals("phone status")||q.equals("phone")){JSONObject s=db.phoneIntakeSummary();out.put("data",s);out.put("reply","Phone intake: "+s.optLong("items")+" indexed, "+s.optLong("copied")+" copied, "+s.optLong("homebase_hits")+" Home Base-family hits, "+s.optLong("unavailable")+" Android-inaccessible.");return out;}
         if(q.startsWith("phone ")){String term=raw.substring(raw.indexOf(' ')+1).trim();JSONArray a=db.searchPhoneIntake(term,200);out.put("data",a);out.put("reply","Phone index found "+a.length()+" matches for “"+term+"”.");return out;}

@@ -1,4 +1,4 @@
-name: HeritageFaith V24 Android Debug APK
+name: HeritageFaith V25 Unified Core Android Debug APK
 on:
   workflow_dispatch:
   push:
@@ -19,20 +19,21 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.11.1'
-      - name: Static HeritageFaith V20 private verification
+      - name: Static HeritageFaith V25 continuity verification
         run: |
           python3 tools/verify_private_v20.py
           python3 tools/verify_private_v24.py
+          python3 tools/verify_private_v25.py
       - name: Build debug APK
         run: gradle --no-daemon :app:assembleDebug --stacktrace
       - name: Prepare and hash APK
         run: |
-          cp app/build/outputs/apk/debug/app-debug.apk HeritageFaith-V24-debug.apk
-          sha256sum HeritageFaith-V24-debug.apk | tee HeritageFaith-V24-debug.apk.sha256
+          cp app/build/outputs/apk/debug/app-debug.apk HeritageFaith-V25-debug.apk
+          sha256sum HeritageFaith-V25-debug.apk | tee HeritageFaith-V25-debug.apk.sha256
       - uses: actions/upload-artifact@v4
         with:
-          name: HeritageFaith-V24-debug-apk
+          name: HeritageFaith-V25-debug-apk
           path: |
-            HeritageFaith-V24-debug.apk
-            HeritageFaith-V24-debug.apk.sha256
+            HeritageFaith-V25-debug.apk
+            HeritageFaith-V25-debug.apk.sha256
           if-no-files-found: error

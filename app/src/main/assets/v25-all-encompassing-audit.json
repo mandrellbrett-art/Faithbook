@@ -1,0 +1,182 @@
+{
+  "schema": "heritagefaith.all-encompassing-audit.v25",
+  "source_version": "24.0.0-homebase-phone-intake",
+  "critical_homebase_domains": 25,
+  "canonical_route_slots": 144,
+  "canonical_route_slots_unbound": 144,
+  "current_literal_runtime_routes": 39,
+  "runtime_routes": [
+    "alexandria",
+    "ancestors",
+    "archive",
+    "bible",
+    "cantus",
+    "cantuslab",
+    "church",
+    "constructor",
+    "continuity",
+    "creationmap",
+    "engineering",
+    "familygifts",
+    "farm",
+    "files",
+    "games",
+    "garden",
+    "home",
+    "homebase",
+    "humanity",
+    "jesus",
+    "kernel",
+    "library",
+    "live",
+    "meaningcourse",
+    "mywork",
+    "notes",
+    "occult",
+    "patents",
+    "phoneintake",
+    "production",
+    "runes",
+    "settings",
+    "study",
+    "systems",
+    "techniques",
+    "technology",
+    "tradition",
+    "understand",
+    "worksheets"
+  ],
+  "gaps": [
+    {
+      "id": "G001",
+      "priority": "BLOCKER",
+      "area": "Historical Home Base data",
+      "status": "IMPORT_REQUIRED",
+      "detail": "Most of the 25 critical Home Base domains have native surfaces but their old phone/Termux data, saves, project history, production records, and package state are not yet reconciled on-device.",
+      "finish_gate": "Run Phone Intake + Continuity import, compare counts/hashes, reconcile missing items, and preserve rollback."
+    },
+    {
+      "id": "G002",
+      "priority": "BLOCKER",
+      "area": "Canonical 144-route registry",
+      "status": "UNBOUND",
+      "detail": "144 of 144 canonical route slots are still placeholders; the current UI exposes 39 distinct literal routes.",
+      "finish_gate": "Recover/bind the canonical R10 route registry and test all 144 routes for render, persistence and back navigation."
+    },
+    {
+      "id": "G003",
+      "priority": "BLOCKER",
+      "area": "Phone coverage",
+      "status": "ON_DEVICE_REQUIRED",
+      "detail": "V24 can inventory/copy only Android document trees the user explicitly authorizes. Other apps' private sandboxes and protected system storage cannot be silently scanned.",
+      "finish_gate": "Authorize the broadest Internal Storage tree, index it, repeat for SD/Drive/providers, and import app-owned data through their own exports when needed."
+    },
+    {
+      "id": "G004",
+      "priority": "HIGH",
+      "area": "Global search/index",
+      "status": "PARTIAL",
+      "detail": "Library metadata search exists, but an all-app content index still needs unified full-text search across projects, source code, notes, Bible context, books, continuity, patents and phone-intake metadata.",
+      "finish_gate": "Add an incremental FTS index, extract supported document text, preserve source/page anchors, and expose one global search surface."
+    },
+    {
+      "id": "G005",
+      "priority": "HIGH",
+      "area": "Readers/viewers/editors",
+      "status": "PARTIAL",
+      "detail": "The Scripture reader has page mode, but the app still needs polished in-app viewers/editors for PDFs/EPUBs/text/source/images/audio/video/archives and strong page/bookmark/history behavior.",
+      "finish_gate": "Add format-aware viewers, bookmarks, recent position, TOC, annotations, safe editing/versioning and external-open fallback."
+    },
+    {
+      "id": "G006",
+      "priority": "HIGH",
+      "area": "My Work execution / Auto Finish",
+      "status": "PARTIAL",
+      "detail": "My Work and Constructor can navigate/index projects, but HeritageFaith deliberately does not execute arbitrary shell code. Historical Termux automation is not yet a safe in-app execution engine.",
+      "finish_gate": "Add an explicit sandboxed task runner with allowlisted tools, dry-run/approval, logs, timeouts, rollback and file-diff review."
+    },
+    {
+      "id": "G007",
+      "priority": "HIGH",
+      "area": "Kernel Computer R2 historical state",
+      "status": "IMPORT_REQUIRED",
+      "detail": "The 144-field runtime exists, but old Kernel Computer state/packages are not considered migrated until actual files are found and verified.",
+      "finish_gate": "Recover Kernel packages/state through Phone Intake/Continuity and attach hashes/version lineage."
+    },
+    {
+      "id": "G008",
+      "priority": "HIGH",
+      "area": "Games / Garden runtime",
+      "status": "PARTIAL",
+      "detail": "Game/Garden records and launch surfaces exist, but emulator/runtime compatibility, real Garden branch execution and save persistence still need device testing and import.",
+      "finish_gate": "Bind game engines/emulator handoffs, import saves, test reopen/save/load, and verify Garden current branch."
+    },
+    {
+      "id": "G009",
+      "priority": "HIGH",
+      "area": "Private library corpus",
+      "status": "NOT_YET_RECONCILED",
+      "detail": "Drive folders are registered and recursive import exists, but all six libraries still need real on-device import/reconciliation and full catalog counts.",
+      "finish_gate": "Import each authorized top-level folder, hash/dedupe, index titles/authors/text where supported, and reconcile failures/skips."
+    },
+    {
+      "id": "G010",
+      "priority": "HIGH",
+      "area": "Legacy patent corpus",
+      "status": "ENGINE_READY_DATA_NOT_LOADED",
+      "detail": "The 70+ year patent inventory database/importer exists, but the historical corpus has not yet been populated.",
+      "finish_gate": "Load authoritative bulk metadata, record source coverage, dedupe jurisdictions/families and index full-text links where available."
+    },
+    {
+      "id": "G011",
+      "priority": "MEDIUM",
+      "area": "Calendar / Maps / Communications / Medical / Images",
+      "status": "PARTIAL_DEVICE_TOOLS",
+      "detail": "These exist mainly as records, handoffs or device adapters rather than complete standalone clients.",
+      "finish_gate": "Test/import each domain on-device, add attachment handling and preserve explicit permission boundaries."
+    },
+    {
+      "id": "G012",
+      "priority": "HIGH",
+      "area": "Backups / encryption / recovery",
+      "status": "NOT_PHYSICALLY_ACCEPTED",
+      "detail": "Backup/rollback code exists, but an all-encompassing private app needs proven restore, encrypted export, optional biometric lock and disaster-recovery tests.",
+      "finish_gate": "Backup test data, restore it, verify hashes/counts, test rollback, add encrypted backup option and recovery-key workflow."
+    },
+    {
+      "id": "G013",
+      "priority": "HIGH",
+      "area": "Scalability",
+      "status": "NEEDS_HARDENING",
+      "detail": "Phone Intake has safety limits; a very large personal archive needs resumable scans, incremental change detection, dedupe/content-addressing, storage budgets and background-safe jobs.",
+      "finish_gate": "Add resumable checkpoints, modified-file detection, content-addressed blobs, duplicate references and storage quota controls."
+    },
+    {
+      "id": "G014",
+      "priority": "HIGH",
+      "area": "Release/update continuity",
+      "status": "DEBUG_PIPELINE",
+      "detail": "GitHub can build the APK, but long-term private upgrades should use a persistent signing key, versioned release artifacts and verified update/rollback packages.",
+      "finish_gate": "Create stable private signing, signed release APK, checksum manifest and upgrade/rollback acceptance test."
+    },
+    {
+      "id": "G015",
+      "priority": "MEDIUM",
+      "area": "Assistant access",
+      "status": "EXPLICIT_HANDOFF_ONLY",
+      "detail": "The Assistant Bridge can export/import scoped context, but it intentionally does not give ChatGPT silent background access to the installed app or phone.",
+      "finish_gate": "Keep explicit user-approved handoff; optionally automate export to an authorized connected folder without granting hidden phone control."
+    }
+  ],
+  "promotion_allowed": false,
+  "definition_of_done": [
+    "All 25 critical Home Base domains have a verified runtime state and historical-data state.",
+    "All 144 canonical routes are bound and physically tested.",
+    "Phone/Drive/Continuity imports are reconciled with counts and hashes.",
+    "Kernel, games, Garden and saves are actually run/reopened on the phone.",
+    "Global full-text search covers supported local content with source/page anchors.",
+    "Backup/restore/rollback pass on disposable test data.",
+    "A stable signed private upgrade build installs over the predecessor without data loss.",
+    "Anything Android cannot access remains visibly labeled rather than guessed or omitted."
+  ]
+}

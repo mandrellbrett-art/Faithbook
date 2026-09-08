@@ -1,0 +1,82 @@
+{
+  "schema": "ark.v25.permanent.qa.v1",
+  "passed": 15,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "new side-by-side package",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "ARK launcher label",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "ARK V25 version code",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "ARK V25 version name",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "release signing config",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "signed release workflow",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "certificate verification step",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "side-by-side migration notice",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Unified Core preserved",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Phone Intake preserved",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Kernel preserved",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Ademic Cantus preserved",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Scripture page reader preserved",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Legacy patents preserved",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "JavaScript syntax",
+      "pass": true,
+      "detail": ""
+    }
+  ]
+}

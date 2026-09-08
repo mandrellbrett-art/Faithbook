@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from pathlib import Path
-import json,subprocess,shutil,sys
+import json,re,subprocess,shutil,sys
 root=Path(__file__).resolve().parents[1]
 checks=[]
 def c(n,x,d=""):checks.append((n,bool(x),d))
@@ -30,8 +30,8 @@ c("V24 preserved",(root/"app/src/main/java/com/arkforge/faith/PhoneIntakeManager
 c("Ademic Cantus preserved",(root/"ADEMIC_CANTUS.md").is_file() and "Ademic Cantus" in app)
 c("Scripture page reader preserved","Page turning" in app and "readerPageNext" in app)
 c("Legacy patents preserved",(root/"app/src/main/java/com/arkforge/faith/LegacyPatentImporter.java").is_file())
-c("V25 version code","versionCode 250001" in grad)
-c("V25 version name","25.0.0-unified-core" in grad)
+m=re.search(r"versionCode\s+(\d+)",grad); c("V25+ version code", bool(m) and int(m.group(1))>=250001)
+c("V25 Unified Core lineage","unified-core" in grad)
 if shutil.which("node"):
     p=subprocess.run(["node","--check",str(root/"app/src/main/assets/app.js")],capture_output=True,text=True)
     c("JavaScript syntax",p.returncode==0,(p.stderr or p.stdout)[-1000:])

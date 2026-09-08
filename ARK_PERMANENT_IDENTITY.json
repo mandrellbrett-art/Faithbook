@@ -1,0 +1,13 @@
+{
+  "schema": "ark.permanent.android.identity.v1",
+  "application_id": "com.arkforge.ark",
+  "launcher_label": "ARK",
+  "version_code": 250101,
+  "version_name": "25.1.0-ark-unified-core",
+  "signing_alias": "ark",
+  "signing_certificate_sha256": "CC:45:40:DC:8C:DA:C1:29:B9:5A:D6:67:DD:51:F0:97:16:97:08:82:16:69:74:97:CA:E2:AC:D4:01:A7:5F:5A",
+  "old_application_id": "com.arkforge.faith",
+  "migration_strategy": "SIDE_BY_SIDE",
+  "old_app_uninstall_required": false,
+  "rule": "Do not delete the predecessor until backup restore, Phone Intake, continuity reconciliation, and acceptance have passed."
+}

@@ -7,15 +7,28 @@ android {
     compileSdk 35
 
     defaultConfig {
-        applicationId 'com.arkforge.faith'
+        applicationId 'com.arkforge.ark'
         minSdk 26
         targetSdk 35
-        versionCode 250001
-        versionName '25.0.0-unified-core'
+        versionCode 250101
+        versionName '25.1.0-ark-unified-core'
+    }
+
+    signingConfigs {
+        arkRelease {
+            def p = System.getenv("ARK_KEYSTORE_PATH")
+            if (p != null && !p.trim().isEmpty()) {
+                storeFile file(p)
+                storePassword System.getenv("ARK_STORE_PASSWORD")
+                keyAlias System.getenv("ARK_KEY_ALIAS") ?: "ark"
+                keyPassword System.getenv("ARK_KEY_PASSWORD")
+            }
+        }
     }
 
     buildTypes {
         release {
+            signingConfig signingConfigs.arkRelease
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }

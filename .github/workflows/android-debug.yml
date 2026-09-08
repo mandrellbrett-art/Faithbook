@@ -1,8 +1,6 @@
 name: HeritageFaith V25 Unified Core Android Debug APK
 on:
   workflow_dispatch:
-  push:
-    branches: [ "main" ]
 jobs:
   build:
     runs-on: ubuntu-latest

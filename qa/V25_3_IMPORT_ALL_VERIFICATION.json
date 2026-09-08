@@ -1,75 +1,80 @@
 {
-  "schema": "ark.v25.permanent.qa.v1",
-  "passed": 15,
+  "schema": "ark.import-all.qa.v25_3",
+  "passed": 16,
   "failed": 0,
   "checks": [
     {
-      "name": "new side-by-side package",
+      "name": "All Files Access permission",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "ARK launcher label",
+      "name": "Runtime permission check",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "ARK V25.3 version code",
+      "name": "Android permission settings",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "ARK V25.3 version name",
+      "name": "Automatic resume after permission",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "release signing config",
+      "name": "Direct all-shared-storage scan",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "signed release workflow",
+      "name": "Multiple storage volumes",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "certificate verification step",
+      "name": "Safety item limit",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "side-by-side migration notice",
+      "name": "No source delete/rename",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Unified Core preserved",
+      "name": "Persisted provider trees",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Phone Intake preserved",
+      "name": "Import All bridge",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Kernel preserved",
+      "name": "Import All main UI",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Ademic Cantus preserved",
+      "name": "Import All settings shortcut",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Scripture page reader preserved",
+      "name": "Import All callback",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Legacy patents preserved",
+      "name": "V25.3 version code",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "V25.3 version name",
       "pass": true,
       "detail": ""
     },

@@ -6,6 +6,10 @@ import android.content.ClipData;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Build;
+import android.os.Environment;
+import android.provider.Settings;
+import android.content.UriPermission;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
@@ -33,6 +37,7 @@ public class MainActivity extends Activity {
     private String pendingImportKind = "project";
     private String pendingAssistantExportMode = "standard";
     private String pendingPhoneMode = PhoneIntakeManager.MODE_INDEX;
+    private boolean pendingImportAll = false;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +86,67 @@ public class MainActivity extends Activity {
     }
 
 
+
+
+    public boolean hasAllFilesAccess(){
+        return Build.VERSION.SDK_INT<30||Environment.isExternalStorageManager();
+    }
+
+    public void requestImportAll(){
+        if(hasAllFilesAccess()){runImportAllNow();return;}
+        pendingImportAll=true;
+        runOnUiThread(()->{
+            try{
+                startActivity(new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION,
+                        Uri.parse("package:"+getPackageName())));
+            }catch(Exception e){
+                try{startActivity(new Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION));}
+                catch(Exception x){callback("onNativeError",error("Android could not open All Files Access settings."));}
+            }
+        });
+    }
+
+    private void runImportAllNow(){
+        pendingImportAll=false;
+        executor.execute(()->{
+            try{
+                JSONObject result=PhoneIntakeManager.scanAllSharedStorage(this,db);
+                JSONArray providers=new JSONArray();
+
+                // Include previously authorized non-local provider trees such as Drive.
+                for(UriPermission perm:getContentResolver().getPersistedUriPermissions()){
+                    if(!perm.isReadPermission())continue;
+                    Uri u=perm.getUri();if(u==null)continue;
+                    String auth=u.getAuthority()==null?"":u.getAuthority();
+                    if("com.android.externalstorage.documents".equals(auth))continue;
+                    try{
+                        JSONObject r=PhoneIntakeManager.scanTree(this,db,u,PhoneIntakeManager.MODE_INDEX);
+                        JSONObject one=new JSONObject();
+                        one.put("uri",u.toString());one.put("authority",auth);
+                        one.put("status",r.optString("run_status","COMPLETE"));
+                        one.put("files",r.optLong("files_seen_this_run",0));
+                        providers.put(one);
+                    }catch(Exception ex){
+                        JSONObject one=new JSONObject();
+                        one.put("uri",u.toString());one.put("authority",auth);
+                        one.put("status","REVIEW");one.put("detail",ex.getMessage());providers.put(one);
+                    }
+                }
+
+                result.put("provider_trees_scanned",providers.length());
+                result.put("persisted_provider_runs",providers);
+                callback("onImportAll",result);
+            }catch(Exception e){
+                db.log("phone-intake","import-all","FAIL",e.getClass().getSimpleName()+": "+e.getMessage());
+                callback("onNativeError",error(e.getMessage()));
+            }
+        });
+    }
+
+    @Override protected void onResume(){
+        super.onResume();
+        if(pendingImportAll&&hasAllFilesAccess())runImportAllNow();
+    }
 
     public void pickPhoneTree(String mode){
         pendingPhoneMode=PhoneIntakeManager.MODE_COPY_ALL.equalsIgnoreCase(mode)?PhoneIntakeManager.MODE_COPY_ALL:PhoneIntakeManager.MODE_INDEX;

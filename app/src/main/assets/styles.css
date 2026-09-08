@@ -95,3 +95,5 @@ blockquote{margin:14px 0;padding:10px 16px;border-left:2px solid #755a35;color:#
 .core-search{margin:18px 0}
 .universal-text-viewer{white-space:pre-wrap;word-break:break-word;max-height:72vh;overflow:auto;padding:18px;background:rgba(255,250,240,.72);border:1px solid rgba(120,90,50,.18);font-size:.9rem;line-height:1.45}
 .route-atlas-matrix{margin:18px 0}
+
+.import-all-card{border-width:2px}.import-all-card .primary{font-size:1.08rem;padding:15px 18px}

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.StatFs;
+import android.os.Environment;
+import android.os.Build;
 import android.provider.DocumentsContract;
 
 import org.json.JSONArray;
@@ -17,6 +19,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.security.MessageDigest;
 import java.util.Locale;
+import java.util.LinkedHashMap;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Map;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -49,6 +55,130 @@ public final class PhoneIntakeManager {
         db.finishPhoneIntakeRun(runId,st.files,st.dirs,st.copied,st.linked,st.failed+st.unavailable,st.bytes,status,detail);
         JSONObject o=db.phoneIntakeSummary();o.put("run_id",runId);o.put("mode",mode);o.put("run_status",status);
         o.put("files_seen_this_run",st.files);o.put("copied_this_run",st.copied);o.put("linked_this_run",st.linked);o.put("unavailable_this_run",st.unavailable);o.put("bytes_copied_this_run",st.bytes);return o;
+    }
+
+
+    public static JSONObject scanAllSharedStorage(Context context,R10Database db)throws Exception{
+        if(Build.VERSION.SDK_INT>=30&&!Environment.isExternalStorageManager())
+            throw new SecurityException("All Files Access has not been granted.");
+
+        LinkedHashMap<String,File> roots=sharedStorageRoots(context);
+        JSONArray volumes=new JSONArray();
+        long totalFiles=0,totalDirs=0,totalLinked=0,totalUnavailable=0;
+
+        for(Map.Entry<String,File> e:roots.entrySet()){
+            String label=e.getKey();File root=e.getValue();
+            String runId=db.beginPhoneIntakeRun(root.toURI().toString(),label,"IMPORT_ALL_SHARED_STORAGE");
+            DirectState st=new DirectState(context,db,runId,root);
+            String status="COMPLETE",detail="Indexed with user-approved Android All Files Access. Originals untouched.";
+            try{
+                walkDirect(st,root,"",0);
+                st.flush();
+                if(st.unavailable>0)status="COMPLETE_WITH_REVIEW";
+            }catch(Exception ex){
+                status="PARTIAL";detail=ex.getClass().getSimpleName()+": "+ex.getMessage();st.unavailable++;
+                try{st.flush();}catch(Exception ignored){}
+            }
+            db.finishPhoneIntakeRun(runId,st.files,st.dirs,0,st.linked,st.unavailable,0,status,detail);
+
+            JSONObject v=new JSONObject();
+            v.put("label",label);v.put("root",root.getAbsolutePath());v.put("run_id",runId);
+            v.put("files",st.files);v.put("directories",st.dirs);v.put("linked",st.linked);
+            v.put("unavailable",st.unavailable);v.put("status",status);volumes.put(v);
+
+            totalFiles+=st.files;totalDirs+=st.dirs;totalLinked+=st.linked;totalUnavailable+=st.unavailable;
+        }
+
+        JSONObject out=db.phoneIntakeSummary();
+        out.put("ok",true);out.put("mode","IMPORT_ALL_SHARED_STORAGE");
+        out.put("volumes",volumes);out.put("files_seen_this_run",totalFiles);
+        out.put("directories_seen_this_run",totalDirs);out.put("linked_this_run",totalLinked);
+        out.put("unavailable_this_run",totalUnavailable);
+        out.put("truth_boundary","Shared storage exposed by Android was indexed. Other apps' private /data/data sandboxes remain inaccessible.");
+        return out;
+    }
+
+    private static LinkedHashMap<String,File> sharedStorageRoots(Context context){
+        LinkedHashMap<String,File> roots=new LinkedHashMap<>();
+        try{
+            File primary=Environment.getExternalStorageDirectory().getCanonicalFile();
+            if(primary.isDirectory())roots.put("Internal storage",primary);
+        }catch(Exception ignored){}
+
+        File[] ext=context.getExternalFilesDirs(null);
+        if(ext!=null){
+            for(File f:ext){
+                if(f==null)continue;
+                try{
+                    String path=f.getCanonicalPath();
+                    String marker="/Android/data/"+context.getPackageName()+"/files";
+                    int i=path.indexOf(marker);
+                    if(i<=0)continue;
+                    File root=new File(path.substring(0,i)).getCanonicalFile();
+                    if(!root.isDirectory())continue;
+                    boolean duplicate=false;
+                    for(File x:roots.values()){
+                        try{if(x.getCanonicalPath().equals(root.getCanonicalPath())){duplicate=true;break;}}catch(Exception ignored){}
+                    }
+                    if(!duplicate)roots.put("Storage "+root.getName(),root);
+                }catch(Exception ignored){}
+            }
+        }
+        return roots;
+    }
+
+    private static void walkDirect(DirectState st,File file,String prefix,int depth)throws Exception{
+        if(depth>MAX_DEPTH)throw new IllegalArgumentException("Folder nesting exceeded "+MAX_DEPTH);
+        if(st.items>1000000)throw new IllegalArgumentException("Import All reached the 1,000,000-item safety limit");
+
+        String canonical;
+        try{canonical=file.getCanonicalPath();}catch(Exception ex){st.unavailable++;return;}
+
+        if(file.isDirectory()){
+            if(!st.visited.add(canonical))return;
+
+            // Avoid re-indexing ARK's own external app directory into itself.
+            if(canonical.contains("/Android/data/"+st.context.getPackageName()))return;
+
+            String nextPrefix=prefix;
+            if(!file.equals(st.root)){
+                st.dirs++;
+                String name=file.getName().isEmpty()?file.getAbsolutePath():file.getName();
+                String rel=prefix.isEmpty()?name:prefix+"/"+name;
+                st.add(row(Uri.fromFile(file),rel,name,DocumentsContract.Document.MIME_TYPE_DIR,-1,
+                        "directory",family(rel),version(rel),"","","LINKED_INDEXED","ALL_FILES_ACCESS"));
+                nextPrefix=rel;
+            }
+
+            File[] children;
+            try{children=file.listFiles();}catch(SecurityException ex){st.unavailable++;return;}
+            if(children==null){st.unavailable++;return;}
+            java.util.Arrays.sort(children,(a,b)->a.getName().compareToIgnoreCase(b.getName()));
+            for(File child:children){st.items++;walkDirect(st,child,nextPrefix,depth+1);}
+            return;
+        }
+
+        if(!file.isFile())return;
+        st.files++;st.linked++;
+        String name=file.getName();String rel=prefix.isEmpty()?name:prefix+"/"+name;
+        String mime=guessMime(name);
+        st.add(row(Uri.fromFile(file),rel,name,mime,file.length(),
+                category(name,mime,rel),family(rel),version(rel),"","","LINKED_INDEXED","ALL_FILES_ACCESS"));
+    }
+
+    private static String guessMime(String name){
+        String extension=ext(name==null?"":name.toLowerCase(Locale.US));
+        String mime=android.webkit.MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
+        return mime==null?"application/octet-stream":mime;
+    }
+
+    private static final class DirectState{
+        final Context context;final R10Database db;final String runId;final File root;
+        final Set<String> visited=new HashSet<>();JSONArray batch=new JSONArray();
+        long items,files,dirs,linked,unavailable;
+        DirectState(Context c,R10Database d,String id,File r){context=c;db=d;runId=id;root=r;}
+        void add(JSONObject o)throws Exception{batch.put(o);if(batch.length()>=BATCH)flush();}
+        void flush()throws Exception{if(batch.length()>0){db.addPhoneIntakeBatch(runId,batch);batch=new JSONArray();}}
     }
 
     private static void walk(State st,String parent,String prefix,int depth)throws Exception{

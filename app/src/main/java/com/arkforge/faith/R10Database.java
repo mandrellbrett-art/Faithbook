@@ -19,7 +19,7 @@ import java.util.UUID;
 
 public class R10Database extends SQLiteOpenHelper {
     public static final String DB_NAME = "arkforge-faith.db";
-    private static final int DB_VERSION = 9;
+    private static final int DB_VERSION = 10;
     private final Context context;
 
     public R10Database(Context context) {
@@ -76,6 +76,23 @@ public class R10Database extends SQLiteOpenHelper {
         db.execSQL("CREATE INDEX IF NOT EXISTS idx_phone_name ON phone_intake_files(name)");
     }
 
+
+    private static void createMirrorSchema(SQLiteDatabase db) {
+        db.execSQL("CREATE TABLE IF NOT EXISTS mirror_triage (" +
+                "file_id INTEGER PRIMARY KEY," +
+                "disposition TEXT NOT NULL DEFAULT 'PRESENT'," +
+                "labels TEXT NOT NULL DEFAULT '[]'," +
+                "score INTEGER NOT NULL DEFAULT 0," +
+                "reason TEXT NOT NULL DEFAULT ''," +
+                "excerpt TEXT NOT NULL DEFAULT ''," +
+                "reflection TEXT NOT NULL DEFAULT ''," +
+                "user_override INTEGER NOT NULL DEFAULT 0," +
+                "classified_at TEXT NOT NULL," +
+                "FOREIGN KEY(file_id) REFERENCES phone_intake_files(id) ON DELETE CASCADE)");
+        db.execSQL("CREATE INDEX IF NOT EXISTS idx_mirror_disposition ON mirror_triage(disposition,file_id)");
+        db.execSQL("CREATE INDEX IF NOT EXISTS idx_mirror_override ON mirror_triage(user_override,file_id)");
+    }
+
     @Override public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE projects (" +
                 "id TEXT PRIMARY KEY,name TEXT NOT NULL,description TEXT NOT NULL DEFAULT ''," +
@@ -129,6 +146,7 @@ public class R10Database extends SQLiteOpenHelper {
         db.execSQL("CREATE INDEX idx_corpus_family ON corpus_files(family,version_token)");
         createLegacyPatentSchema(db);
         createPhoneIntakeSchema(db);
+        createMirrorSchema(db);
         logInternal(db, "system", "database-create", "PASS", "HeritageFaith local database created");
         seedSystemRecords(db);
         seedBibleLibraryRecord(db);
@@ -170,6 +188,11 @@ public class R10Database extends SQLiteOpenHelper {
             createPhoneIntakeSchema(db);
             logInternal(db, "phone-intake", "schema-upgrade", "PASS",
                     "Added phone intake ledger without replacing prior data");
+        }
+        if (oldVersion < 10) {
+            createMirrorSchema(db);
+            logInternal(db, "mirror", "schema-upgrade", "PASS",
+                    "Added non-destructive longitudinal mirror triage");
         }
     }
 
@@ -456,6 +479,8 @@ public class R10Database extends SQLiteOpenHelper {
         o.put("corpus_files",scalar(db,"SELECT COUNT(*) FROM corpus_files"));
         o.put("continuity_items",scalar(db,"SELECT COUNT(*) FROM migration_items"));
         o.put("phone_items",scalar(db,"SELECT COUNT(*) FROM phone_intake_files"));
+        o.put("mirror_archive",scalar(db,"SELECT COUNT(*) FROM mirror_triage WHERE disposition='MIRROR_ARCHIVE'"));
+        o.put("mirror_review",scalar(db,"SELECT COUNT(*) FROM mirror_triage WHERE disposition='REVIEW'"));
         o.put("bible_verses",scalar(db,"SELECT COUNT(*) FROM bible_verses"));
         o.put("legacy_patents",scalar(db,"SELECT COUNT(*) FROM legacy_patents"));
         o.put("cantus_events",scalar(db,"SELECT COUNT(*) FROM cantus_log"));
@@ -493,9 +518,11 @@ public class R10Database extends SQLiteOpenHelper {
                 new String[]{q,q,q,q});
 
         appendGlobal(out,db,
-                "SELECT 'phone' source,CAST(id AS TEXT) ref_id,name title,relative_path body,'phoneintake' route,intake_status state,indexed_at updated_at," +
-                "family extra1,source_uri extra2 FROM phone_intake_files WHERE name LIKE ? OR relative_path LIKE ? OR family LIKE ? OR category LIKE ? OR version_token LIKE ? OR sha256 LIKE ? " +
-                "ORDER BY id DESC LIMIT "+per,
+                "SELECT 'phone' source,CAST(p.id AS TEXT) ref_id,p.name title,p.relative_path body,'phoneintake' route,p.intake_status state,p.indexed_at updated_at," +
+                "p.family extra1,p.source_uri extra2 FROM phone_intake_files p LEFT JOIN mirror_triage m ON m.file_id=p.id " +
+                "WHERE (m.disposition IS NULL OR m.disposition<>'MIRROR_ARCHIVE') AND " +
+                "(p.name LIKE ? OR p.relative_path LIKE ? OR p.family LIKE ? OR p.category LIKE ? OR p.version_token LIKE ? OR p.sha256 LIKE ?) " +
+                "ORDER BY p.id DESC LIMIT "+per,
                 new String[]{q,q,q,q,q,q});
 
         appendGlobal(out,db,
@@ -533,6 +560,54 @@ public class R10Database extends SQLiteOpenHelper {
         try(Cursor c=db.rawQuery(sql,args)){
             while(c.moveToNext()) out.put(cursorRow(c));
         }
+    }
+
+
+    public synchronized JSONObject mirrorSummary() throws Exception {
+        JSONObject o=new JSONObject();SQLiteDatabase db=getReadableDatabase();
+        o.put("ok",true);
+        o.put("classified",scalar(db,"SELECT COUNT(*) FROM mirror_triage"));
+        o.put("present",scalar(db,"SELECT COUNT(*) FROM mirror_triage WHERE disposition='PRESENT'"));
+        o.put("mirror_archive",scalar(db,"SELECT COUNT(*) FROM mirror_triage WHERE disposition='MIRROR_ARCHIVE'"));
+        o.put("review",scalar(db,"SELECT COUNT(*) FROM mirror_triage WHERE disposition='REVIEW'"));
+        o.put("overrides",scalar(db,"SELECT COUNT(*) FROM mirror_triage WHERE user_override=1"));
+        o.put("dad_conflict",scalar(db,"SELECT COUNT(*) FROM mirror_triage WHERE labels LIKE '%DAD_CONFLICT%'"));
+        o.put("family_conflict",scalar(db,"SELECT COUNT(*) FROM mirror_triage WHERE labels LIKE '%FAMILY_CONFLICT%'"));
+        o.put("exit_planning",scalar(db,"SELECT COUNT(*) FROM mirror_triage WHERE labels LIKE '%EXIT_RELOCATION_PLANNING%'"));
+        o.put("unclassified_phone_items",scalar(db,"SELECT COUNT(*) FROM phone_intake_files p LEFT JOIN mirror_triage m ON m.file_id=p.id WHERE m.file_id IS NULL AND p.category<>'directory'"));
+        return o;
+    }
+
+    public synchronized JSONArray mirrorSearch(String query,String disposition,int limit) throws Exception {
+        JSONArray out=new JSONArray();SQLiteDatabase db=getReadableDatabase();
+        String q="%"+(query==null?"":query.trim())+"%";
+        String d=disposition==null?"":disposition.trim();
+        int safe=Math.max(1,Math.min(limit,2000));
+        String sql="SELECT p.id,p.name,p.relative_path,p.category,p.family,p.size,p.source_uri,"+
+                "m.disposition,m.labels,m.score,m.reason,m.excerpt,m.reflection,m.user_override,m.classified_at "+
+                "FROM mirror_triage m JOIN phone_intake_files p ON p.id=m.file_id WHERE "+
+                (d.isEmpty()?"":"m.disposition=? AND ")+
+                "(p.name LIKE ? OR p.relative_path LIKE ? OR m.labels LIKE ? OR m.reason LIKE ? OR m.excerpt LIKE ? OR m.reflection LIKE ?) "+
+                "ORDER BY m.user_override DESC,m.score DESC,p.id DESC LIMIT "+safe;
+        String[] args=d.isEmpty()
+                ? new String[]{q,q,q,q,q,q}
+                : new String[]{d,q,q,q,q,q,q};
+        try(Cursor c=db.rawQuery(sql,args)){while(c.moveToNext())out.put(cursorRow(c));}
+        return out;
+    }
+
+    public synchronized void setMirrorDisposition(long fileId,String disposition,String reflection) {
+        String d=disposition==null?"REVIEW":disposition.trim().toUpperCase(Locale.US);
+        if(!d.equals("PRESENT")&&!d.equals("MIRROR_ARCHIVE")&&!d.equals("REVIEW"))d="REVIEW";
+        ContentValues v=new ContentValues();v.put("disposition",d);v.put("user_override",1);
+        v.put("reflection",reflection==null?"":reflection);v.put("classified_at",now());
+        int n=getWritableDatabase().update("mirror_triage",v,"file_id=?",new String[]{String.valueOf(fileId)});
+        if(n==0){
+            v.put("file_id",fileId);v.put("labels","[]");v.put("score",0);v.put("reason","Manual classification");
+            v.put("excerpt","");
+            getWritableDatabase().insert("mirror_triage",null,v);
+        }
+        log("mirror","manual-"+d,"PASS","file_id="+fileId);
     }
 
 

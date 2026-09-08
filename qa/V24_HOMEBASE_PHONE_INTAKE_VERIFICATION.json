@@ -4,7 +4,7 @@
   "failed": 0,
   "checks": [
     {
-      "name": "DB v9",
+      "name": "DB v9+",
       "pass": true
     },
     {

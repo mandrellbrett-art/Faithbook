@@ -1,82 +1,90 @@
 {
-  "schema": "ark.runtime-continuity.v25_2",
-  "functions": 111,
-  "routes": 43,
-  "passed": 16,
+  "schema": "ark.mirror-sweep.qa.v25_4",
+  "passed": 18,
   "failed": 0,
   "checks": [
     {
-      "name": "Every route renderer exists",
-      "pass": true,
-      "detail": "[]"
-    },
-    {
-      "name": "V23 feature-function continuity",
-      "pass": true,
-      "detail": "[]"
-    },
-    {
-      "name": "V24/V25 additive functions",
-      "pass": true,
-      "detail": "[]"
-    },
-    {
-      "name": "Phone Intake route",
+      "name": "DB v10",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Unified Core route",
+      "name": "Mirror schema",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Global Search route",
+      "name": "Additive DB migration",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Route Atlas route",
+      "name": "Mirror filter class",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Scripture page reader",
+      "name": "No source deletion",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Ademic Cantus",
+      "name": "Narrow family conflict rules",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Ancestors",
+      "name": "Exit planning rule",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Alexandria",
+      "name": "High emotion goes to review",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Living Church/Tradition",
+      "name": "Text sampling bounded",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Patents",
+      "name": "Import All auto mirror",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Faith worksheets",
+      "name": "Mirror bridge",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Meaning/Runes",
+      "name": "Mirror route",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Mirror archive UI",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Manual overrides",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Present global search excludes mirror archive",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "V25.4 code",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "V25.4 name",
       "pass": true,
       "detail": ""
     },

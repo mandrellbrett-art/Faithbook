@@ -97,3 +97,5 @@ blockquote{margin:14px 0;padding:10px 16px;border-left:2px solid #755a35;color:#
 .route-atlas-matrix{margin:18px 0}
 
 .import-all-card{border-width:2px}.import-all-card .primary{font-size:1.08rem;padding:15px 18px}
+
+.mirror-excerpt{font-style:italic;opacity:.82;border-left:3px solid rgba(120,90,50,.25);padding-left:12px}

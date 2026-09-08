@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from pathlib import Path
-import json,sys,subprocess,shutil
+import json,re,sys,subprocess,shutil
 root=Path(__file__).resolve().parents[1]
 checks=[]
 def c(n,x,d=""):checks.append((n,bool(x),d))
@@ -23,8 +23,8 @@ c("Import All bridge","importAllAccessible" in nb and "allFilesAccessStatus" in 
 c("Import All main UI",'id="importAllAccessible"' in app)
 c("Import All settings shortcut",'id="settingsImportAll"' in app)
 c("Import All callback","onImportAll(payload)" in app)
-c("V25.3 version code","versionCode 250300" in grad)
-c("V25.3 version name","25.3.0-import-all" in grad)
+m=re.search(r"versionCode\s+(\d+)",grad);c("V25.3+ version code",bool(m) and int(m.group(1))>=250300)
+c("Import All lineage","import-all" in grad or "mirror-sweep" in grad)
 if shutil.which("node"):
     p=subprocess.run(["node","--check",str(root/"app/src/main/assets/app.js")],capture_output=True,text=True)
     c("JavaScript syntax",p.returncode==0,(p.stderr or p.stdout)[-1000:])

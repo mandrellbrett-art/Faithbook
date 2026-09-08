@@ -135,6 +135,9 @@ public class MainActivity extends Activity {
 
                 result.put("provider_trees_scanned",providers.length());
                 result.put("persisted_provider_runs",providers);
+
+                JSONObject mirror=MirrorFilter.sweep(this,db,false);
+                result.put("mirror",mirror);
                 callback("onImportAll",result);
             }catch(Exception e){
                 db.log("phone-intake","import-all","FAIL",e.getClass().getSimpleName()+": "+e.getMessage());

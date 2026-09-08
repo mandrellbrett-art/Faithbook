@@ -1,4 +1,4 @@
-name: ARK V25 Permanent Signed Release APK
+name: ARK V25.2 Full Continuity Permanent Signed APK
 on:
   workflow_dispatch:
   push:
@@ -53,15 +53,15 @@ jobs:
           APK="app/build/outputs/apk/release/app-release.apk"
           test -f "$APK"
           "$ANDROID_HOME/build-tools/35.0.0/aapt" dump badging "$APK" | grep "package: name='com.arkforge.ark'"
-          "$ANDROID_HOME/build-tools/35.0.0/aapt" dump badging "$APK" | grep "versionCode='250101'"
+          "$ANDROID_HOME/build-tools/35.0.0/aapt" dump badging "$APK" | grep "versionCode='250200'"
           "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose --print-certs "$APK"
-          cp "$APK" ARK-V25-Unified-Core.apk
-          sha256sum ARK-V25-Unified-Core.apk | tee ARK-V25-Unified-Core.apk.sha256
+          cp "$APK" ARK-V25.2-Full-Continuity.apk
+          sha256sum ARK-V25.2-Full-Continuity.apk | tee ARK-V25.2-Full-Continuity.apk.sha256
 
       - uses: actions/upload-artifact@v4
         with:
-          name: ARK-V25-permanent-signed-apk
+          name: ARK-V25.2-full-continuity-signed-apk
           path: |
-            ARK-V25-Unified-Core.apk
-            ARK-V25-Unified-Core.apk.sha256
+            ARK-V25.2-Full-Continuity.apk
+            ARK-V25.2-Full-Continuity.apk.sha256
           if-no-files-found: error

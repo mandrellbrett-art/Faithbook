@@ -1,75 +1,82 @@
 {
-  "schema": "ark.v25.permanent.qa.v1",
-  "passed": 15,
+  "schema": "ark.runtime-continuity.v25_2",
+  "functions": 110,
+  "routes": 42,
+  "passed": 16,
   "failed": 0,
   "checks": [
     {
-      "name": "new side-by-side package",
+      "name": "Every route renderer exists",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "name": "V23 feature-function continuity",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "name": "V24/V25 additive functions",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "name": "Phone Intake route",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "ARK launcher label",
+      "name": "Unified Core route",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "ARK V25.2 version code",
+      "name": "Global Search route",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "ARK V25.2 version name",
+      "name": "Route Atlas route",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "release signing config",
+      "name": "Scripture page reader",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "signed release workflow",
+      "name": "Ademic Cantus",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "certificate verification step",
+      "name": "Ancestors",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "side-by-side migration notice",
+      "name": "Alexandria",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Unified Core preserved",
+      "name": "Living Church/Tradition",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Phone Intake preserved",
+      "name": "Patents",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Kernel preserved",
+      "name": "Faith worksheets",
       "pass": true,
       "detail": ""
     },
     {
-      "name": "Ademic Cantus preserved",
-      "pass": true,
-      "detail": ""
-    },
-    {
-      "name": "Scripture page reader preserved",
-      "pass": true,
-      "detail": ""
-    },
-    {
-      "name": "Legacy patents preserved",
+      "name": "Meaning/Runes",
       "pass": true,
       "detail": ""
     },

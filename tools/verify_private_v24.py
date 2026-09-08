@@ -19,7 +19,7 @@ c("phone bridge","phoneIntakeSummary" in nb and "phoneIntakeSearch" in nb);c("ba
 c("phone route","case 'phoneintake':return renderPhoneIntake();" in app);c("homebase recovery","Critical Home Base domains" in app)
 c("kernel r2","Kernel Computer R2 / Golden Field 144" in app);c("feature registry",(root/"app/src/main/assets/homebase-feature-registry.json").is_file())
 c("continuity lock",(root/"app/src/main/assets/homebase-continuity-lock.json").is_file());c("parity",(root/"app/src/main/assets/homebase-v24-parity.json").is_file())
-m=re.search(r"versionCode\s+(\d+)",grad);c("V24+ code",bool(m) and int(m.group(1))>=240001);c("V24 Home Base lineage","homebase-phone-intake" in grad or "unified-core" in grad)
+m=re.search(r"versionCode\s+(\d+)",grad);c("V24+ code",bool(m) and int(m.group(1))>=240001);c("V24 Home Base lineage",any(x in grad for x in ["homebase-phone-intake","unified-core","full-continuity"]))
 bad=[n for n,x in checks if not x];out={"schema":"heritagefaith.qa.v24","passed":len(checks)-len(bad),"failed":len(bad),"checks":[{"name":n,"pass":x} for n,x in checks]}
 (root/"qa").mkdir(exist_ok=True);(root/"qa/V24_HOMEBASE_PHONE_INTAKE_VERIFICATION.json").write_text(json.dumps(out,indent=2))
 print(json.dumps(out,indent=2));sys.exit(1 if bad else 0)

@@ -10,8 +10,8 @@ android {
         applicationId 'com.arkforge.ark'
         minSdk 26
         targetSdk 35
-        versionCode 250101
-        versionName '25.1.0-ark-unified-core'
+        versionCode 250200
+        versionName '25.2.0-full-continuity'
     }
 
     signingConfigs {
